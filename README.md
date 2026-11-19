@@ -1,4 +1,4 @@
-- dunkel-schlicht ist ein einfaches Wordpress Theme mit anpassbaren Farben und Hell- Dunkelmodus  
+- einfaches-template-wx ist ein einfach gehaltenes Wordpress Template bei dem die Plugins einfacher-kalender und soft-blur-lightbox bereits integriert sind
 - einfacher-kalender ist ein Kalender Plugin mit Kategorien und Listen-, Monats- und Jahresansicht  
 - soft-blur-lightbox ist eine Plugin für die Vergrößerung von Bildern beim anklicken mit Hintergrundunschärfe  
 - webcam-archiv ist ein Plugin um ein Archiv für Webcambilder auf der Webseite einzubinden  
