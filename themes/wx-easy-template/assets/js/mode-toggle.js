@@ -1,5 +1,5 @@
 /**
- * Dunkel Schlicht – Hell/Dunkel-Umschalter
+ * WX Easy Template – Hell/Dunkel-Umschalter
  *
  * Ohne gespeicherte Wahl folgt das Design dem Standard aus dem Customizer
  * (bei „Automatisch“ der Geräteeinstellung – auch live, wenn sie sich ändert).

@@ -9,21 +9,26 @@ Bei einem Update bietet WordPress an, die vorhandene Version zu ersetzen. Die Ei
 
 | Paket | Art | Version | Datei |
 |---|---|---|---|
-| [einfaches-template-wx](#einfaches-template-wx) | Theme | 1.9.0 | `einfaches-template-wx.zip` |
+| [WX Easy Template](#wx-easy-template) | Theme | 1.10.0 | `wx-easy-template.zip` |
 | [LSV Flugplatz](#lsv-flugplatz) | Theme | 1.2.0 | `lsv-flugplatz.zip` |
-| [Einfacher Kalender](#einfacher-kalender) | Plugin | 1.3.1 | `einfacher-kalender-wx.zip` |
-| [Soft Blur Lightbox](#soft-blur-lightbox) | Plugin | 1.0.0 | `soft-blur-lightbox-wx.zip` |
-| [Webcam Archiv](#webcam-archiv) | Plugin | 1.4.0 | `webcam-archiv-1.4.0.zip` |
+| [WX Easy Calendar](#wx-easy-calendar) | Plugin | 1.4.0 | `wx-easy-calendar.zip` |
+| [WX Lightbox](#wx-lightbox) | Plugin | 1.1.0 | `wx-lightbox.zip` |
+| [WX Webcam Archive](#wx-webcam-archive) | Plugin | 1.5.0 | `wx-webcam-archive-1.5.0.zip` |
 | [LSV Wetter am Platz](#lsv-wetter-am-platz) | Plugin | 1.1.0 | `lsv-wetter-plugin.zip` |
-| [WP Komplett-Backup & Umzug](#wp-komplett-backup--umzug) | Plugin | 1.0.0 | `wp-komplett-backup.zip` |
+| [WX Easy Backup](#wx-easy-backup) | Plugin | 1.1.0 | `wx-easy-backup.zip` |
 
 Alle Pakete benötigen PHP 7.4 oder neuer.
 
+**Umstieg von den alten Namen:** Fünf Pakete hießen früher anders (einfaches-template-wx, Einfacher Kalender, Soft Blur Lightbox, Webcam Archiv, WP Komplett-Backup & Umzug). WordPress behandelt die neuen Pakete als eigenständige Plugins bzw. als eigenes Theme, ein Update ersetzt die alte Version also nicht automatisch. Alle Einstellungen und Daten bleiben trotzdem erhalten:
+
+1. Neues Paket hochladen und aktivieren. Ein Plugin schaltet seine alte Version dabei selbst ab und übernimmt deren Einstellungen und Daten. Das Theme übernimmt beim ersten Aktivieren die Customizer-Einstellungen, Menüs, Logo und das zusätzliche CSS.
+2. Danach die alte Version unter *Plugins* bzw. *Design → Themes* löschen, **während die neue aktiv ist**. Bei Webcam Archiv und Soft Blur Lightbox verhindert die neue Version dabei, dass die alte beim Löschen die gemeinsamen Daten entfernt.
+
 ---
 
-## einfaches-template-wx
+## WX Easy Template
 
-Schlichtes Theme mit Logo oben rechts, zentriertem Hauptmenü mit gleitenden Untermenüs und einem Footer-Menü für Datenschutz und Impressum. Die Plugins *Einfacher Kalender* und *Soft Blur Lightbox* sind bereits eingebaut.
+Schlichtes Theme mit Logo oben rechts, zentriertem Hauptmenü mit gleitenden Untermenüs und einem Footer-Menü für Datenschutz und Impressum. Die Plugins *WX Easy Calendar* und *WX Lightbox* sind bereits eingebaut.
 
 - **Farbschemata:** Marineblau, Petrol, Waldgrün, Bordeaux, Aubergine, Graphit & Bernstein oder eigene Farben (zwei Hintergründe und eine Akzentfarbe, der Rest wird automatisch passend berechnet)
 - **Hell/Dunkel:** automatisch nach Geräteeinstellung, fest hell oder fest dunkel; optional ein Umschalter für Besucher und ein eigenes Logo für das helle Design
@@ -35,7 +40,7 @@ Einstellungen: *Design → Customizer* (Abschnitte „Farbschema“, „Typograf
 
 Kalender und Lightbox funktionieren wie die einzelnen Plugins (gleiche Shortcodes und Einstellungen). Sind die Plugins zusätzlich aktiv, übernehmen sie die Aufgabe; sie können dann deaktiviert werden.
 
-Der Quellcode liegt entpackt unter [`themes/einfaches-template-wx/`](themes/einfaches-template-wx/).
+Der Quellcode liegt entpackt unter [`themes/wx-easy-template/`](themes/wx-easy-template/).
 
 ## LSV Flugplatz
 
@@ -48,7 +53,7 @@ Eigenständiges Theme für lsv-vilsbiburg.de im Stil der Wetterseite wetter.lsv-
 
 Einstellungen: *Design → Customizer → „LSV Kopf- & Fußzeile“* (Kürzel, Titel, Unterzeile, Button oben rechts, Fußzeilentext, Adresse der Wetterseite).
 
-## Einfacher Kalender
+## WX Easy Calendar
 
 Schlanker Terminkalender mit Kategorien und den Ansichten Liste, Monat und Jahr.
 
@@ -66,7 +71,7 @@ Shortcodes:
 [termine_liste anzahl="5"]                   die nächsten Termine, z. B. für die Seitenleiste
 ```
 
-## Soft Blur Lightbox
+## WX Lightbox
 
 Vergrößert Bilder beim Anklicken; der Hintergrund wird dabei sanft weichgezeichnet.
 
@@ -78,7 +83,7 @@ Vergrößert Bilder beim Anklicken; der Hintergrund wird dabei sanft weichgezeic
 Einstellungen: *Einstellungen → Lightbox* (u. a. Stärke der Unschärfe).
 Manuell nutzbar mit `data-lightbox` an Links, ausschließen mit `class="no-lightbox"`.
 
-## Webcam Archiv
+## WX Webcam Archive
 
 Speichert Webcam-Bilder automatisch und macht sie über einen Kalender wieder abrufbar.
 
@@ -90,7 +95,7 @@ Speichert Webcam-Bilder automatisch und macht sie über einen Kalender wieder ab
 - Teilbare Links auf einen bestimmten Tag und eine bestimmte Kamera
 - Farben im Backend anpassbar (Schemas LSV-Blau, Hell, Anthrazit, Grün)
 
-Einstellungen: *Einstellungen → Webcam Archiv*.
+Einstellungen: *Einstellungen → WX Webcam Archive*.
 
 ```
 [webcam_archiv]                                   Archiv mit allen Kameras
@@ -120,7 +125,7 @@ Aktuell [lsv_wind_komplett], QNH [lsv_qnh]
 
 Die vollständige Liste der Einzelwerte steht in der `readme.txt` des Plugins.
 
-## WP Komplett-Backup & Umzug
+## WX Easy Backup
 
 Sichert eine komplette WordPress-Seite in eine einzige Datei und spielt sie auf demselben oder einem anderen Server wieder ein.
 
@@ -132,22 +137,22 @@ Sichert eine komplette WordPress-Seite in eine einzige Datei und spielt sie auf 
 - `wp-config.php` und `.htaccess` des Zielservers werden nie überschrieben
 - Das Backup ist eine normale `.tar`-Datei und lässt sich auch mit 7-Zip oder WinRAR öffnen
 
-Bedienung: *Werkzeuge → Komplett-Backup*.
+Bedienung: *Werkzeuge → WX Easy Backup*. Backups der alten Version „WP Komplett-Backup & Umzug“ lassen sich weiterhin einspielen.
 
 **Kurzanleitung: Seite auf einen anderen Server umziehen**
 
-1. Auf der alten Seite das Plugin installieren, unter *Werkzeuge → Komplett-Backup* auf „Backup jetzt erstellen“ klicken und die `.tar`-Datei herunterladen.
+1. Auf der alten Seite das Plugin installieren, unter *Werkzeuge → WX Easy Backup* auf „Backup jetzt erstellen“ klicken und die `.tar`-Datei herunterladen.
 2. Auf dem neuen Server WordPress frisch installieren (Tabellen-Präfix beliebig) und dieses Plugin installieren und aktivieren.
-3. Unter *Werkzeuge → Komplett-Backup* die `.tar`-Datei hochladen. Alternativ per FTP nach `wp-content/wpkb-backups/` kopieren.
+3. Unter *Werkzeuge → WX Easy Backup* die `.tar`-Datei hochladen. Alternativ per FTP nach `wp-content/wpkb-backups/` kopieren.
 4. Beim Backup auf „Wiederherstellen“ klicken, die Bestandteile wählen und bestätigen. Das Fenster bis zum Ende geöffnet lassen.
 5. Mit den Zugangsdaten der **alten** Seite anmelden und unter *Einstellungen → Permalinks* einmal speichern.
 
-Für sehr große Seiten per WP-CLI:
+Für sehr große Seiten per WP-CLI (der alte Befehl `wp komplett-backup` funktioniert weiterhin):
 
 ```
-wp komplett-backup create                 Backup erstellen (--no-db, --no-content, --no-core, --exclude=…)
-wp komplett-backup list                   vorhandene Backups anzeigen
-wp komplett-backup restore <datei>        Backup einspielen (--no-db, --no-files, --no-core, --yes)
+wp wx-easy-backup create                  Backup erstellen (--no-db, --no-content, --no-core, --exclude=…)
+wp wx-easy-backup list                    vorhandene Backups anzeigen
+wp wx-easy-backup restore <datei>         Backup einspielen (--no-db, --no-files, --no-core, --yes)
 ```
 
 Hinweise: Das Backup enthält die `wp-config.php` der alten Seite mit den Datenbank-Zugangsdaten, also vertraulich behandeln. Unter nginx schützt die mitgelieferte `.htaccess` den Backup-Ordner nicht (Abhilfe siehe `readme.txt` im Plugin). Multisite-Netzwerke werden nicht wiederhergestellt. Den ersten Umzug am besten auf einer Testseite ausprobieren.

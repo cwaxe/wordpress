@@ -1,6 +1,6 @@
 <?php
 /**
- * Integrierter Kalender, basierend auf Einfacher Kalender 1.3.1.
+ * Integrierter Kalender, basierend auf WX Easy Calendar 1.4.0.
  * Lizenz: GPL-2.0-or-later.
  * @package Dunkel_Schlicht
  */

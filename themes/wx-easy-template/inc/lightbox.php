@@ -1,6 +1,6 @@
 <?php
 /**
- * Integrierte Bildansicht, basierend auf Soft Blur Lightbox 1.0.0.
+ * Integrierte Bildansicht, basierend auf WX Lightbox 1.1.0.
  * Lizenz: GPL-2.0-or-later.
  * @package Dunkel_Schlicht
  */
@@ -88,12 +88,12 @@ function sbl_enqueue_assets() {
 		'group'   => (bool) $s['group'],
 		'caption' => (bool) $s['caption'],
 		'i18n'    => array(
-			'dialog'  => __( 'Bildansicht', 'dunkel-schlicht' ),
-			'close'   => __( 'Schließen (Esc)', 'dunkel-schlicht' ),
-			'prev'    => __( 'Vorheriges Bild', 'dunkel-schlicht' ),
-			'next'    => __( 'Nächstes Bild', 'dunkel-schlicht' ),
+			'dialog'  => __( 'Bildansicht', 'wx-easy-template' ),
+			'close'   => __( 'Schließen (Esc)', 'wx-easy-template' ),
+			'prev'    => __( 'Vorheriges Bild', 'wx-easy-template' ),
+			'next'    => __( 'Nächstes Bild', 'wx-easy-template' ),
 			/* translators: 1: aktuelles Bild, 2: Anzahl Bilder */
-			'counter' => __( '%1$s / %2$s', 'dunkel-schlicht' ),
+			'counter' => __( '%1$s / %2$s', 'wx-easy-template' ),
 		),
 	);
 
@@ -135,8 +135,8 @@ function sbl_sanitize_settings( $input ) {
 add_action( 'admin_menu', __NAMESPACE__ . '\\sbl_add_settings_page' );
 function sbl_add_settings_page() {
 	add_options_page(
-		__( 'Soft Blur Lightbox', 'dunkel-schlicht' ),
-		__( 'Lightbox', 'dunkel-schlicht' ),
+		__( 'WX Lightbox', 'wx-easy-template' ),
+		__( 'Lightbox', 'wx-easy-template' ),
 		'manage_options',
 		'soft-blur-lightbox',
 		__NAMESPACE__ . '\\sbl_render_settings_page'
@@ -151,36 +151,36 @@ function sbl_render_settings_page() {
 	$name = SBL_OPTION;
 	?>
 	<div class="wrap">
-		<h1><?php esc_html_e( 'Soft Blur Lightbox', 'dunkel-schlicht' ); ?></h1>
+		<h1><?php esc_html_e( 'WX Lightbox', 'wx-easy-template' ); ?></h1>
 		<form method="post" action="options.php">
 			<?php settings_fields( 'sbl_settings_group' ); ?>
 			<table class="form-table" role="presentation">
 				<tr>
-					<th scope="row"><label for="sbl-blur"><?php esc_html_e( 'Weichzeichner-Stärke', 'dunkel-schlicht' ); ?></label></th>
+					<th scope="row"><label for="sbl-blur"><?php esc_html_e( 'Weichzeichner-Stärke', 'wx-easy-template' ); ?></label></th>
 					<td>
 						<input type="range" id="sbl-blur" name="<?php echo esc_attr( $name ); ?>[blur]" min="0" max="30" step="1" value="<?php echo esc_attr( $s['blur'] ); ?>" oninput="this.nextElementSibling.value=this.value+' px'">
 						<output><?php echo esc_html( $s['blur'] ); ?> px</output>
-						<p class="description"><?php esc_html_e( '4–10 px wirkt „leicht verschwommen“, höhere Werte machen den Hintergrund unkenntlich.', 'dunkel-schlicht' ); ?></p>
+						<p class="description"><?php esc_html_e( '4–10 px wirkt „leicht verschwommen“, höhere Werte machen den Hintergrund unkenntlich.', 'wx-easy-template' ); ?></p>
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><label for="sbl-opacity"><?php esc_html_e( 'Abdunklung', 'dunkel-schlicht' ); ?></label></th>
+					<th scope="row"><label for="sbl-opacity"><?php esc_html_e( 'Abdunklung', 'wx-easy-template' ); ?></label></th>
 					<td>
 						<input type="range" id="sbl-opacity" name="<?php echo esc_attr( $name ); ?>[opacity]" min="0" max="100" step="5" value="<?php echo esc_attr( $s['opacity'] ); ?>" oninput="this.nextElementSibling.value=this.value+' %'">
 						<output><?php echo esc_html( $s['opacity'] ); ?> %</output>
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><label for="sbl-color"><?php esc_html_e( 'Farbe der Abdunklung', 'dunkel-schlicht' ); ?></label></th>
+					<th scope="row"><label for="sbl-color"><?php esc_html_e( 'Farbe der Abdunklung', 'wx-easy-template' ); ?></label></th>
 					<td><input type="color" id="sbl-color" name="<?php echo esc_attr( $name ); ?>[color]" value="<?php echo esc_attr( $s['color'] ); ?>"></td>
 				</tr>
 				<tr>
-					<th scope="row"><?php esc_html_e( 'Verhalten', 'dunkel-schlicht' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Verhalten', 'wx-easy-template' ); ?></th>
 					<td>
 						<fieldset>
-							<label><input type="checkbox" name="<?php echo esc_attr( $name ); ?>[auto]" value="1" <?php checked( $s['auto'] ); ?>> <?php esc_html_e( 'Alle Links auf Bilddateien automatisch in der Lightbox öffnen', 'dunkel-schlicht' ); ?></label><br>
-							<label><input type="checkbox" name="<?php echo esc_attr( $name ); ?>[group]" value="1" <?php checked( $s['group'] ); ?>> <?php esc_html_e( 'Bilder einer Galerie bzw. eines Beitrags durchblättern', 'dunkel-schlicht' ); ?></label><br>
-							<label><input type="checkbox" name="<?php echo esc_attr( $name ); ?>[caption]" value="1" <?php checked( $s['caption'] ); ?>> <?php esc_html_e( 'Bildunterschriften anzeigen', 'dunkel-schlicht' ); ?></label>
+							<label><input type="checkbox" name="<?php echo esc_attr( $name ); ?>[auto]" value="1" <?php checked( $s['auto'] ); ?>> <?php esc_html_e( 'Alle Links auf Bilddateien automatisch in der Lightbox öffnen', 'wx-easy-template' ); ?></label><br>
+							<label><input type="checkbox" name="<?php echo esc_attr( $name ); ?>[group]" value="1" <?php checked( $s['group'] ); ?>> <?php esc_html_e( 'Bilder einer Galerie bzw. eines Beitrags durchblättern', 'wx-easy-template' ); ?></label><br>
+							<label><input type="checkbox" name="<?php echo esc_attr( $name ); ?>[caption]" value="1" <?php checked( $s['caption'] ); ?>> <?php esc_html_e( 'Bildunterschriften anzeigen', 'wx-easy-template' ); ?></label>
 						</fieldset>
 					</td>
 				</tr>
@@ -188,12 +188,12 @@ function sbl_render_settings_page() {
 			<?php submit_button(); ?>
 		</form>
 
-		<h2><?php esc_html_e( 'So funktioniert’s', 'dunkel-schlicht' ); ?></h2>
+		<h2><?php esc_html_e( 'So funktioniert’s', 'wx-easy-template' ); ?></h2>
 		<ul style="list-style:disc;padding-left:1.5em">
-			<li><?php esc_html_e( 'Bild- oder Galerie-Block: „Link zu“ → „Mediendatei“ auswählen.', 'dunkel-schlicht' ); ?></li>
-			<li><?php echo wp_kses_post( __( 'Einzelne Links manuell aktivieren: <code>data-lightbox</code> oder Klasse <code>lightbox</code>. Eigene Gruppe: <code>data-lightbox="reise"</code>.', 'dunkel-schlicht' ) ); ?></li>
-			<li><?php echo wp_kses_post( __( 'Ausschließen: Klasse <code>no-lightbox</code> am Link oder an einem Eltern-Element.', 'dunkel-schlicht' ) ); ?></li>
-			<li><?php echo wp_kses_post( __( 'Eigene Bildunterschrift: <code>data-caption="…"</code> am Link.', 'dunkel-schlicht' ) ); ?></li>
+			<li><?php esc_html_e( 'Bild- oder Galerie-Block: „Link zu“ → „Mediendatei“ auswählen.', 'wx-easy-template' ); ?></li>
+			<li><?php echo wp_kses_post( __( 'Einzelne Links manuell aktivieren: <code>data-lightbox</code> oder Klasse <code>lightbox</code>. Eigene Gruppe: <code>data-lightbox="reise"</code>.', 'wx-easy-template' ) ); ?></li>
+			<li><?php echo wp_kses_post( __( 'Ausschließen: Klasse <code>no-lightbox</code> am Link oder an einem Eltern-Element.', 'wx-easy-template' ) ); ?></li>
+			<li><?php echo wp_kses_post( __( 'Eigene Bildunterschrift: <code>data-caption="…"</code> am Link.', 'wx-easy-template' ) ); ?></li>
 		</ul>
 	</div>
 	<?php

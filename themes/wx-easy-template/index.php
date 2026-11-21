@@ -13,13 +13,13 @@ if ( $dunkel_is_news ) :
 	$dunkel_posts_page = (int) get_option( 'page_for_posts' );
 	$dunkel_news_title = ! is_front_page() && $dunkel_posts_page ? get_the_title( $dunkel_posts_page ) : '';
 	?>
-	<h1 class="page-title"><?php echo esc_html( $dunkel_news_title ?: __( 'Aktuelles', 'dunkel-schlicht' ) ); ?></h1>
+	<h1 class="page-title"><?php echo esc_html( $dunkel_news_title ?: __( 'Aktuelles', 'wx-easy-template' ) ); ?></h1>
 	<?php
 elseif ( is_archive() ) :
 	the_archive_title( '<h1 class="page-title">', '</h1>' );
 elseif ( is_search() ) :
 	/* translators: %s: Suchbegriff */
-	echo '<h1 class="page-title">' . sprintf( esc_html__( 'Suche: %s', 'dunkel-schlicht' ), esc_html( get_search_query() ) ) . '</h1>';
+	echo '<h1 class="page-title">' . sprintf( esc_html__( 'Suche: %s', 'wx-easy-template' ), esc_html( get_search_query() ) ) . '</h1>';
 endif;
 
 if ( have_posts() ) :
@@ -41,7 +41,7 @@ if ( have_posts() ) :
 			<?php endif; ?>
 
 			<?php if ( $dunkel_is_news ) : ?>
-				<?php $dunkel_post_title = get_the_title() ?: __( 'Beitrag ohne Titel', 'dunkel-schlicht' ); ?>
+				<?php $dunkel_post_title = get_the_title() ?: __( 'Beitrag ohne Titel', 'wx-easy-template' ); ?>
 				<h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php echo esc_html( $dunkel_post_title ); ?></a></h2>
 			<?php else : ?>
 				<?php the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '">', '</a></h2>' ); ?>
@@ -53,7 +53,7 @@ if ( have_posts() ) :
 
 			<div class="entry-content"><?php the_excerpt(); ?></div>
 			<a class="read-more" href="<?php the_permalink(); ?>">
-				<?php esc_html_e( 'Weiterlesen →', 'dunkel-schlicht' ); ?>
+				<?php esc_html_e( 'Weiterlesen →', 'wx-easy-template' ); ?>
 				<?php if ( $dunkel_is_news ) : ?>
 					<span class="screen-reader-text"><?php echo esc_html( $dunkel_post_title ); ?></span>
 				<?php endif; ?>
@@ -77,11 +77,11 @@ if ( have_posts() ) :
 else :
 	?>
 	<?php if ( $dunkel_is_news ) : ?>
-		<h2><?php esc_html_e( 'Nichts gefunden', 'dunkel-schlicht' ); ?></h2>
+		<h2><?php esc_html_e( 'Nichts gefunden', 'wx-easy-template' ); ?></h2>
 	<?php else : ?>
-		<h1><?php esc_html_e( 'Nichts gefunden', 'dunkel-schlicht' ); ?></h1>
+		<h1><?php esc_html_e( 'Nichts gefunden', 'wx-easy-template' ); ?></h1>
 	<?php endif; ?>
-	<p><?php esc_html_e( 'Hier gibt es noch keine Inhalte.', 'dunkel-schlicht' ); ?></p>
+	<p><?php esc_html_e( 'Hier gibt es noch keine Inhalte.', 'wx-easy-template' ); ?></p>
 	<?php get_search_form(); ?>
 	<?php
 endif;

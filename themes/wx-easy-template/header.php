@@ -15,17 +15,17 @@
 
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<a class="skip-link screen-reader-text" href="#inhalt"><?php esc_html_e( 'Zum Inhalt springen', 'dunkel-schlicht' ); ?></a>
+<a class="skip-link screen-reader-text" href="#inhalt"><?php esc_html_e( 'Zum Inhalt springen', 'wx-easy-template' ); ?></a>
 
 <header class="site-header">
 	<div class="header-inner">
 
 		<button class="menu-toggle" aria-controls="hauptmenue" aria-expanded="false">
 			<span></span>
-			<span class="screen-reader-text"><?php esc_html_e( 'Menü', 'dunkel-schlicht' ); ?></span>
+			<span class="screen-reader-text"><?php esc_html_e( 'Menü', 'wx-easy-template' ); ?></span>
 		</button>
 
-		<nav id="hauptmenue" class="main-navigation" aria-label="<?php esc_attr_e( 'Hauptmenü', 'dunkel-schlicht' ); ?>">
+		<nav id="hauptmenue" class="main-navigation" aria-label="<?php esc_attr_e( 'Hauptmenü', 'wx-easy-template' ); ?>">
 			<?php
 			wp_nav_menu(
 				array(

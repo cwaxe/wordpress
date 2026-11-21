@@ -36,7 +36,7 @@ while ( have_posts() ) :
 			the_content();
 			wp_link_pages(
 				array(
-					'before' => '<nav class="page-links">' . esc_html__( 'Seiten:', 'dunkel-schlicht' ),
+					'before' => '<nav class="page-links">' . esc_html__( 'Seiten:', 'wx-easy-template' ),
 					'after'  => '</nav>',
 				)
 			);

@@ -1,6 +1,6 @@
 <?php
 /**
- * einfaches-template-wx – Funktionen
+ * WX Easy Template – Funktionen
  *
  * @package Dunkel_Schlicht
  */
@@ -9,7 +9,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'DUNKEL_VERSION', '1.9.0' );
+define( 'DUNKEL_VERSION', '1.10.0' );
+
+/**
+ * Übernimmt beim ersten Aktivieren die Customizer-Einstellungen (Farben,
+ * Schriften, Logo, Menüs, zusätzliches CSS) der Vorgänger-Version, die im
+ * Ordner „dunkel-schlicht“ installiert war.
+ */
+function dunkel_import_legacy_mods() {
+	if ( get_option( 'wx_easy_template_legacy_imported' ) ) {
+		return;
+	}
+	update_option( 'wx_easy_template_legacy_imported', 1, false );
+	$legacy = get_option( 'theme_mods_dunkel-schlicht' );
+	if ( ! is_array( $legacy ) || ! $legacy ) {
+		return;
+	}
+	$key     = 'theme_mods_' . get_option( 'stylesheet' );
+	$current = get_option( $key );
+	update_option( $key, array_merge( is_array( $current ) ? $current : array(), $legacy ) );
+}
+add_action( 'after_switch_theme', 'dunkel_import_legacy_mods' );
 
 // Aktive Einzelplugins übernehmen ihre bisherigen Aufgaben bis zur Deaktivierung.
 if ( ! function_exists( 'ek_register_post_type' ) ) {
@@ -23,7 +43,7 @@ if ( ! function_exists( 'sbl_enqueue_assets' ) ) {
  * Theme-Unterstützung und Menüs registrieren.
  */
 function dunkel_setup() {
-	load_theme_textdomain( 'dunkel-schlicht', get_template_directory() . '/languages' );
+	load_theme_textdomain( 'wx-easy-template', get_template_directory() . '/languages' );
 
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'automatic-feed-links' );
@@ -46,8 +66,8 @@ function dunkel_setup() {
 
 	register_nav_menus(
 		array(
-			'primary' => __( 'Hauptmenü (oben mittig)', 'dunkel-schlicht' ),
-			'footer'  => __( 'Footer-Menü (Datenschutz & Impressum)', 'dunkel-schlicht' ),
+			'primary' => __( 'Hauptmenü (oben mittig)', 'wx-easy-template' ),
+			'footer'  => __( 'Footer-Menü (Datenschutz & Impressum)', 'wx-easy-template' ),
 		)
 	);
 }
@@ -94,8 +114,8 @@ function dunkel_scripts() {
 		'dunkelMode',
 		array(
 			'fallback' => dunkel_default_mode(),
-			'toLight'  => __( 'Zum hellen Design wechseln', 'dunkel-schlicht' ),
-			'toDark'   => __( 'Zum dunklen Design wechseln', 'dunkel-schlicht' ),
+			'toLight'  => __( 'Zum hellen Design wechseln', 'wx-easy-template' ),
+			'toDark'   => __( 'Zum dunklen Design wechseln', 'wx-easy-template' ),
 		)
 	);
 
@@ -103,8 +123,8 @@ function dunkel_scripts() {
 		'dunkel-navigation',
 		'dunkelNav',
 		array(
-			'expand'   => __( 'Untermenü öffnen', 'dunkel-schlicht' ),
-			'collapse' => __( 'Untermenü schließen', 'dunkel-schlicht' ),
+			'expand'   => __( 'Untermenü öffnen', 'wx-easy-template' ),
+			'collapse' => __( 'Untermenü schließen', 'wx-easy-template' ),
 		)
 	);
 
@@ -123,12 +143,12 @@ function dunkel_footer_fallback() {
 
 	$privacy_id = (int) get_option( 'wp_page_for_privacy_policy' );
 	if ( $privacy_id && 'publish' === get_post_status( $privacy_id ) ) {
-		$links[] = '<li><a href="' . esc_url( get_permalink( $privacy_id ) ) . '">' . esc_html__( 'Datenschutz', 'dunkel-schlicht' ) . '</a></li>';
+		$links[] = '<li><a href="' . esc_url( get_permalink( $privacy_id ) ) . '">' . esc_html__( 'Datenschutz', 'wx-easy-template' ) . '</a></li>';
 	}
 
 	$imprint = get_page_by_path( 'impressum' );
 	if ( $imprint && 'publish' === $imprint->post_status ) {
-		$links[] = '<li><a href="' . esc_url( get_permalink( $imprint ) ) . '">' . esc_html__( 'Impressum', 'dunkel-schlicht' ) . '</a></li>';
+		$links[] = '<li><a href="' . esc_url( get_permalink( $imprint ) ) . '">' . esc_html__( 'Impressum', 'wx-easy-template' ) . '</a></li>';
 	}
 
 	if ( $links ) {
@@ -287,7 +307,7 @@ function dunkel_mode_toggle() {
 		return;
 	}
 	?>
-	<button type="button" class="mode-toggle" aria-label="<?php esc_attr_e( 'Design wechseln', 'dunkel-schlicht' ); ?>">
+	<button type="button" class="mode-toggle" aria-label="<?php esc_attr_e( 'Design wechseln', 'wx-easy-template' ); ?>">
 		<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
 		<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.6A8.2 8.2 0 0 1 9.4 4a8.2 8.2 0 1 0 10.6 10.6Z"/></svg>
 	</button>
@@ -307,31 +327,31 @@ function dunkel_mode_toggle() {
 function dunkel_color_schemes() {
 	return array(
 		'marine'    => array(
-			'label'  => __( 'Marineblau', 'dunkel-schlicht' ),
+			'label'  => __( 'Marineblau', 'wx-easy-template' ),
 			'colors' => array( '#0b1628', '#84a4dc', '#f7f9fc', '#1f3c70' ),
 		),
 		'petrol'    => array(
-			'label'  => __( 'Petrol', 'dunkel-schlicht' ),
+			'label'  => __( 'Petrol', 'wx-easy-template' ),
 			'colors' => array( '#0a1d20', '#6cc4c4', '#f5fafa', '#0f5e63' ),
 		),
 		'wald'      => array(
-			'label'  => __( 'Waldgrün', 'dunkel-schlicht' ),
+			'label'  => __( 'Waldgrün', 'wx-easy-template' ),
 			'colors' => array( '#0d1a12', '#8fc79c', '#f6faf6', '#2a5c38' ),
 		),
 		'bordeaux'  => array(
-			'label'  => __( 'Bordeaux', 'dunkel-schlicht' ),
+			'label'  => __( 'Bordeaux', 'wx-easy-template' ),
 			'colors' => array( '#1c0d12', '#e591a6', '#fcf7f8', '#7a2338' ),
 		),
 		'aubergine' => array(
-			'label'  => __( 'Aubergine', 'dunkel-schlicht' ),
+			'label'  => __( 'Aubergine', 'wx-easy-template' ),
 			'colors' => array( '#160f22', '#b9a0e8', '#f9f7fc', '#4e3487' ),
 		),
 		'graphit'   => array(
-			'label'  => __( 'Graphit & Bernstein', 'dunkel-schlicht' ),
+			'label'  => __( 'Graphit & Bernstein', 'wx-easy-template' ),
 			'colors' => array( '#141517', '#e0b45c', '#f7f7f8', '#855a10' ),
 		),
 		'custom'    => array(
-			'label'  => __( 'Eigenes Farbschema', 'dunkel-schlicht' ),
+			'label'  => __( 'Eigenes Farbschema', 'wx-easy-template' ),
 			'colors' => array( '#0b1628', '#84a4dc', '#f7f9fc', '#1f3c70' ),
 		),
 	);
@@ -530,18 +550,18 @@ function dunkel_sanitize_mode( $value ) {
 function dunkel_fonts() {
 	return array(
 		'system' => array(
-			'label' => __( 'Systemschrift', 'dunkel-schlicht' ),
-			'desc'  => __( 'Schlicht, lädt nichts nach', 'dunkel-schlicht' ),
+			'label' => __( 'Systemschrift', 'wx-easy-template' ),
+			'desc'  => __( 'Schlicht, lädt nichts nach', 'wx-easy-template' ),
 			'stack' => '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 		),
 		'arial' => array(
-			'label' => __( 'Arial', 'dunkel-schlicht' ),
-			'desc'  => __( 'Klassisch, lädt nichts nach', 'dunkel-schlicht' ),
+			'label' => __( 'Arial', 'wx-easy-template' ),
+			'desc'  => __( 'Klassisch, lädt nichts nach', 'wx-easy-template' ),
 			'stack' => 'Arial, Helvetica, sans-serif',
 		),
 		'inter' => array(
-			'label' => __( 'Inter', 'dunkel-schlicht' ),
-			'desc'  => __( 'Modern und sachlich', 'dunkel-schlicht' ),
+			'label' => __( 'Inter', 'wx-easy-template' ),
+			'desc'  => __( 'Modern und sachlich', 'wx-easy-template' ),
 			'stack' => '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 			'family' => 'Inter',
 			'files' => array(
@@ -552,8 +572,8 @@ function dunkel_fonts() {
 			),
 		),
 		'work-sans' => array(
-			'label' => __( 'Work Sans', 'dunkel-schlicht' ),
-			'desc'  => __( 'Freundlich und offen', 'dunkel-schlicht' ),
+			'label' => __( 'Work Sans', 'wx-easy-template' ),
+			'desc'  => __( 'Freundlich und offen', 'wx-easy-template' ),
 			'stack' => '"Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 			'family' => 'Work Sans',
 			'files' => array(
@@ -564,8 +584,8 @@ function dunkel_fonts() {
 			),
 		),
 		'instrument-sans' => array(
-			'label' => __( 'Instrument Sans', 'dunkel-schlicht' ),
-			'desc'  => __( 'Schmal und elegant', 'dunkel-schlicht' ),
+			'label' => __( 'Instrument Sans', 'wx-easy-template' ),
+			'desc'  => __( 'Schmal und elegant', 'wx-easy-template' ),
 			'stack' => '"Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 			'family' => 'Instrument Sans',
 			'files' => array(
@@ -576,8 +596,8 @@ function dunkel_fonts() {
 			),
 		),
 		'poppins' => array(
-			'label' => __( 'Poppins', 'dunkel-schlicht' ),
-			'desc'  => __( 'Geometrisch und rund', 'dunkel-schlicht' ),
+			'label' => __( 'Poppins', 'wx-easy-template' ),
+			'desc'  => __( 'Geometrisch und rund', 'wx-easy-template' ),
 			'stack' => '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 			'family' => 'Poppins',
 			'files' => array(
@@ -588,8 +608,8 @@ function dunkel_fonts() {
 			),
 		),
 		'outfit' => array(
-			'label' => __( 'Outfit', 'dunkel-schlicht' ),
-			'desc'  => __( 'Geometrisch, gut für Überschriften', 'dunkel-schlicht' ),
+			'label' => __( 'Outfit', 'wx-easy-template' ),
+			'desc'  => __( 'Geometrisch, gut für Überschriften', 'wx-easy-template' ),
 			'stack' => '"Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 			'family' => 'Outfit',
 			'files' => array(
@@ -598,18 +618,18 @@ function dunkel_fonts() {
 			),
 		),
 		'georgia' => array(
-			'label' => __( 'Georgia', 'dunkel-schlicht' ),
-			'desc'  => __( 'Klassische Serifenschrift, lädt nichts nach', 'dunkel-schlicht' ),
+			'label' => __( 'Georgia', 'wx-easy-template' ),
+			'desc'  => __( 'Klassische Serifenschrift, lädt nichts nach', 'wx-easy-template' ),
 			'stack' => 'Georgia, "Times New Roman", serif',
 		),
 		'noto-serif' => array(
-			'label' => __( 'Noto Serif', 'dunkel-schlicht' ),
-			'desc'  => __( 'Serifen, ruhig und gut lesbar', 'dunkel-schlicht' ),
+			'label' => __( 'Noto Serif', 'wx-easy-template' ),
+			'desc'  => __( 'Serifen, ruhig und gut lesbar', 'wx-easy-template' ),
 			'stack' => '"Noto Serif", Georgia, "Times New Roman", serif',
 		),
 		'lora' => array(
-			'label' => __( 'Lora', 'dunkel-schlicht' ),
-			'desc'  => __( 'Serifen, angenehm für längere Texte', 'dunkel-schlicht' ),
+			'label' => __( 'Lora', 'wx-easy-template' ),
+			'desc'  => __( 'Serifen, angenehm für längere Texte', 'wx-easy-template' ),
 			'stack' => '"Lora", Georgia, "Times New Roman", serif',
 			'family' => 'Lora',
 			'files' => array(
@@ -618,8 +638,8 @@ function dunkel_fonts() {
 			),
 		),
 		'ibm-plex-serif' => array(
-			'label' => __( 'IBM Plex Serif', 'dunkel-schlicht' ),
-			'desc'  => __( 'Serifen, technisch-klar', 'dunkel-schlicht' ),
+			'label' => __( 'IBM Plex Serif', 'wx-easy-template' ),
+			'desc'  => __( 'Serifen, technisch-klar', 'wx-easy-template' ),
 			'stack' => '"IBM Plex Serif", Georgia, "Times New Roman", serif',
 			'family' => 'IBM Plex Serif',
 			'files' => array(
@@ -630,8 +650,8 @@ function dunkel_fonts() {
 			),
 		),
 		'crimson-pro' => array(
-			'label' => __( 'Crimson Pro', 'dunkel-schlicht' ),
-			'desc'  => __( 'Serifen, buchartig', 'dunkel-schlicht' ),
+			'label' => __( 'Crimson Pro', 'wx-easy-template' ),
+			'desc'  => __( 'Serifen, buchartig', 'wx-easy-template' ),
 			'stack' => '"Crimson Pro", Georgia, "Times New Roman", serif',
 			'family' => 'Crimson Pro',
 			'size'  => '112%',
@@ -642,8 +662,8 @@ function dunkel_fonts() {
 			),
 		),
 		'young-serif' => array(
-			'label' => __( 'Young Serif', 'dunkel-schlicht' ),
-			'desc'  => __( 'Kräftige Serifen, nur für Überschriften', 'dunkel-schlicht' ),
+			'label' => __( 'Young Serif', 'wx-easy-template' ),
+			'desc'  => __( 'Kräftige Serifen, nur für Überschriften', 'wx-easy-template' ),
 			'stack' => '"Young Serif", Georgia, "Times New Roman", serif',
 			'family' => 'Young Serif',
 			'files' => array(
@@ -791,7 +811,7 @@ function dunkel_customize_register( $wp_customize ) {
 	$wp_customize->add_section(
 		'dunkel_colors',
 		array(
-			'title'    => __( 'Farbschema', 'dunkel-schlicht' ),
+			'title'    => __( 'Farbschema', 'wx-easy-template' ),
 			'priority' => 29,
 		)
 	);
@@ -815,8 +835,8 @@ function dunkel_customize_register( $wp_customize ) {
 			$wp_customize,
 			'dunkel_color_scheme',
 			array(
-				'label'       => __( 'Farbschema', 'dunkel-schlicht' ),
-				'description' => __( 'Wähle „Eigenes Farbschema“, um zwei Hintergrundfarben und eine gemeinsame Akzentfarbe festzulegen. Das Theme passt Texte, Kacheln und Schaltflächen automatisch an.', 'dunkel-schlicht' ),
+				'label'       => __( 'Farbschema', 'wx-easy-template' ),
+				'description' => __( 'Wähle „Eigenes Farbschema“, um zwei Hintergrundfarben und eine gemeinsame Akzentfarbe festzulegen. Das Theme passt Texte, Kacheln und Schaltflächen automatisch an.', 'wx-easy-template' ),
 				'section'     => 'dunkel_colors',
 				'choices'     => $schemes,
 			)
@@ -839,8 +859,8 @@ function dunkel_customize_register( $wp_customize ) {
 			$wp_customize,
 			'dunkel_accent_color',
 			array(
-				'label'           => __( 'Akzentfarbe des vorgegebenen Schemas überschreiben', 'dunkel-schlicht' ),
-				'description'     => __( 'Gilt im Hell- und Dunkelmodus. Leere das Feld, um die Farben der Vorlage wiederherzustellen.', 'dunkel-schlicht' ),
+				'label'           => __( 'Akzentfarbe des vorgegebenen Schemas überschreiben', 'wx-easy-template' ),
+				'description'     => __( 'Gilt im Hell- und Dunkelmodus. Leere das Feld, um die Farben der Vorlage wiederherzustellen.', 'wx-easy-template' ),
 				'section'         => 'dunkel_colors',
 				'active_callback' => static function ( $control ) use ( $custom_scheme_active ) {
 					return ! $custom_scheme_active( $control );
@@ -850,9 +870,9 @@ function dunkel_customize_register( $wp_customize ) {
 	);
 
 	$color_labels = array(
-		'light'  => __( 'Hintergrund im Hellmodus', 'dunkel-schlicht' ),
-		'dark'   => __( 'Hintergrund im Dunkelmodus', 'dunkel-schlicht' ),
-		'accent' => __( 'Akzentfarbe für beide Modi', 'dunkel-schlicht' ),
+		'light'  => __( 'Hintergrund im Hellmodus', 'wx-easy-template' ),
+		'dark'   => __( 'Hintergrund im Dunkelmodus', 'wx-easy-template' ),
+		'accent' => __( 'Akzentfarbe für beide Modi', 'wx-easy-template' ),
 	);
 
 	foreach ( dunkel_simple_palette_defaults() as $role => $default ) {
@@ -880,7 +900,7 @@ function dunkel_customize_register( $wp_customize ) {
 	$wp_customize->add_section(
 		'dunkel_options',
 		array(
-			'title'    => __( 'Theme-Optionen', 'dunkel-schlicht' ),
+			'title'    => __( 'Theme-Optionen', 'wx-easy-template' ),
 			'priority' => 30,
 		)
 	);
@@ -888,8 +908,8 @@ function dunkel_customize_register( $wp_customize ) {
 	$wp_customize->add_section(
 		'dunkel_typography',
 		array(
-			'title'       => __( 'Typografie', 'dunkel-schlicht' ),
-			'description' => __( 'Alle Schriften sind kostenlos (Open Font License) und liegen im Theme. Es werden keine Daten an Google oder andere Anbieter übertragen.', 'dunkel-schlicht' ),
+			'title'       => __( 'Typografie', 'wx-easy-template' ),
+			'description' => __( 'Alle Schriften sind kostenlos (Open Font License) und liegen im Theme. Es werden keine Daten an Google oder andere Anbieter übertragen.', 'wx-easy-template' ),
 			'priority'    => 31,
 		)
 	);
@@ -909,7 +929,7 @@ function dunkel_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'dunkel_font_body',
 		array(
-			'label'   => __( 'Schrift für Text und Menü', 'dunkel-schlicht' ),
+			'label'   => __( 'Schrift für Text und Menü', 'wx-easy-template' ),
 			'section' => 'dunkel_typography',
 			'type'    => 'select',
 			'choices' => $font_choices,
@@ -926,10 +946,10 @@ function dunkel_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'dunkel_font_heading',
 		array(
-			'label'   => __( 'Schrift für Überschriften', 'dunkel-schlicht' ),
+			'label'   => __( 'Schrift für Überschriften', 'wx-easy-template' ),
 			'section' => 'dunkel_typography',
 			'type'    => 'select',
-			'choices' => array( 'body' => __( 'Wie Text', 'dunkel-schlicht' ) ) + $font_choices,
+			'choices' => array( 'body' => __( 'Wie Text', 'wx-easy-template' ) ) + $font_choices,
 		)
 	);
 
@@ -943,11 +963,11 @@ function dunkel_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'dunkel_font_news',
 		array(
-			'label'       => __( 'Schrift für „Aktuelles“-Beitragstitel', 'dunkel-schlicht' ),
-			'description' => __( 'Titel der Beitragskarten auf der Übersichtsseite.', 'dunkel-schlicht' ),
+			'label'       => __( 'Schrift für „Aktuelles“-Beitragstitel', 'wx-easy-template' ),
+			'description' => __( 'Titel der Beitragskarten auf der Übersichtsseite.', 'wx-easy-template' ),
 			'section'     => 'dunkel_typography',
 			'type'        => 'select',
-			'choices'     => array( 'heading' => __( 'Wie Überschriften', 'dunkel-schlicht' ) ) + $font_choices,
+			'choices'     => array( 'heading' => __( 'Wie Überschriften', 'wx-easy-template' ) ) + $font_choices,
 		)
 	);
 
@@ -962,8 +982,8 @@ function dunkel_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'dunkel_img_radius',
 		array(
-			'label'       => __( 'Abrundung der Bildecken (px)', 'dunkel-schlicht' ),
-			'description' => __( '0 = eckig. Gilt für Beitragsbilder und Bilder im Inhalt.', 'dunkel-schlicht' ),
+			'label'       => __( 'Abrundung der Bildecken (px)', 'wx-easy-template' ),
+			'description' => __( '0 = eckig. Gilt für Beitragsbilder und Bilder im Inhalt.', 'wx-easy-template' ),
 			'section'     => 'dunkel_options',
 			'type'        => 'range',
 			'input_attrs' => array(
@@ -985,8 +1005,8 @@ function dunkel_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'dunkel_logo_height',
 		array(
-			'label'       => __( 'Logohöhe (px)', 'dunkel-schlicht' ),
-			'description' => __( 'Die Kopfzeile passt sich automatisch an. Auf dem Handy wird das Logo höchstens 50 px hoch.', 'dunkel-schlicht' ),
+			'label'       => __( 'Logohöhe (px)', 'wx-easy-template' ),
+			'description' => __( 'Die Kopfzeile passt sich automatisch an. Auf dem Handy wird das Logo höchstens 50 px hoch.', 'wx-easy-template' ),
 			'section'     => 'dunkel_options',
 			'type'        => 'range',
 			'input_attrs' => array(
@@ -1008,8 +1028,8 @@ function dunkel_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'dunkel_content_width',
 		array(
-			'label'       => __( 'Inhaltsbreite (px)', 'dunkel-schlicht' ),
-			'description' => __( 'Maximale Breite des Inhaltsbereichs.', 'dunkel-schlicht' ),
+			'label'       => __( 'Inhaltsbreite (px)', 'wx-easy-template' ),
+			'description' => __( 'Maximale Breite des Inhaltsbereichs.', 'wx-easy-template' ),
 			'section'     => 'dunkel_options',
 			'type'        => 'range',
 			'input_attrs' => array(
@@ -1031,13 +1051,13 @@ function dunkel_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'dunkel_default_mode',
 		array(
-			'label'   => __( 'Standard-Design', 'dunkel-schlicht' ),
+			'label'   => __( 'Standard-Design', 'wx-easy-template' ),
 			'section' => 'dunkel_options',
 			'type'    => 'radio',
 			'choices' => array(
-				'auto'  => __( 'Automatisch (nach Geräteeinstellung)', 'dunkel-schlicht' ),
-				'dark'  => __( 'Immer dunkel', 'dunkel-schlicht' ),
-				'light' => __( 'Immer hell', 'dunkel-schlicht' ),
+				'auto'  => __( 'Automatisch (nach Geräteeinstellung)', 'wx-easy-template' ),
+				'dark'  => __( 'Immer dunkel', 'wx-easy-template' ),
+				'light' => __( 'Immer hell', 'wx-easy-template' ),
 			),
 		)
 	);
@@ -1053,8 +1073,8 @@ function dunkel_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'dunkel_show_toggle',
 		array(
-			'label'       => __( 'Hell/Dunkel-Umschalter im Header anzeigen', 'dunkel-schlicht' ),
-			'description' => __( 'Besucher können das Design selbst wählen; die Wahl wird im Browser gespeichert.', 'dunkel-schlicht' ),
+			'label'       => __( 'Hell/Dunkel-Umschalter im Header anzeigen', 'wx-easy-template' ),
+			'description' => __( 'Besucher können das Design selbst wählen; die Wahl wird im Browser gespeichert.', 'wx-easy-template' ),
 			'section'     => 'dunkel_options',
 			'type'        => 'checkbox',
 		)
@@ -1073,8 +1093,8 @@ function dunkel_customize_register( $wp_customize ) {
 			$wp_customize,
 			'dunkel_logo_light',
 			array(
-				'label'       => __( 'Logo für das helle Design (optional)', 'dunkel-schlicht' ),
-				'description' => __( 'Wird statt des normalen Logos gezeigt, wenn das helle Design aktiv ist.', 'dunkel-schlicht' ),
+				'label'       => __( 'Logo für das helle Design (optional)', 'wx-easy-template' ),
+				'description' => __( 'Wird statt des normalen Logos gezeigt, wenn das helle Design aktiv ist.', 'wx-easy-template' ),
 				'section'     => 'dunkel_options',
 				'mime_type'   => 'image',
 			)

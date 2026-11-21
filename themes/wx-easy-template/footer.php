@@ -8,7 +8,7 @@
 </main>
 
 <footer class="site-footer">
-	<nav class="footer-navigation" aria-label="<?php esc_attr_e( 'Rechtliches', 'dunkel-schlicht' ); ?>">
+	<nav class="footer-navigation" aria-label="<?php esc_attr_e( 'Rechtliches', 'wx-easy-template' ); ?>">
 		<?php
 		wp_nav_menu(
 			array(

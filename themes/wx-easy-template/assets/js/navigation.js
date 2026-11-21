@@ -1,5 +1,5 @@
 /**
- * Dunkel Schlicht – Navigation
+ * WX Easy Template – Navigation
  * - gleitender Indikator unter den Hauptpunkten
  * - Untermenüs per Tastatur/Touch öffnen
  * - mobiles Burger-Menü
