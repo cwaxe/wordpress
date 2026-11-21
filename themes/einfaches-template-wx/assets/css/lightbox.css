@@ -1,0 +1,289 @@
+/*! Soft Blur Lightbox 1.0.0 | GPL-2.0-or-later */
+
+:root {
+	--sbl-blur: 8px;
+	--sbl-bg: rgba(0, 0, 0, 0.35);
+	--sbl-fg: #fff;
+	--sbl-duration: 0.25s;
+}
+
+/* Scrollen der Seite sperren, ohne dass das Layout springt */
+html.sbl-lock,
+html.sbl-lock body {
+	overflow: hidden !important;
+}
+html.sbl-lock body {
+	padding-right: var(--sbl-scrollbar, 0px);
+}
+
+/* Zoom-Cursor auf Bildern, die die Lightbox öffnen */
+a.sbl-trigger img {
+	cursor: zoom-in;
+}
+
+/* ---------- Overlay mit Weichzeichner ---------- */
+
+.sbl-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 2147483000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	padding: clamp(12px, 4vw, 64px);
+	background: var(--sbl-bg);
+	-webkit-backdrop-filter: blur(var(--sbl-blur)) saturate(115%);
+	backdrop-filter: blur(var(--sbl-blur)) saturate(115%);
+	color: var(--sbl-fg);
+	font-family: inherit;
+	opacity: 0;
+	transition: opacity var(--sbl-duration) ease;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.sbl-overlay[hidden] {
+	display: none !important;
+}
+
+.sbl-overlay.sbl-open {
+	opacity: 1;
+}
+
+.sbl-overlay *,
+.sbl-overlay *::before,
+.sbl-overlay *::after {
+	box-sizing: border-box;
+}
+
+.sbl-stage {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+
+.sbl-overlay .sbl-figure {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 100%;
+	max-height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.sbl-overlay .sbl-image {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: min(100%, 1800px);
+	max-height: calc(100vh - 150px);
+	margin: 0;
+	object-fit: contain;
+	border-radius: 6px;
+	box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+	opacity: 0;
+	transform: scale(0.96);
+	transition: opacity 0.3s ease, transform 0.3s ease;
+	user-select: none;
+	-webkit-user-drag: none;
+}
+
+@supports (height: 100dvh) {
+	.sbl-overlay .sbl-image {
+		max-height: calc(100dvh - 150px);
+	}
+}
+
+.sbl-overlay .sbl-image.sbl-ready {
+	opacity: 1;
+	transform: none;
+}
+
+.sbl-overlay .sbl-caption {
+	max-width: 70ch;
+	margin: 14px 0 0;
+	padding: 0;
+	font-size: 0.95rem;
+	line-height: 1.5;
+	text-align: center;
+	color: var(--sbl-fg);
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+}
+
+.sbl-overlay .sbl-caption[hidden] {
+	display: none;
+}
+
+/* ---------- Buttons ---------- */
+
+.sbl-overlay .sbl-btn {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 46px;
+	height: 46px;
+	min-width: 0;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(20, 20, 20, 0.35);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	box-shadow: none;
+	color: var(--sbl-fg);
+	font: inherit;
+	line-height: 1;
+	text-transform: none;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.sbl-overlay .sbl-btn:hover {
+	background: rgba(20, 20, 20, 0.6);
+	transform: scale(1.06);
+}
+
+.sbl-overlay .sbl-btn:focus {
+	outline: none;
+}
+
+.sbl-overlay .sbl-btn:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 3px;
+}
+
+.sbl-overlay .sbl-btn[hidden] {
+	display: none;
+}
+
+.sbl-overlay .sbl-btn svg {
+	width: 22px;
+	height: 22px;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	pointer-events: none;
+}
+
+.sbl-overlay .sbl-close {
+	top: 16px;
+	right: 16px;
+}
+
+.sbl-overlay .sbl-prev,
+.sbl-overlay .sbl-next {
+	top: 50%;
+	margin-top: -23px;
+}
+
+.sbl-overlay .sbl-prev {
+	left: 16px;
+}
+
+.sbl-overlay .sbl-next {
+	right: 16px;
+}
+
+/* ---------- Zähler & Ladeanzeige ---------- */
+
+.sbl-counter {
+	position: absolute;
+	top: 28px;
+	left: 24px;
+	font-size: 0.85rem;
+	letter-spacing: 0.05em;
+	opacity: 0.85;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+}
+
+.sbl-counter[hidden] {
+	display: none;
+}
+
+.sbl-spinner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 36px;
+	height: 36px;
+	margin: -18px 0 0 -18px;
+	border: 3px solid rgba(255, 255, 255, 0.3);
+	border-top-color: #fff;
+	border-radius: 50%;
+	opacity: 0;
+	pointer-events: none;
+	animation: sbl-spin 0.8s linear infinite;
+	transition: opacity 0.2s ease;
+}
+
+.sbl-loading .sbl-spinner {
+	opacity: 1;
+	transition-delay: 0.15s;
+}
+
+@keyframes sbl-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* ---------- Mobil ---------- */
+
+@media (max-width: 600px) {
+	.sbl-overlay .sbl-btn {
+		width: 42px;
+		height: 42px;
+	}
+
+	.sbl-overlay .sbl-prev,
+	.sbl-overlay .sbl-next {
+		top: auto;
+		bottom: 16px;
+		margin-top: 0;
+	}
+
+	.sbl-overlay .sbl-image {
+		max-height: calc(100vh - 180px);
+	}
+
+	@supports (height: 100dvh) {
+		.sbl-overlay .sbl-image {
+			max-height: calc(100dvh - 180px);
+		}
+	}
+}
+
+/* ---------- Fallback für Browser ohne backdrop-filter ---------- */
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+	html.sbl-active body > *:not(.sbl-overlay) {
+		filter: blur(var(--sbl-blur));
+	}
+}
+
+/* ---------- Reduzierte Bewegung ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+	.sbl-overlay,
+	.sbl-overlay .sbl-image,
+	.sbl-overlay .sbl-btn {
+		transition: none !important;
+	}
+
+	.sbl-overlay .sbl-image {
+		transform: none;
+	}
+
+	.sbl-spinner {
+		animation-duration: 2s;
+	}
+}
