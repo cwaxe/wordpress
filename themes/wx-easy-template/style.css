@@ -3,7 +3,7 @@ Theme Name: WX Easy Template
 Theme URI: https://example.com/wx-easy-template
 Author: WX Easy Template
 Description: Ein schlichtes Theme mit wählbaren Farbschemata (Marineblau, Petrol, Waldgrün, Bordeaux, Aubergine, Graphit) in dunklem und hellem Design (automatisch nach Geräteeinstellung oder per Umschalter). Logo oben rechts, zentriertes Hauptmenü mit gleitendem Untermenü und Hover-Indikator, zentriertes Footer-Menü für Datenschutz und Impressum.
-Version: 1.10.0
+Version: 1.10.1
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -542,11 +542,10 @@ button:not(.mode-toggle):not(.menu-toggle):not(.submenu-toggle):hover,
 	opacity: 0;
 	visibility: hidden;
 	transform: translate(-50%, -12px);
-	clip-path: inset(0 0 100% 0 round var(--radius));
+	/* Keine Clip-Maske: sie würde weitere Unterebenen abschneiden. */
 	transition:
 		opacity .3s var(--ease),
 		transform .45s var(--ease),
-		clip-path .45s var(--ease),
 		visibility 0s linear .45s;
 }
 
@@ -556,7 +555,7 @@ button:not(.mode-toggle):not(.menu-toggle):not(.submenu-toggle):hover,
 	opacity: 1;
 	visibility: visible;
 	transform: translate(-50%, 0);
-	clip-path: inset(0 0 0 0 round var(--radius));
+	clip-path: none;
 	transition-delay: 0s;
 }
 
@@ -611,7 +610,7 @@ button:not(.mode-toggle):not(.menu-toggle):not(.submenu-toggle):hover,
 	top: -9px;
 	left: calc(100% + 8px);
 	transform: translateX(-10px);
-	clip-path: inset(0 100% 0 0 round var(--radius));
+	clip-path: none;
 }
 .main-navigation .sub-menu li:hover > .sub-menu,
 .main-navigation .sub-menu li:focus-within > .sub-menu,
@@ -619,7 +618,7 @@ button:not(.mode-toggle):not(.menu-toggle):not(.submenu-toggle):hover,
 	opacity: 1;
 	visibility: visible;
 	transform: none;
-	clip-path: inset(0 0 0 0 round var(--radius));
+	clip-path: none;
 	transition-delay: 0s;
 }
 .main-navigation .sub-menu .menu-item-has-children > a::after {
@@ -723,8 +722,47 @@ button:not(.mode-toggle):not(.menu-toggle):not(.submenu-toggle):hover,
 	}
 	.main-navigation .menu li:hover > .sub-menu,
 	.main-navigation .menu li:focus-within > .sub-menu { max-height: 0; transform: none; clip-path: none; }
-	.main-navigation .menu li.is-open > .sub-menu { max-height: 1000px; transform: none; clip-path: none; }
+	.main-navigation .menu li.is-open > .sub-menu { max-height: none; overflow: visible; transform: none; clip-path: none; }
 	.main-navigation .sub-menu .menu-item-has-children > a::after { display: none; }
+}
+
+/* Version 1.9.2 – ruhige Kaskadenmenüs mit erkennbarem aktivem Pfad */
+@media (min-width: 901px) {
+ .main-navigation .sub-menu { min-width: 238px; padding: 7px; border-radius: 12px; box-shadow: 0 14px 38px rgba(0,0,0,.16); transition: opacity .18s ease, transform .2s ease, visibility 0s linear .2s; }
+ .main-navigation .sub-menu > li { opacity: 1; transform: none; transition: none; }
+ .main-navigation .sub-menu a { padding: 11px 32px 11px 13px; border-radius: 8px; transition: background-color .16s ease, color .16s ease; }
+ .main-navigation .sub-menu a::before { display: none; }
+ .main-navigation .sub-menu a:hover, .main-navigation .sub-menu a:focus-visible,
+ .main-navigation .sub-menu .current-menu-item > a,
+ .main-navigation .sub-menu .current-menu-ancestor > a,
+ .main-navigation .sub-menu .current_page_ancestor > a,
+ .main-navigation .sub-menu li.is-open > a { padding-left: 13px; background: var(--hover-bg); color: var(--heading); }
+ .main-navigation .sub-menu .sub-menu { top: -8px; left: calc(100% + 4px); transform: translateX(-7px); }
+ .main-navigation .sub-menu li:hover > .sub-menu, .main-navigation .sub-menu li:focus-within > .sub-menu, .main-navigation .sub-menu li.is-open > .sub-menu { transform: translateX(0); }
+ .main-navigation .sub-menu li.submenu-flip > .sub-menu { left: auto; right: calc(100% + 4px); transform: translateX(7px); }
+ .main-navigation .sub-menu li.submenu-flip:hover > .sub-menu, .main-navigation .sub-menu li.submenu-flip:focus-within > .sub-menu, .main-navigation .sub-menu li.submenu-flip.is-open > .sub-menu { transform: translateX(0); }
+ .main-navigation .sub-menu .menu-item-has-children > a::after,
+ .main-navigation .sub-menu .page_item_has_children > a::after { right: 15px; transform: translateY(-50%) rotate(-45deg); }
+ .main-navigation .sub-menu li.submenu-flip > a::after { transform: translateY(-50%) rotate(135deg); }
+}
+@media (max-width: 900px) {
+ .main-navigation .menu { padding: 10px 16px 24px; }
+ .main-navigation .menu li { border-bottom: 1px solid var(--line); }
+ .main-navigation .menu li > a { min-width: 0; white-space: normal; padding: 12px 10px; line-height: 1.5; }
+ .main-navigation .menu > li > a { padding: 14px 10px; }
+ .main-navigation .sub-menu, .main-navigation .sub-menu .sub-menu { margin-left: 10px; padding-left: 10px; border-left: 1px solid var(--line); }
+ .main-navigation .sub-menu > li { opacity: 1; transform: none; }
+ .main-navigation .sub-menu li:last-child { border-bottom: 0; }
+ .main-navigation .sub-menu a { padding: 11px 10px; }
+ .main-navigation .sub-menu a:hover, .main-navigation .sub-menu a:focus-visible,
+ .main-navigation .sub-menu .current-menu-item > a,
+ .main-navigation .sub-menu .current-menu-ancestor > a { padding-left: 10px; background: var(--hover-bg); color: var(--heading); }
+ .main-navigation .sub-menu a::before { display: none; }
+ .main-navigation .submenu-toggle { flex: 0 0 40px; width: 40px; height: 40px; border-radius: 8px; background: var(--hover-bg); margin-right: 3px; }
+ .main-navigation .menu li.is-open > .sub-menu { max-height: none; overflow: visible; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .main-navigation .sub-menu, .main-navigation .sub-menu a { transition: none !important; }
 }
 
 /* ---------- Inhalt ---------- */

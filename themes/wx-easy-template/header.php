@@ -32,7 +32,7 @@
 					'theme_location' => 'primary',
 					'container'      => false,
 					'menu_class'     => 'menu',
-					'depth'          => 3,
+					'depth'          => 0,
 					'fallback_cb'    => 'dunkel_primary_fallback',
 				)
 			);

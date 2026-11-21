@@ -73,6 +73,26 @@
 		document.fonts.ready.then( resetIndicator );
 	}
 
+	/* Unterebenen am rechten Bildschirmrand nach links ausrichten. */
+	function positionSubmenus() {
+		if ( mq.matches ) { return; }
+		nav.querySelectorAll( '.sub-menu li.menu-item-has-children, .sub-menu li.page_item_has_children' ).forEach( function ( li ) {
+			var submenu = li.querySelector( ':scope > .sub-menu' );
+			if ( ! submenu ) { return; }
+			li.classList.remove( 'submenu-flip' );
+			var rect = li.getBoundingClientRect();
+			var width = Math.max( submenu.offsetWidth, 238 );
+			var ancestorFlipped = li.parentElement.closest( '.submenu-flip' );
+			if ( ancestorFlipped || rect.right + width + 12 > window.innerWidth ) {
+				if ( rect.left - width > 8 || ancestorFlipped ) { li.classList.add( 'submenu-flip' ); }
+			}
+		} );
+	}
+	window.addEventListener( 'resize', positionSubmenus );
+	nav.addEventListener( 'mouseenter', positionSubmenus, true );
+	nav.addEventListener( 'focusin', positionSubmenus );
+	positionSubmenus();
+
 	/* ---------- Untermenü-Buttons ---------- */
 	var parents = nav.querySelectorAll( '.menu-item-has-children, .page_item_has_children' );
 

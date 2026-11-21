@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'DUNKEL_VERSION', '1.10.0' );
+define( 'DUNKEL_VERSION', '1.10.1' );
 
 /**
  * Übernimmt beim ersten Aktivieren die Customizer-Einstellungen (Farben,
@@ -164,7 +164,7 @@ function dunkel_primary_fallback() {
 	wp_list_pages(
 		array(
 			'title_li' => '',
-			'depth'    => 3,
+			'depth'    => 0,
 		)
 	);
 	echo '</ul>';

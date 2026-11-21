@@ -9,7 +9,7 @@ Bei einem Update bietet WordPress an, die vorhandene Version zu ersetzen. Die Ei
 
 | Paket | Art | Version | Datei |
 |---|---|---|---|
-| [WX Easy Template](#wx-easy-template) | Theme | 1.10.0 | `wx-easy-template-1.10.0.zip` |
+| [WX Easy Template](#wx-easy-template) | Theme | 1.10.1 | `wx-easy-template-1.10.1.zip` |
 | [LSV Flugplatz](#lsv-flugplatz) | Theme | 1.2.0 | `lsv-flugplatz-1.2.0.zip` |
 | [WX Easy Calendar](#wx-easy-calendar) | Plugin | 1.4.0 | `wx-easy-calendar-1.4.0.zip` |
 | [WX Lightbox](#wx-lightbox) | Plugin | 1.1.0 | `wx-lightbox-1.1.0.zip` |
