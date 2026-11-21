@@ -1,13 +1,28 @@
-# Baut bei einem Tag <paket>-v<version> die ZIP-Datei und legt ein Release an.
+# Veröffentlicht jedes Paket, dessen Version noch kein Release hat.
+#
+# Läuft bei jedem Push auf main und lässt sich unter Actions → Release → Run workflow
+# auch von Hand starten. Für jedes Paket in themes/ und plugins/ wird die Version aus
+# dem Kopf gelesen; fehlt das Release <paket>-v<version>, wird die ZIP gebaut und ein
+# Release mit dem Text aus CHANGELOG.md angelegt (das Tag entsteht dabei automatisch).
 name: Release
 
 on:
   push:
-    tags:
-      - '*-v*'
+    branches: [main]
+    paths:
+      - 'themes/**'
+      - 'plugins/**'
+      - 'build.sh'
+      - 'CHANGELOG.md'
+      - '.github/workflows/release.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 jobs:
   release:
@@ -15,35 +30,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Paket und Version aus dem Tag lesen
-        id: tag
-        run: |
-          tag="$GITHUB_REF_NAME"
-          echo "package=${tag%-v*}" >> "$GITHUB_OUTPUT"
-          echo "version=${tag##*-v}" >> "$GITHUB_OUTPUT"
-
-      - name: ZIP bauen
-        run: ./build.sh --expect-version "${{ steps.tag.outputs.version }}" "${{ steps.tag.outputs.package }}"
-
-      - name: Release-Text aus CHANGELOG.md
-        run: |
-          awk -v h="## ${{ steps.tag.outputs.package }} ${{ steps.tag.outputs.version }}" '
-            $0 == h { on = 1; next }
-            on && /^## / { exit }
-            on { print }
-          ' CHANGELOG.md > notes.md
-          if ! grep -q '[^[:space:]]' notes.md; then
-            echo "Kein Abschnitt in CHANGELOG.md gefunden." > notes.md
-          fi
-          cat notes.md
-
-      - name: Release anlegen
+      - name: Neue Versionen veröffentlichen
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          package="${{ steps.tag.outputs.package }}"
-          version="${{ steps.tag.outputs.version }}"
-          gh release create "$GITHUB_REF_NAME" "dist/$package-$version.zip" \
-            --title "$package $version" \
-            --notes-file notes.md \
-            --latest=false
+          set -euo pipefail
+          ./build.sh --list | while read -r package version; do
+            tag="$package-v$version"
+            if gh release view "$tag" >/dev/null 2>&1; then
+              echo "$tag: gibt es schon"
+              continue
+            fi
+
+            ./build.sh "$package"
+
+            awk -v h="## $package $version" '
+              $0 == h { on = 1; next }
+              on && /^## / { exit }
+              on { print }
+            ' CHANGELOG.md > notes.md
+            if ! grep -q '[^[:space:]]' notes.md; then
+              echo "$package $version" > notes.md
+            fi
+
+            gh release create "$tag" "dist/$package-$version.zip" \
+              --target "$GITHUB_SHA" \
+              --title "$package $version" \
+              --notes-file notes.md \
+              --latest=false
+            echo "$tag: veröffentlicht"
+          done

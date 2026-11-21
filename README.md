@@ -32,7 +32,7 @@ themes/<paket>/      Quellcode der Themes (Version im Kopf von style.css)
 plugins/<paket>/     Quellcode der Plugins (Version im Kopf von <paket>.php)
 build.sh             baut die ZIP-Dateien nach dist/
 CHANGELOG.md         Änderungen je Paket und Version, erscheinen als Release-Text
-.github/workflows/   baut beim Tag automatisch die ZIP und legt das Release an
+.github/workflows/   veröffentlicht neue Versionen automatisch als Release
 ```
 
 ZIP-Dateien werden nicht eingecheckt. `dist/` ist in `.gitignore` eingetragen.
@@ -46,11 +46,6 @@ Das Template enthält eigene, angepasste Kopien von WX Easy Calendar und WX Ligh
 1. Änderungen im Paketordner vornehmen und die Version im Kopf erhöhen (bei Plugins auch die Konstante `…_VERSION` und `Stable tag` in `readme.txt`, beim Template `DUNKEL_VERSION` in `functions.php`).
 2. In `CHANGELOG.md` einen Abschnitt `## <paket> <version>` ergänzen.
 3. Version und Download-Link in der Tabelle oben anpassen.
-4. Committen, pushen und einen Tag `<paket>-v<version>` setzen:
+4. Committen und auf `main` pushen.
 
-   ```
-   git tag wx-lightbox-v1.2.0
-   git push origin wx-lightbox-v1.2.0
-   ```
-
-Die GitHub Action prüft, ob die Version im Tag zum Paket passt, baut die ZIP und legt das Release mit dem Text aus `CHANGELOG.md` an. Tags einzeln pushen: Bei mehr als drei Tags in einem Push startet GitHub keine Actions.
+Die GitHub Action sieht bei jedem Push nach, ob es für die Version jedes Pakets schon ein Release gibt. Fehlt eins, baut sie die ZIP und legt das Release `<paket>-v<version>` mit dem Text aus `CHANGELOG.md` an. Tags muss man nicht von Hand setzen. Von Hand starten lässt sie sich unter *Actions → Release → Run workflow*.
