@@ -1,4 +1,5 @@
-# Veröffentlicht jedes Paket, dessen Version noch kein Release hat.
+# Zieht Versionen und README-Tabelle nach und veröffentlicht jedes Paket,
+# dessen Version noch kein Release hat.
 #
 # Läuft bei jedem Push auf main und lässt sich unter Actions → Release → Run workflow
 # auch von Hand starten. Für jedes Paket in themes/ und plugins/ wird die Version aus
@@ -30,6 +31,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Version aus dem Dateikopf in …_VERSION, Stable tag und README-Tabelle übernehmen.
+      # Der Commit stammt vom GITHUB_TOKEN und löst deshalb keinen weiteren Lauf aus.
+      - name: Versionen und README nachziehen
+        run: |
+          set -euo pipefail
+          ./build.sh --sync
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -am 'Versionen und Download-Tabelle automatisch aktualisiert'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+          echo "SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
       - name: Neue Versionen veröffentlichen
         env:
           GH_TOKEN: ${{ github.token }}
@@ -54,7 +70,7 @@ jobs:
             fi
 
             gh release create "$tag" "dist/$package-$version.zip" \
-              --target "$GITHUB_SHA" \
+              --target "$SHA" \
               --title "$package $version" \
               --notes-file notes.md \
               --latest=false

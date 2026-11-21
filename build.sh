@@ -5,13 +5,15 @@
 #   ./build.sh                    alle Pakete bauen
 #   ./build.sh wx-lightbox …      nur die genannten Pakete bauen
 #   ./build.sh --list             Pakete mit Version auflisten
+#   ./build.sh --sync             Version aus dem Dateikopf überall nachziehen
+#                                 (…_VERSION, Stable tag, Tabelle in README.md)
 #
 # Ergebnis: dist/<paket>-<version>.zip, darin der Ordner <paket>/ ohne Version,
 # damit WordPress neue Versionen als Update der vorhandenen erkennt.
 # Die Version steht im Kopf von style.css (Themes) bzw. <paket>.php (Plugins).
 #
 # Mit --expect-version X.Y.Z bricht das Skript ab, wenn die Version im Kopf
-# nicht passt (wird beim Release aus einem Git-Tag genutzt).
+# nicht passt.
 
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -81,17 +83,73 @@ php_check() {
 	done < <(find "$1" -name '*.php' -print0)
 }
 
+package_name() {
+	sed -n -E 's/^[[:space:]*#@]*(Theme|Plugin) Name:[[:space:]]*(.*[^[:space:]])[[:space:]]*$/\2/p' "$(header_file "$1")" | head -n 1
+}
+
+# Datei, in der die Konstante <X>_VERSION steht.
+constant_file() {
+	case "$1" in
+		themes/*)  echo "$1/functions.php" ;;
+		plugins/*) header_file "$1" ;;
+	esac
+}
+
+# Version aus dem Dateikopf in die Konstante <X>_VERSION und den
+# „Stable tag“ der readme.txt übernehmen.
+sync_versions() {
+	local dir=$1 version file
+	version=$(package_version "$dir")
+	file=$(constant_file "$dir")
+	if [ -f "$file" ]; then
+		sed -i -E "s/^(define\( *'[A-Z0-9_]+_VERSION', *')[^']*('.*)$/\1$version\2/" "$file"
+	fi
+	if [ -f "$dir/readme.txt" ]; then
+		sed -i -E "s/^(Stable tag:[[:space:]]*).*/\1$version/" "$dir/readme.txt"
+	fi
+}
+
+# Tabelle zwischen den Markierungen in README.md neu schreiben.
+sync_readme() {
+	local repo_url=$1 table dir name version type tag file
+	table=$(mktemp)
+	{
+		echo '| Paket | Art | Version | Download |'
+		echo '|---|---|---|---|'
+		for dir in themes/*/ plugins/*/; do
+			dir=${dir%/}
+			[ -f "$(header_file "$dir")" ] || continue
+			name=$(basename "$dir")
+			version=$(package_version "$dir")
+			case "$dir" in themes/*) type=Theme ;; *) type=Plugin ;; esac
+			tag="$name-v$version"
+			file="$name-$version.zip"
+			echo "| [$(package_name "$dir")]($dir/) | $type | $version | [$file]($repo_url/releases/download/$tag/$file) |"
+		done
+	} > "$table"
+	awk -v t="$table" '
+		/<!-- pakete:start -->/ { print; while ((getline l < t) > 0) print l; skip = 1; next }
+		/<!-- pakete:end -->/   { skip = 0 }
+		!skip { print }
+	' README.md > README.md.tmp && mv README.md.tmp README.md
+	rm -f "$table"
+}
+
 EXPECT=
 PACKAGES=()
 while [ $# -gt 0 ]; do
 	case "$1" in
+		--sync)
+			for p in $(all_packages); do sync_versions "$(package_dir "$p")"; done
+			sync_readme "${REPO_URL:-https://github.com/cwaxe/wordpress}"
+			exit 0 ;;
 		--list)
 			for p in $(all_packages); do
 				printf '%-22s %s\n' "$p" "$(package_version "$(package_dir "$p")")"
 			done
 			exit 0 ;;
 		--expect-version) EXPECT=${2:-}; shift ;;
-		-h|--help) sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+		-h|--help) sed -n '2,17p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
 		*) PACKAGES+=( "$1" ) ;;
 	esac
 	shift

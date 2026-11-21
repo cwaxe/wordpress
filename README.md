@@ -6,6 +6,7 @@ Sammlung eigener WordPress-Themes und -Plugins. Alle Pakete sind auf Deutsch, br
 
 Die fertigen ZIP-Dateien liegen unter [**Releases**](https://github.com/cwaxe/wordpress/releases), dort auch alle älteren Versionen.
 
+<!-- pakete:start -->
 | Paket | Art | Version | Download |
 |---|---|---|---|
 | [WX Easy Template](themes/wx-easy-template/) | Theme | 1.10.1 | [wx-easy-template-1.10.1.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-template-v1.10.1/wx-easy-template-1.10.1.zip) |
@@ -15,6 +16,7 @@ Die fertigen ZIP-Dateien liegen unter [**Releases**](https://github.com/cwaxe/wo
 | [WX Webcam Archive](plugins/wx-webcam-archive/) | Plugin | 1.5.0 | [wx-webcam-archive-1.5.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-webcam-archive-v1.5.0/wx-webcam-archive-1.5.0.zip) |
 | [LSV Wetter am Platz](plugins/lsv-wetter/) | Plugin | 1.1.0 | [lsv-wetter-1.1.0.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-wetter-v1.1.0/lsv-wetter-1.1.0.zip) |
 | [WX Easy Backup](plugins/wx-easy-backup/) | Plugin | 1.1.0 | [wx-easy-backup-1.1.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-backup-v1.1.0/wx-easy-backup-1.1.0.zip) |
+<!-- pakete:end -->
 
 Beschreibung, Einstellungen und Shortcodes stehen in der README des jeweiligen Pakets.
 
@@ -43,9 +45,17 @@ Das Template enthält eigene, angepasste Kopien von WX Easy Calendar und WX Ligh
 
 ## Neue Version veröffentlichen
 
-1. Änderungen im Paketordner vornehmen und die Version im Kopf erhöhen (bei Plugins auch die Konstante `…_VERSION` und `Stable tag` in `readme.txt`, beim Template `DUNKEL_VERSION` in `functions.php`).
-2. In `CHANGELOG.md` einen Abschnitt `## <paket> <version>` ergänzen.
-3. Version und Download-Link in der Tabelle oben anpassen.
-4. Committen und auf `main` pushen.
+1. Änderungen im Paketordner vornehmen und die Version im Kopf erhöhen: `Version:` in `style.css` (Themes) bzw. in `<paket>.php` (Plugins).
+2. Optional in `CHANGELOG.md` einen Abschnitt `## <paket> <version>` ergänzen. Er wird zum Text des Releases.
+3. Committen und auf `main` pushen.
 
-Die GitHub Action sieht bei jedem Push nach, ob es für die Version jedes Pakets schon ein Release gibt. Fehlt eins, baut sie die ZIP und legt das Release `<paket>-v<version>` mit dem Text aus `CHANGELOG.md` an. Tags muss man nicht von Hand setzen. Von Hand starten lässt sie sich unter *Actions → Release → Run workflow*.
+Den Rest erledigt die GitHub Action:
+
+- Sie übernimmt die Version aus dem Dateikopf in die Konstante `…_VERSION` und den `Stable tag` der `readme.txt`.
+- Sie aktualisiert die Tabelle oben mit Versionen und Download-Links.
+- Diese Änderungen committet sie selbst auf `main`.
+- Für jede Version ohne Release baut sie die ZIP und veröffentlicht sie als Release `<paket>-v<version>`.
+
+Ein neues Paket braucht nur einen eigenen Ordner in `themes/` oder `plugins/`. Es erscheint beim nächsten Push in der Tabelle und unter Releases.
+
+Lokal macht `./build.sh --sync` dasselbe Nachziehen wie die Action, `./build.sh` baut alle ZIPs nach `dist/`. Von Hand starten lässt sich die Action unter *Actions → Release → Run workflow*.
