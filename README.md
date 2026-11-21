@@ -9,13 +9,13 @@ Bei einem Update bietet WordPress an, die vorhandene Version zu ersetzen. Die Ei
 
 | Paket | Art | Version | Datei |
 |---|---|---|---|
-| [WX Easy Template](#wx-easy-template) | Theme | 1.10.0 | `wx-easy-template.zip` |
-| [LSV Flugplatz](#lsv-flugplatz) | Theme | 1.2.0 | `lsv-flugplatz.zip` |
-| [WX Easy Calendar](#wx-easy-calendar) | Plugin | 1.4.0 | `wx-easy-calendar.zip` |
-| [WX Lightbox](#wx-lightbox) | Plugin | 1.1.0 | `wx-lightbox.zip` |
+| [WX Easy Template](#wx-easy-template) | Theme | 1.10.0 | `wx-easy-template-1.10.0.zip` |
+| [LSV Flugplatz](#lsv-flugplatz) | Theme | 1.2.0 | `lsv-flugplatz-1.2.0.zip` |
+| [WX Easy Calendar](#wx-easy-calendar) | Plugin | 1.4.0 | `wx-easy-calendar-1.4.0.zip` |
+| [WX Lightbox](#wx-lightbox) | Plugin | 1.1.0 | `wx-lightbox-1.1.0.zip` |
 | [WX Webcam Archive](#wx-webcam-archive) | Plugin | 1.5.0 | `wx-webcam-archive-1.5.0.zip` |
-| [LSV Wetter am Platz](#lsv-wetter-am-platz) | Plugin | 1.1.0 | `lsv-wetter-plugin.zip` |
-| [WX Easy Backup](#wx-easy-backup) | Plugin | 1.1.0 | `wx-easy-backup.zip` |
+| [LSV Wetter am Platz](#lsv-wetter-am-platz) | Plugin | 1.1.0 | `lsv-wetter-plugin-1.1.0.zip` |
+| [WX Easy Backup](#wx-easy-backup) | Plugin | 1.1.0 | `wx-easy-backup-1.1.0.zip` |
 
 Alle Pakete benötigen PHP 7.4 oder neuer.
 
