@@ -1,0 +1,439 @@
+/* WX Webcam Archive – Frontend
+   Skin angelehnt an wetter.lsv-vilsbiburg.de (Luftsportverein Vilsbiburg e. V.), ohne Gelb
+
+   Alle Farben sind CSS-Variablen und lassen sich im Theme überschreiben, z. B.:
+   .wca-archive { --wca-accent: #ff9800; }
+*/
+
+.wca-archive,
+.wca-latest {
+	--wca-page: #486d97;          /* Seitenhintergrund */
+	--wca-card: #2c4767;          /* Karten */
+	--wca-inner: #385879;         /* Felder innerhalb von Karten */
+	--wca-header: #ffffff;        /* Überschrift und Stand in der Kopfzeile */
+	/* abgeleitete Töne – passen sich automatisch an */
+	--wca-inner-hover: color-mix(in srgb, var(--wca-inner) 80%, #fff);
+	--wca-deep: color-mix(in srgb, var(--wca-card) 70%, #000);
+	--wca-line: #8fb3dc;          /* Akzentlinie oben an Kacheln */
+	--wca-title: #d3e3f4;         /* Kartenüberschriften */
+	--wca-text: #f2f6fa;          /* Werte */
+	--wca-muted: #b6c7da;         /* Beschriftungen */
+	--wca-accent: #8fb3dc;        /* Hellblau (wie die Kachel-Linien) */
+	--wca-accent-text: #14273d;
+	--wca-radius: 4px;
+	--wca-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+	--wca-font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Roboto, Arial, sans-serif;
+}
+
+.wca-archive {
+	display: grid;
+	grid-template-columns: minmax(0, 1.85fr) minmax(300px, 1fr);
+	grid-template-areas:
+		"header header"
+		"viewer cal"
+		"tiles  tiles"
+		"strip  strip";
+	gap: 14px;
+	align-items: stretch;
+	padding: 16px;
+	background: var(--wca-page);
+	border-radius: 6px;
+	color: var(--wca-text);
+	font-family: var(--wca-font);
+	font-size: 15px;
+	line-height: 1.4;
+	outline: none;
+}
+.wca-archive.wca-flat { padding: 0; background: none; border-radius: 0; }
+
+@media (max-width: 900px) {
+	.wca-archive {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas: "header" "viewer" "tiles" "cal" "strip";
+		padding: 10px;
+		gap: 10px;
+	}
+}
+
+.wca-archive *,
+.wca-archive *::before,
+.wca-archive *::after { box-sizing: border-box; }
+
+/* Grundelemente ------------------------------------------------------- */
+
+.wca-archive .wca-card {
+	background: var(--wca-card);
+	border-radius: var(--wca-radius);
+	box-shadow: var(--wca-shadow);
+	padding: 14px 16px 16px;
+	min-width: 0;
+	margin: 0;
+}
+.wca-archive .wca-card-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	margin-bottom: 12px;
+	min-height: 30px;
+}
+.wca-archive .wca-card-title {
+	margin: 0;
+	padding: 0;
+	font-family: inherit;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.3;
+	color: var(--wca-title);
+	letter-spacing: 0;
+	text-transform: none;
+	border: 0;
+}
+
+.wca-archive .wca-btn {
+	appearance: none;
+	border: 0;
+	background: var(--wca-inner);
+	color: var(--wca-text);
+	border-radius: var(--wca-radius);
+	min-width: 32px;
+	height: 32px;
+	padding: 0 10px;
+	margin: 0;
+	font: inherit;
+	font-size: 18px;
+	line-height: 1;
+	cursor: pointer;
+	box-shadow: none;
+	text-shadow: none;
+	transition: background .15s, color .15s, opacity .15s;
+}
+.wca-archive .wca-btn:hover:not(:disabled) { background: var(--wca-inner-hover); color: var(--wca-text); }
+.wca-archive .wca-btn:focus-visible { outline: 2px solid var(--wca-accent); outline-offset: 2px; }
+.wca-archive .wca-btn:disabled { opacity: .3; cursor: default; }
+.wca-archive .wca-btn-text { font-size: 13px; padding: 0 12px; }
+
+/* Kopfzeile ------------------------------------------------------------ */
+
+.wca-archive .wca-header {
+	grid-area: header;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+	padding: 0 2px 2px;
+}
+.wca-archive .wca-header-main {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	flex-wrap: wrap;
+	min-width: 0;
+}
+.wca-archive .wca-header-title {
+	margin: 0;
+	padding: 0;
+	font-family: inherit;
+	font-size: 22px;
+	font-weight: 600;
+	line-height: 1.2;
+	color: var(--wca-header);
+	border: 0;
+}
+.wca-archive .wca-header-stamp { text-align: right; margin-left: auto; }
+.wca-archive .wca-stamp { font-size: 14px; font-weight: 500; color: var(--wca-header); }
+.wca-archive .wca-stamp-ago { font-size: 12px; color: var(--wca-muted); }
+
+.wca-archive .wca-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.wca-archive .wca-tab {
+	font-size: 14px;
+	font-weight: 500;
+	background: var(--wca-card);
+	color: var(--wca-muted);
+	padding: 0 14px;
+}
+.wca-archive .wca-tab[aria-selected="true"],
+.wca-archive .wca-tab[aria-selected="true"]:hover:not(:disabled) {
+	background: var(--wca-accent);
+	color: var(--wca-accent-text);
+	font-weight: 600;
+}
+
+/* Bild-Karte ----------------------------------------------------------- */
+
+.wca-archive .wca-viewer { grid-area: viewer; display: flex; flex-direction: column; }
+.wca-archive .wca-daynav { display: flex; gap: 6px; }
+
+.wca-archive .wca-stage {
+	position: relative;
+	background: var(--wca-deep);
+	border-radius: var(--wca-radius);
+	overflow: hidden;
+	min-height: 220px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.wca-archive .wca-img {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-height: 70vh;
+	object-fit: contain;
+	cursor: zoom-in;
+	border: 0;
+	box-shadow: none;
+}
+.wca-archive .wca-stage:fullscreen { border-radius: 0; background: #000; }
+.wca-archive .wca-stage:fullscreen .wca-img { max-height: 100vh; height: 100%; cursor: zoom-out; }
+
+/* Uhrzeit-Plakette im Bild */
+.wca-archive .wca-badge {
+	position: absolute;
+	left: 12px;
+	top: 12px;
+	background: rgba(0, 0, 0, .6);
+	color: #fff;
+	font-weight: 600;
+	font-size: 15px;
+	padding: 3px 10px;
+	border-radius: var(--wca-radius);
+	font-variant-numeric: tabular-nums;
+	pointer-events: none;
+}
+.wca-archive.wca-is-empty .wca-badge,
+.wca-archive .wca-badge:empty { display: none; }
+
+.wca-archive .wca-nav {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 42px;
+	height: 60px;
+	font-size: 30px;
+	background: rgba(0, 0, 0, .4);
+	color: #fff;
+	opacity: 0;
+}
+.wca-archive .wca-stage:hover .wca-nav:not(:disabled),
+.wca-archive .wca-nav:focus-visible { opacity: 1; }
+.wca-archive .wca-nav:hover:not(:disabled) { background: rgba(0, 0, 0, .7); color: #fff; }
+.wca-archive .wca-nav-prev { left: 8px; }
+.wca-archive .wca-nav-next { right: 8px; }
+@media (hover: none) { .wca-archive .wca-nav:not(:disabled) { opacity: .85; } }
+
+.wca-archive .wca-loader {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 22px;
+	height: 22px;
+	border: 3px solid color-mix(in srgb, var(--wca-text) 25%, transparent);
+	border-top-color: var(--wca-accent);
+	border-radius: 50%;
+	animation: wca-spin .8s linear infinite;
+	display: none;
+}
+.wca-archive.wca-loading .wca-loader { display: block; }
+@keyframes wca-spin { to { transform: rotate(360deg); } }
+
+.wca-archive .wca-message,
+.wca-message { padding: 24px; text-align: center; color: var(--wca-muted, #6b7280); }
+.wca-archive .wca-stage .wca-message {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--wca-muted);
+}
+.wca-archive .wca-hidden { display: none !important; }
+
+.wca-archive .wca-bar {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-top: 12px;
+	padding: 8px 10px;
+	background: var(--wca-inner);
+	border-radius: var(--wca-radius);
+}
+.wca-archive .wca-play { font-size: 13px; width: 40px; background: var(--wca-card); }
+.wca-archive.wca-playing .wca-play,
+.wca-archive.wca-playing .wca-play:hover:not(:disabled) { background: var(--wca-accent); color: var(--wca-accent-text); }
+.wca-archive .wca-slider { flex: 1; min-width: 0; accent-color: var(--wca-accent); margin: 0; }
+.wca-archive .wca-time {
+	font-size: 20px;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+	min-width: 92px;
+	text-align: right;
+	color: var(--wca-text);
+}
+
+/* Kalender-Karte ------------------------------------------------------- */
+
+.wca-archive .wca-cal { grid-area: cal; display: flex; flex-direction: column; }
+.wca-archive .wca-cal-head {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+.wca-archive .wca-cal-title { flex: 1; text-align: center; }
+
+.wca-archive .wca-cal-grid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 5px;
+}
+.wca-archive .wca-wd {
+	text-align: center;
+	font-size: 12px;
+	color: var(--wca-muted);
+	padding: 2px 0 4px;
+}
+.wca-archive .wca-day {
+	aspect-ratio: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: var(--wca-radius);
+	font-size: 14px;
+	color: color-mix(in srgb, var(--wca-muted) 45%, transparent);
+	min-width: 0;
+	height: auto;
+	padding: 0;
+}
+.wca-archive .wca-day.wca-has {
+	color: var(--wca-text);
+	font-weight: 600;
+	font-size: 14px;
+	background: color-mix(in srgb, var(--wca-line) calc(var(--wca-fill, .5) * 30%), var(--wca-inner));
+}
+.wca-archive .wca-day.wca-has:hover:not(:disabled) { background: color-mix(in srgb, var(--wca-line) 45%, var(--wca-inner)); }
+.wca-archive .wca-day.wca-selected,
+.wca-archive .wca-day.wca-selected:hover:not(:disabled) { background: var(--wca-accent); color: var(--wca-accent-text); }
+.wca-archive .wca-day.wca-today { box-shadow: inset 0 0 0 2px var(--wca-line); }
+
+.wca-archive .wca-cal-foot {
+	margin-top: auto;
+	padding-top: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+.wca-archive .wca-legend { font-size: 12px; color: var(--wca-muted); display: flex; align-items: center; gap: 6px; }
+.wca-archive .wca-lg { display: inline-block; width: 12px; height: 12px; border-radius: 2px; }
+.wca-archive .wca-lg-has { background: color-mix(in srgb, var(--wca-line) 30%, var(--wca-inner)); }
+.wca-archive .wca-lg-sel { background: var(--wca-accent); margin-left: 8px; }
+
+/* Info-Kacheln (wie QNH / QFE / Dichtehöhe) ---------------------------- */
+
+.wca-archive .wca-tiles {
+	grid-area: tiles;
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 14px;
+}
+@media (max-width: 600px) {
+	.wca-archive .wca-tiles { gap: 8px; }
+	.wca-archive .wca-tile { padding: 8px 9px 9px; }
+	.wca-archive .wca-tile-label { font-size: 11px; }
+	.wca-archive .wca-tile-value { font-size: 17px; }
+	.wca-archive .wca-tile-sub { font-size: 11px; }
+	.wca-archive .wca-header-title { font-size: 19px; }
+}
+.wca-archive .wca-tile {
+	background: var(--wca-card);
+	border-top: 3px solid var(--wca-line);
+	border-radius: var(--wca-radius);
+	box-shadow: var(--wca-shadow);
+	padding: 10px 14px 12px;
+	min-width: 0;
+}
+.wca-archive .wca-tile-label { font-size: 13px; color: var(--wca-muted); }
+.wca-archive .wca-tile-value {
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 1.25;
+	color: var(--wca-text);
+	font-variant-numeric: tabular-nums;
+	margin: 2px 0;
+}
+.wca-archive .wca-tile-sub { font-size: 13px; color: var(--wca-muted); }
+.wca-archive .wca-link { color: var(--wca-title); text-decoration: underline; text-underline-offset: 2px; }
+.wca-archive .wca-link:hover { color: var(--wca-text); }
+
+/* Tagesverlauf ------------------------------------------------------------ */
+
+.wca-archive .wca-strip-card { grid-area: strip; padding-bottom: 10px; }
+.wca-archive .wca-strip-card .wca-card-head { margin-bottom: 6px; }
+.wca-archive .wca-strip {
+	position: relative;
+	display: flex;
+	gap: 8px;
+	overflow-x: auto;
+	padding: 4px 2px 8px;
+	scroll-behavior: smooth;
+	scrollbar-width: thin;
+	scrollbar-color: var(--wca-inner-hover) transparent;
+}
+.wca-archive.wca-playing .wca-strip { scroll-behavior: auto; }
+.wca-archive .wca-thumb {
+	flex: 0 0 auto;
+	width: 128px;
+	padding: 0;
+	margin: 0;
+	border: 2px solid transparent;
+	border-radius: var(--wca-radius);
+	background: var(--wca-inner);
+	cursor: pointer;
+	color: var(--wca-muted);
+	font: inherit;
+	font-size: 12px;
+	text-align: center;
+	overflow: hidden;
+	transition: border-color .15s;
+}
+.wca-archive .wca-thumb img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+	background: var(--wca-deep);
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+.wca-archive .wca-thumb span { display: block; padding: 3px 0; }
+.wca-archive .wca-thumb:hover { border-color: var(--wca-line); color: var(--wca-text); }
+.wca-archive .wca-thumb.wca-active { border-color: var(--wca-accent); color: var(--wca-text); font-weight: 600; }
+
+/* [webcam_aktuell] ----------------------------------------------------- */
+
+.wca-latest {
+	margin: 0 0 1.5em;
+	padding: 12px;
+	background: var(--wca-card);
+	border-top: 3px solid var(--wca-line);
+	border-radius: var(--wca-radius);
+	box-shadow: var(--wca-shadow);
+	font-family: var(--wca-font);
+	color: var(--wca-text);
+}
+.wca-latest img { display: block; width: 100%; height: auto; border-radius: var(--wca-radius); }
+.wca-latest figcaption {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	margin-top: 8px;
+	font-size: 14px;
+}
+.wca-latest .wca-latest-name { font-weight: 600; color: var(--wca-title); }
+.wca-latest .wca-latest-time { color: var(--wca-muted); }
+.wca-latest .wca-message { color: var(--wca-muted); padding: 12px; }

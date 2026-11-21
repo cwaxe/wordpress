@@ -1,0 +1,847 @@
+/*
+Theme Name:   LSV Flugplatz
+Theme URI:    https://lsv-vilsbiburg.de
+Description:  Eigenständiges Theme für den Luftsportverein Vilsbiburg im Stil von wetter.lsv-vilsbiburg.de: blauer Hintergrund, dunkelblaue Karten, klare Kopfzeile. Kompatibel mit Inhalten, Menüs und Widgets aus Twenty Twenty-One.
+Author:       Luftsportverein Vilsbiburg e. V.
+Version:      1.2.0
+Requires at least: 6.0
+Tested up to: 7.1
+Requires PHP: 7.4
+License:      GNU General Public License v2 or later
+License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:  lsv-flugplatz
+Tags:         blue, dark, one-column, custom-logo, custom-menu, editor-style, wide-blocks, block-styles
+*/
+
+/* =========================================================
+   1. Variablen – Farben von wetter.lsv-vilsbiburg.de (ohne Gelb)
+   ========================================================= */
+:root {
+	--blau: #486d97;
+	--blau-dunkel: #3a5a7f;
+	--karte: #2c4767;
+	--karte-hell: #385879;
+	--text: #f2f6fa;
+	--text-leise: #b6c7da;
+	--titel: #d3e3f4;
+	--akzent: #8fb3dc;
+	--gut: #2e8b57;
+	--warn: #c0392b;
+	--linie: rgba(255, 255, 255, .14);
+	--radius: 4px;
+	--abstand: 14px;
+	--schatten: 0 2px 8px rgba(0, 0, 0, .18);
+	--schrift: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+	--breite: 1280px;
+	--breite-text: 900px;
+	color-scheme: dark;
+}
+
+/* =========================================================
+   2. Grundlagen
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+	margin: 0;
+	background-color: var(--blau);
+	color: var(--text);
+	font-family: var(--schrift);
+	font-size: 16px;
+	line-height: 1.55;
+	-webkit-font-smoothing: antialiased;
+	overflow-wrap: break-word;
+}
+img, video, iframe, embed, object, svg { max-width: 100%; }
+img { height: auto; vertical-align: middle; }
+
+a { color: var(--text); text-decoration-color: var(--akzent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--titel); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible {
+	outline: 2px solid var(--akzent);
+	outline-offset: 2px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--schrift);
+	font-weight: 600;
+	line-height: 1.25;
+	letter-spacing: .01em;
+	color: var(--text);
+	margin: 1.6em 0 .6em;
+}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.45rem; color: var(--titel); }
+h3 { font-size: 1.2rem; color: var(--titel); }
+h4 { font-size: 1.05rem; }
+h5, h6 { font-size: 1rem; }
+p { margin: 0 0 1em; }
+strong, b { font-weight: 600; }
+small { font-size: .85em; color: var(--text-leise); }
+hr { border: 0; border-top: 1px solid var(--linie); margin: 2em 0; }
+code, kbd, pre, samp { font-family: Consolas, Monaco, monospace; font-size: .92em; }
+pre { background: var(--karte); padding: 12px 14px; border-radius: var(--radius); overflow-x: auto; }
+:not(pre) > code { background: var(--karte-hell); padding: 1px 5px; border-radius: 3px; }
+mark { background: var(--akzent); color: #10243a; padding: 0 3px; }
+abbr[title] { text-decoration: underline dotted; cursor: help; }
+ul, ol { padding-left: 1.4em; margin: 0 0 1em; }
+li { margin-bottom: .25em; }
+dl { margin: 0 0 1em; }
+dt { color: var(--text-leise); }
+dd { margin: 0 0 .5em; }
+blockquote {
+	margin: 1.5em 0;
+	padding: 4px 0 4px 16px;
+	border-left: 3px solid var(--akzent);
+	color: var(--text);
+}
+blockquote cite, figcaption, .wp-caption-text, .wp-element-caption { color: var(--text-leise); font-size: .85rem; font-style: normal; }
+table { border-collapse: collapse; width: 100%; }
+th, td { padding: 6px 10px; border-bottom: 1px solid var(--linie); text-align: left; vertical-align: top; }
+th { color: var(--text-leise); font-weight: 600; }
+
+/* Barrierefreiheit */
+.screen-reader-text {
+	border: 0; clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%);
+	height: 1px; margin: -1px; overflow: hidden; padding: 0;
+	position: absolute !important; width: 1px; word-wrap: normal !important;
+}
+.screen-reader-text:focus, .skip-link:focus {
+	background: var(--karte); color: var(--text); clip: auto !important; clip-path: none;
+	display: block; height: auto; left: 8px; top: 8px; padding: 12px 18px; width: auto; z-index: 100000;
+	border-radius: var(--radius); box-shadow: var(--schatten); text-decoration: none;
+}
+
+/* =========================================================
+   3. Kopfzeile
+   ========================================================= */
+.kopf { background: var(--blau); color: #fff; padding-top: env(safe-area-inset-top); position: relative; z-index: 50; }
+.kopf-innen {
+	max-width: var(--breite);
+	margin: 0 auto;
+	padding: 14px var(--abstand) 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px 18px;
+}
+.kopf-marke { display: flex; align-items: center; gap: 18px; flex: 1 1 auto; min-width: 0; }
+.logo img, .logo .custom-logo { max-height: 56px; width: auto; display: block; }
+.logo a { display: block; }
+.titel { min-width: 0; }
+.titel-h { margin: 0; font-size: 1.45rem; font-weight: 400; color: #fff; line-height: 1.25; }
+.titel-h a { color: #fff; text-decoration: none; }
+.titel-h strong { font-weight: 600; margin-right: .2em; }
+.titel-name { opacity: .9; }
+.titel-zeile { margin: 2px 0 0; font-size: .9rem; opacity: .85; line-height: 1.35; }
+
+/* Hauptmenü */
+/* Desktop: Menü als eigene Leiste unter Logo und Titel */
+.hauptmenue {
+	order: 3;
+	flex: 1 1 100%;
+	border-top: 1px solid var(--linie);
+	padding: 4px 0;
+	margin: 0 calc(-1 * 2px);
+}
+.hauptmenue ul { list-style: none; margin: 0; padding: 0; }
+.hauptmenue li { margin: 0; position: relative; }
+.hauptmenue .menue { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; justify-content: center; }
+.hauptmenue .menue > li { display: flex; align-items: center; }
+.hauptmenue a {
+	display: block;
+	color: #fff;
+	text-decoration: none;
+	font-weight: 500;
+	padding: 9px 12px;
+	border-radius: var(--radius);
+	white-space: nowrap;
+}
+.hauptmenue .menue > li > a:hover,
+.hauptmenue .menue > li.offen > a { background: rgba(255, 255, 255, .08); color: #fff; }
+.hauptmenue .menue > .current-menu-item > a,
+.hauptmenue .menue > .current_page_item > a,
+.hauptmenue .menue > .current-menu-ancestor > a,
+.hauptmenue .menue > .current_page_ancestor > a {
+	box-shadow: inset 0 -3px 0 var(--akzent);
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.lsv-sub-toggle {
+	background: transparent;
+	border: 0;
+	color: #fff;
+	width: 26px;
+	height: 34px;
+	margin-left: -8px;
+	padding: 0;
+	cursor: pointer;
+	border-radius: var(--radius);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+.lsv-sub-toggle span {
+	width: 7px; height: 7px;
+	border-right: 2px solid currentColor;
+	border-bottom: 2px solid currentColor;
+	transform: translateY(-2px) rotate(45deg);
+	transition: transform .15s;
+}
+.lsv-sub-toggle[aria-expanded="true"] span { transform: translateY(2px) rotate(-135deg); }
+.lsv-sub-toggle:hover { background: rgba(255, 255, 255, .08); }
+
+.hauptmenue .sub-menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	min-width: 230px;
+	background: var(--karte);
+	border-radius: var(--radius);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, .28);
+	padding: 6px 0;
+	display: none;
+	z-index: 60;
+}
+.hauptmenue .sub-menu .sub-menu { top: 0; left: 100%; }
+.hauptmenue li:hover > .sub-menu,
+.hauptmenue li:focus-within > .sub-menu,
+.hauptmenue li.offen > .sub-menu { display: block; }
+.hauptmenue .sub-menu li { display: flex; align-items: center; }
+.hauptmenue .sub-menu a { flex: 1; padding: 8px 16px; border-radius: 0; font-size: .95rem; white-space: normal; }
+.hauptmenue .sub-menu a:hover,
+.hauptmenue .sub-menu .current-menu-item > a { background: var(--karte-hell); }
+.hauptmenue .sub-menu .lsv-sub-toggle { margin: 0 6px 0 0; }
+
+.kopf-button {
+	flex: 0 0 auto;
+	background: var(--karte);
+	color: #fff;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: .95rem;
+	padding: 8px 14px;
+	border-radius: var(--radius);
+	border: 1px solid var(--linie);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .12);
+}
+.kopf-button:hover { background: var(--blau-dunkel); color: #fff; }
+
+/* Gelbes Pistenschild rechts oben (Plugin "LSV Wetter am Platz") */
+.kopf-schild {
+	flex: 0 0 auto;
+	display: block;
+	color: #fff;
+	text-decoration: none;
+	padding: 6px 10px 6px 6px;
+	margin-right: -6px;
+	border-radius: var(--radius);
+	transition: background-color .15s;
+}
+.kopf-schild:hover,
+.kopf-schild:focus-visible { background: rgba(255, 255, 255, .08); color: #fff; }
+.kopf-schild .lsv-schild-wrap { gap: 10px; }
+.kopf-schild .lsv-schild-titel { font-size: .95rem; color: #fff; }
+.kopf-schild .lsv-schild-text { font-size: .8rem; color: var(--text-leise); opacity: 1; }
+.kopf-schild:hover .lsv-schild-titel { text-decoration: underline; text-decoration-color: var(--akzent); text-underline-offset: 3px; }
+
+@media (max-width: 1000px) {
+	.kopf-schild .lsv-schild-text { display: none; }
+}
+@media (max-width: 700px) {
+	.kopf-schild .lsv-schild-info { display: none; }
+}
+@media (max-width: 520px) {
+	.kopf-innen:has(.kopf-schild) .titel-zeile { display: none; }
+}
+
+/* Menü-Knopf (nur mobil) */
+.menue-knopf {
+	display: none;
+	align-items: center;
+	gap: 8px;
+	background: transparent;
+	color: #fff;
+	border: 1px solid var(--linie);
+	border-radius: var(--radius);
+	padding: 8px 12px;
+	font: inherit;
+	font-weight: 500;
+	cursor: pointer;
+}
+.menue-icon { width: 18px; height: 12px; position: relative; display: inline-block; }
+.menue-icon::before, .menue-icon::after, .menue-icon span {
+	content: ""; position: absolute; left: 0; right: 0; height: 2px; background: currentColor; border-radius: 1px;
+	transition: transform .2s, opacity .2s;
+}
+.menue-icon::before { top: 0; }
+.menue-icon span { top: 5px; }
+.menue-icon::after { bottom: 0; }
+.menue-offen .menue-icon::before { transform: translateY(5px) rotate(45deg); }
+.menue-offen .menue-icon span { opacity: 0; }
+.menue-offen .menue-icon::after { transform: translateY(-5px) rotate(-45deg); }
+
+@media (max-width: 900px) {
+	.kopf-innen { flex-wrap: wrap; padding-bottom: 14px; }
+	.kopf-marke { order: 1; flex: 1 1 0; }
+	.menue-knopf { display: inline-flex; order: 3; }
+	.kopf-button, .kopf-schild { order: 2; }
+	.hauptmenue {
+		order: 4;
+		flex: 1 1 100%;
+		display: none;
+		background: var(--blau-dunkel);
+		border-top: 0;
+		border-radius: var(--radius);
+		padding: 6px;
+		margin: 4px 0 0;
+	}
+	.menue-offen .hauptmenue { display: block; }
+	.hauptmenue .menue { flex-direction: column; align-items: stretch; gap: 0; }
+	.hauptmenue .menue > li, .hauptmenue .sub-menu li { flex-wrap: wrap; }
+	.hauptmenue .menue > li > a { flex: 1; }
+	.hauptmenue a { white-space: normal; }
+	.lsv-sub-toggle { width: 44px; height: 42px; margin: 0; }
+	.hauptmenue .menue > .current-menu-item > a,
+	.hauptmenue .menue > .current_page_item > a,
+	.hauptmenue .menue > .current-menu-ancestor > a { box-shadow: inset 3px 0 0 var(--akzent); border-radius: 0; }
+	.hauptmenue .sub-menu,
+	.hauptmenue .sub-menu .sub-menu {
+		position: static;
+		flex: 1 1 100%;
+		box-shadow: none;
+		background: var(--karte);
+		margin: 2px 0 6px 12px;
+		min-width: 0;
+	}
+	.hauptmenue li:hover > .sub-menu,
+	.hauptmenue li:focus-within > .sub-menu { display: none; }
+	.hauptmenue li.offen > .sub-menu { display: block; }
+}
+@media (max-width: 520px) {
+	.kopf-innen { gap: 10px; padding: 10px; }
+	.kopf-marke { gap: 10px; }
+	.logo img, .logo .custom-logo { max-height: 40px; }
+	.titel-h { font-size: 1.15rem; }
+	.titel-zeile { font-size: .8rem; }
+	.menue-text { display: none; }
+	.kopf-button { padding: 7px 10px; font-size: .9rem; }
+	.kopf-schild { padding: 4px; margin-right: 0; }
+	.kopf-schild .lsv-schild-info { display: none; }
+	.kopf-schild .lsv-schild { font-size: 1rem; padding: 8px 9px; }
+}
+
+/* =========================================================
+   4. Inhaltsbereich
+   ========================================================= */
+.inhalt-rahmen { padding: 6px var(--abstand) 20px; }
+.inhalt { max-width: var(--breite); margin: 0 auto; }
+
+.seiten-kopf { max-width: var(--breite-text); margin: 18px auto 22px; }
+.seiten-titel { margin: 0 0 6px; font-size: 2rem; color: var(--text); }
+.seiten-beschreibung { color: var(--text-leise); }
+.seiten-bild { margin: 0 auto 24px; max-width: var(--breite); }
+.seiten-bild img { width: 100%; border-radius: var(--radius); box-shadow: var(--schatten); }
+.seiten-fuss { max-width: var(--breite-text); margin: 24px auto 0; color: var(--text-leise); font-size: .85rem; }
+.seiten-fuss .post-edit-link { color: var(--text-leise); }
+.lsv-meta { color: var(--text-leise); font-size: .9rem; }
+.lsv-meta a { color: var(--text-leise); }
+
+/* Block-Inhalte: Standardbreite, breit, volle Breite */
+.entry-content > * { max-width: var(--breite-text); margin-left: auto; margin-right: auto; }
+.entry-content > .alignwide { max-width: var(--breite); }
+.entry-content > .alignfull {
+	max-width: none;
+	width: calc(100% + 2 * var(--abstand));
+	margin-left: calc(-1 * var(--abstand));
+	margin-right: calc(-1 * var(--abstand));
+}
+.entry-content > *:first-child { margin-top: 0; }
+.entry-content > h2 { font-size: 1.3rem; margin-top: 2em; }
+
+.alignleft { float: left; margin: .3em 1.5em 1em 0; }
+.alignright { float: right; margin: .3em 0 1em 1.5em; }
+.aligncenter { display: block; margin-left: auto; margin-right: auto; text-align: center; }
+.entry-content > .alignleft { max-width: 50%; margin-left: max(0px, calc((100% - var(--breite-text)) / 2)); }
+.entry-content > .alignright { max-width: 50%; margin-right: max(0px, calc((100% - var(--breite-text)) / 2)); }
+.entry-content::after { content: ""; display: table; clear: both; }
+@media (max-width: 600px) {
+	.alignleft, .alignright, .entry-content > .alignleft, .entry-content > .alignright { float: none; max-width: 100%; margin: 0 auto 1em; }
+}
+.wp-caption { max-width: 100%; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+.gallery-item { margin: 0; }
+.sticky, .bypostauthor { display: block; }
+
+/* =========================================================
+   5. Karten & Kacheln
+   ========================================================= */
+.lsv-karte,
+.entry-content .wp-block-group.is-style-lsv-karte,
+.entry-content .wp-block-image.is-style-lsv-karte {
+	background: var(--karte);
+	border-radius: var(--radius);
+	padding: 14px 16px 16px;
+	box-shadow: var(--schatten);
+	margin-bottom: var(--abstand);
+}
+.lsv-karte > *:first-child, .is-style-lsv-karte > *:first-child { margin-top: 0; }
+.lsv-karte > *:last-child, .is-style-lsv-karte > *:last-child { margin-bottom: 0; }
+.lsv-karte h2, .lsv-karte h3,
+.is-style-lsv-karte h2, .is-style-lsv-karte h3,
+.lsv-karte .widget-title {
+	font-size: 1.05rem;
+	font-weight: 600;
+	color: var(--titel);
+	margin: 0 0 10px;
+}
+.entry-content .wp-block-image.is-style-lsv-karte img { border-radius: var(--radius); }
+
+/* Spalten = Karten (abschaltbar mit Stil "Ohne Karten") */
+.entry-content .wp-block-columns { gap: var(--abstand); margin-bottom: var(--abstand); }
+.entry-content .wp-block-columns:not(.is-style-lsv-ohne-karten):not(.is-style-twentytwentyone-columns-overlap) > .wp-block-column {
+	background: var(--karte);
+	border-radius: var(--radius);
+	padding: 14px 16px 16px;
+	box-shadow: var(--schatten);
+}
+.entry-content .wp-block-column > *:first-child { margin-top: 0; }
+.entry-content .wp-block-column > *:last-child { margin-bottom: 0; }
+.entry-content .wp-block-column h2,
+.entry-content .wp-block-column h3 { font-size: 1.05rem; color: var(--titel); margin: 0 0 10px; }
+.entry-content .wp-block-column img { border-radius: var(--radius); }
+.entry-content .wp-block-column .wp-block-image:not(:last-child) { margin-bottom: 8px; }
+.entry-content .wp-block-column figcaption,
+.entry-content .wp-block-column .wp-element-caption { margin: 8px 0 0; }
+
+/* Kachel (wie QNH / QFE auf der Wetterseite) */
+.lsv-kachel,
+.entry-content .wp-block-group.is-style-lsv-kachel {
+	background: var(--karte);
+	border-radius: var(--radius);
+	border-top: 3px solid var(--akzent);
+	padding: 12px 14px;
+	box-shadow: var(--schatten);
+	margin-bottom: var(--abstand);
+}
+.is-style-lsv-kachel > * { margin-top: 0; margin-bottom: 2px; }
+.is-style-lsv-kachel > *:first-child { font-size: .85rem; color: var(--text-leise); }
+.is-style-lsv-kachel > *:last-child { margin-bottom: 0; }
+.is-style-lsv-kachel > *:nth-child(n+3) { font-size: .85rem; color: var(--text-leise); }
+.is-style-lsv-kachel h2, .is-style-lsv-kachel h3, .is-style-lsv-kachel strong {
+	font-size: 1.6rem; font-weight: 600; color: var(--text); line-height: 1.2;
+}
+.entry-content .wp-block-columns.is-style-lsv-ohne-karten .is-style-lsv-kachel { height: 100%; margin-bottom: 0; }
+
+/* =========================================================
+   6. Blöcke
+   ========================================================= */
+/* Titelbild */
+.entry-content .wp-block-cover,
+.entry-content .wp-block-cover-image {
+	border-radius: var(--radius);
+	overflow: hidden;
+	box-shadow: var(--schatten);
+	margin-bottom: 24px;
+}
+.entry-content .wp-block-cover.alignfull { border-radius: 0; }
+.wp-block-cover .wp-block-cover__inner-container h1,
+.wp-block-cover .wp-block-cover__inner-container h2,
+.wp-block-cover .wp-block-cover__inner-container h3,
+.wp-block-cover .wp-block-cover__inner-container p {
+	color: #fff;
+	text-shadow: 0 1px 4px rgba(0, 0, 0, .35);
+}
+
+/* Startseite: Text im Titelbild oben im Himmel statt in der Bildmitte.
+   Gilt nur für Titelbilder mit Inhaltsposition "Mitte" auf der Startseite. */
+.home .entry-content > .wp-block-cover.is-position-center-center {
+	align-items: flex-start;
+	padding-top: clamp(28px, 6%, 80px);
+}
+
+/* Bilder & Galerie */
+.wp-block-image img, .wp-block-gallery img { border-radius: var(--radius); }
+.wp-block-image figcaption, .wp-block-gallery figcaption { text-align: center; }
+.wp-block-gallery.has-nested-images figure.wp-block-image figcaption { border-radius: 0 0 var(--radius) var(--radius); }
+
+/* Medien */
+.wp-block-embed { margin-bottom: 24px; }
+.wp-block-embed iframe, .wp-block-video video { border-radius: var(--radius); }
+.wp-block-embed__wrapper { border-radius: var(--radius); overflow: hidden; box-shadow: var(--schatten); }
+.wp-block-media-text { background: var(--karte); border-radius: var(--radius); overflow: hidden; box-shadow: var(--schatten); }
+.wp-block-media-text .wp-block-media-text__content { padding: 18px 22px; }
+.wp-block-media-text img { border-radius: 0; }
+
+/* Buttons */
+.wp-block-button__link,
+.wp-element-button,
+.wp-block-file .wp-block-file__button,
+.wp-block-search__button,
+input[type="submit"], input[type="button"], input[type="reset"],
+button.such-knopf, .button {
+	display: inline-block;
+	background: var(--karte-hell);
+	color: var(--text);
+	border: 1px solid var(--linie);
+	border-radius: var(--radius);
+	font-family: var(--schrift);
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.3;
+	padding: 10px 18px;
+	text-decoration: none;
+	cursor: pointer;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .12);
+}
+.wp-block-button__link:hover, .wp-element-button:hover,
+.wp-block-file .wp-block-file__button:hover, .wp-block-search__button:hover,
+input[type="submit"]:hover, input[type="button"]:hover, button.such-knopf:hover, .button:hover {
+	background: var(--blau-dunkel);
+	color: var(--text);
+}
+.wp-block-button.is-style-outline > .wp-block-button__link,
+.wp-block-button__link.is-style-outline {
+	background: transparent;
+	border: 1px solid var(--akzent);
+	color: var(--text);
+}
+.wp-block-buttons { margin-bottom: 1em; }
+
+/* Tabellen */
+.entry-content .wp-block-table {
+	background: var(--karte);
+	border-radius: var(--radius);
+	box-shadow: var(--schatten);
+	padding: 6px 10px;
+	overflow-x: auto;
+}
+.wp-block-table table { border: 0; }
+.wp-block-table td, .wp-block-table th { border: 0; border-bottom: 1px solid var(--linie); }
+.wp-block-table tr:last-child td { border-bottom: 0; }
+.wp-block-table.is-style-stripes { border-bottom: 0; }
+.wp-block-table.is-style-stripes tbody tr:nth-child(odd) { background: var(--karte-hell); }
+.wp-block-table thead { border-bottom: 1px solid var(--linie); }
+
+/* Zitate */
+.wp-block-quote { border-left: 3px solid var(--akzent); padding-left: 16px; }
+.wp-block-quote.is-style-large { border-left: 0; padding-left: 0; font-size: 1.3rem; }
+.wp-block-pullquote { border-top: 2px solid var(--linie); border-bottom: 2px solid var(--linie); color: var(--text); padding: 1.5em 0; }
+.wp-block-pullquote blockquote { border: 0; padding: 0; }
+
+/* Trenner */
+.wp-block-separator { border: 0; border-top: 1px solid var(--linie); opacity: 1; margin: 2em auto; }
+.wp-block-separator:not(.is-style-wide):not(.is-style-dots) { max-width: 120px; }
+.wp-block-separator.is-style-dots::before { color: var(--text-leise); }
+.wp-block-separator.has-background { border-top-color: currentColor; }
+
+/* Code, Details */
+.wp-block-code { background: var(--karte); border: 0; border-radius: var(--radius); padding: 12px 14px; }
+.wp-block-details { background: var(--karte); border-radius: var(--radius); padding: 10px 14px; box-shadow: var(--schatten); }
+.wp-block-details summary { cursor: pointer; font-weight: 600; color: var(--titel); }
+
+/* Neueste Beiträge, Kalender, Archive, Kategorien */
+.wp-block-latest-posts { padding-left: 0; }
+.wp-block-latest-posts.wp-block-latest-posts__list li { margin-bottom: .6em; }
+.wp-block-latest-posts__post-date, .wp-block-latest-comments__comment-date { color: var(--text-leise); font-size: .85rem; }
+.wp-block-calendar table { background: var(--karte); border-radius: var(--radius); }
+.wp-block-calendar th { background: var(--karte-hell); color: var(--text); }
+.wp-block-calendar td, .wp-block-calendar th { border-color: var(--linie); }
+
+/* Suche (Block) */
+.wp-block-search__input { min-width: 0; }
+.wp-block-search__inside-wrapper { gap: 6px; }
+
+/* Social Icons */
+.wp-block-social-links .wp-social-link { border-radius: 50%; }
+
+/* =========================================================
+   7. Twenty-Twenty-One-Kompatibilität
+   ========================================================= */
+/* Rahmen-Stile → im LSV-Look als Karte statt weißem Rahmen */
+.is-style-twentytwentyone-border,
+.wp-block-image.is-style-twentytwentyone-border img,
+.wp-block-image.is-style-twentytwentyone-image-frame img,
+.wp-block-media-text.is-style-twentytwentyone-border,
+.wp-block-gallery.is-style-twentytwentyone-border img {
+	border: 0 !important;
+	border-radius: var(--radius);
+	box-shadow: var(--schatten);
+}
+.wp-block-image.is-style-twentytwentyone-image-frame img { padding: 8px; background: var(--karte); }
+.wp-block-group.is-style-twentytwentyone-border { background: var(--karte); padding: 14px 16px 16px; }
+.wp-block-separator.is-style-twentytwentyone-separator-thick { border-top-width: 3px; }
+.wp-block-latest-posts.is-style-twentytwentyone-latest-posts-borders li {
+	background: var(--karte); border-radius: var(--radius); padding: 12px 14px; box-shadow: var(--schatten); list-style: none;
+}
+.wp-block-latest-posts.is-style-twentytwentyone-latest-posts-dividers li { border-bottom: 1px solid var(--linie); padding-bottom: .6em; }
+.wp-block-social-links.is-style-twentytwentyone-social-icons-color .wp-social-link { background: none; color: var(--text); }
+
+/* Farbklassen der Twenty-Twenty-One-Palette */
+.has-black-color { color: #000 !important; }
+.has-black-background-color { background-color: #000 !important; color: #fff; }
+.has-dark-gray-color { color: #28303d !important; }
+.has-dark-gray-background-color { background-color: #28303d !important; color: #fff; }
+.has-gray-color { color: #39414d !important; }
+.has-gray-background-color { background-color: #39414d !important; color: #fff; }
+.has-green-color { color: #d1e4dd !important; }
+.has-green-background-color { background-color: #d1e4dd !important; color: #1f2933; }
+.has-blue-color { color: #d1dfe4 !important; }
+.has-blue-background-color { background-color: #d1dfe4 !important; color: #1f2933; }
+.has-purple-color { color: #d1d1e4 !important; }
+.has-purple-background-color { background-color: #d1d1e4 !important; color: #1f2933; }
+.has-red-color { color: #e4d1d1 !important; }
+.has-red-background-color { background-color: #e4d1d1 !important; color: #1f2933; }
+.has-orange-color { color: #e4dad1 !important; }
+.has-orange-background-color { background-color: #e4dad1 !important; color: #1f2933; }
+.has-yellow-color { color: #eeeadd !important; }
+.has-yellow-background-color { background-color: #eeeadd !important; color: #1f2933; }
+.has-white-color { color: #fff !important; }
+.has-white-background-color { background-color: #fff !important; color: #1f2933; }
+
+/* LSV-Palette */
+.has-lsv-blau-color { color: #486d97 !important; }
+.has-lsv-blau-background-color { background-color: #486d97 !important; }
+.has-lsv-blau-dunkel-color { color: #3a5a7f !important; }
+.has-lsv-blau-dunkel-background-color { background-color: #3a5a7f !important; }
+.has-lsv-karte-color { color: #2c4767 !important; }
+.has-lsv-karte-background-color { background-color: #2c4767 !important; }
+.has-lsv-karte-hell-color { color: #385879 !important; }
+.has-lsv-karte-hell-background-color { background-color: #385879 !important; }
+.has-lsv-akzent-color { color: #8fb3dc !important; }
+.has-lsv-akzent-background-color { background-color: #8fb3dc !important; color: #10243a; }
+.has-lsv-titel-color { color: #d3e3f4 !important; }
+.has-lsv-titel-background-color { background-color: #d3e3f4 !important; color: #10243a; }
+.has-lsv-text-color { color: #f2f6fa !important; }
+.has-lsv-text-background-color { background-color: #f2f6fa !important; color: #1f2933; }
+.has-lsv-text-leise-color { color: #b6c7da !important; }
+.has-lsv-text-leise-background-color { background-color: #b6c7da !important; color: #10243a; }
+.has-lsv-gut-color { color: #2e8b57 !important; }
+.has-lsv-gut-background-color { background-color: #2e8b57 !important; }
+.has-lsv-warn-color { color: #c0392b !important; }
+.has-lsv-warn-background-color { background-color: #c0392b !important; }
+p.has-background,
+.wp-block-group.has-background:not(.alignfull) { padding: 14px 18px; border-radius: var(--radius); }
+
+/* Schriftgrößen (gleiche Slugs wie Twenty Twenty-One) */
+.has-extra-small-font-size { font-size: .8125rem !important; }
+.has-small-font-size { font-size: .875rem !important; }
+.has-normal-font-size, .has-regular-font-size { font-size: 1rem !important; }
+.has-large-font-size { font-size: 1.375rem !important; }
+.has-extra-large-font-size { font-size: 1.875rem !important; }
+.has-huge-font-size { font-size: 2.5rem !important; }
+.has-gigantic-font-size { font-size: 3.5rem !important; line-height: 1.1; }
+@media (max-width: 600px) {
+	.has-extra-large-font-size { font-size: 1.5rem !important; }
+	.has-huge-font-size { font-size: 1.85rem !important; line-height: 1.2; }
+	.has-gigantic-font-size { font-size: 2.3rem !important; }
+	h1, .seiten-titel { font-size: 1.6rem; }
+	.entry-content .wp-block-cover { min-height: 300px !important; }
+}
+
+/* =========================================================
+   8. Beitragsliste (Aktuelles)
+   ========================================================= */
+.beitrag-liste { max-width: var(--breite-text); margin: 0 auto; }
+.beitrag-karte { display: grid; grid-template-columns: 220px 1fr; gap: 18px; padding: 16px; }
+.beitrag-karte:not(.has-post-thumbnail) { grid-template-columns: 1fr; }
+.beitrag-bild img { width: 100%; height: 100%; max-height: 180px; object-fit: cover; border-radius: var(--radius); }
+.beitrag-titel { font-size: 1.25rem; margin: 0 0 4px; color: var(--text); }
+.beitrag-titel a { text-decoration: none; }
+.beitrag-titel a:hover { color: var(--titel); text-decoration: underline; }
+.beitrag-auszug { margin-top: 8px; color: var(--text); }
+.beitrag-auszug p { margin-bottom: .5em; }
+.weiterlesen { font-weight: 600; font-size: .95rem; color: var(--titel); text-decoration: none; }
+.weiterlesen:hover { text-decoration: underline; }
+.beitrag-fixiert {
+	display: inline-block; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em;
+	color: var(--akzent); margin-bottom: 4px;
+}
+@media (max-width: 600px) {
+	.beitrag-karte { grid-template-columns: 1fr; }
+	.beitrag-bild img { max-height: 200px; }
+}
+
+.pagination, .post-navigation, .comments-pagination { max-width: var(--breite-text); margin: 24px auto; }
+.pagination .nav-links { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.pagination .page-numbers {
+	display: inline-block; min-width: 38px; text-align: center; padding: 7px 10px;
+	background: var(--karte); border-radius: var(--radius); text-decoration: none; box-shadow: var(--schatten);
+}
+.pagination .page-numbers.current { background: var(--karte-hell); box-shadow: inset 0 -3px 0 var(--akzent); }
+.pagination .page-numbers.dots { background: transparent; box-shadow: none; }
+.post-navigation .nav-links { display: grid; grid-template-columns: 1fr 1fr; gap: var(--abstand); }
+.post-navigation a {
+	display: block; background: var(--karte); border-radius: var(--radius); padding: 12px 14px;
+	text-decoration: none; box-shadow: var(--schatten); height: 100%;
+}
+.post-navigation a:hover { background: var(--karte-hell); }
+.post-navigation .nav-next { text-align: right; grid-column: 2; }
+.nav-klein { display: block; font-size: .8rem; color: var(--text-leise); }
+.nav-titel { font-weight: 600; }
+@media (max-width: 600px) {
+	.post-navigation .nav-links { grid-template-columns: 1fr; }
+	.post-navigation .nav-next { grid-column: 1; }
+}
+.keine-treffer { max-width: var(--breite-text); margin: 30px auto; }
+
+/* =========================================================
+   9. Formulare & Suche
+   ========================================================= */
+input[type="text"], input[type="email"], input[type="tel"], input[type="url"],
+input[type="password"], input[type="search"], input[type="number"], input[type="date"],
+input[type="time"], input[type="datetime-local"], textarea, select {
+	width: 100%;
+	max-width: 100%;
+	background: var(--karte);
+	color: var(--text);
+	border: 1px solid var(--linie);
+	border-radius: var(--radius);
+	padding: 9px 11px;
+	font: inherit;
+}
+textarea { min-height: 120px; }
+input:focus, textarea:focus, select:focus { outline: 2px solid var(--akzent); outline-offset: 0; border-color: var(--akzent); }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--akzent); }
+::placeholder { color: var(--text-leise); opacity: .8; }
+label { color: var(--text-leise); font-size: .95rem; }
+.suchformular { display: flex; gap: 8px; max-width: 520px; }
+.suchformular .suchfeld { flex: 1; }
+.seiten-kopf .suchformular { margin-top: 12px; }
+
+/* Kommentare */
+.kommentare { max-width: var(--breite-text); margin: 30px auto; }
+.kommentar-liste { list-style: none; padding: 0; }
+.kommentar-liste .children { list-style: none; padding-left: 20px; }
+.comment-body { border-bottom: 1px solid var(--linie); padding: 12px 0; }
+.comment-meta { font-size: .85rem; color: var(--text-leise); }
+.comment-author img { border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+.comment-author .fn { color: var(--text); font-weight: 600; font-style: normal; }
+.comment-metadata a { color: var(--text-leise); }
+.comment-form p { margin-bottom: 12px; }
+.comment-form label { display: block; margin-bottom: 4px; }
+.comment-form-cookies-consent label { display: inline; }
+
+/* =========================================================
+   10. Fußzeile
+   ========================================================= */
+.fuss { color: var(--text-leise); font-size: .9rem; padding: 10px var(--abstand) calc(24px + env(safe-area-inset-bottom)); }
+.fuss-innen { max-width: var(--breite); margin: 0 auto; }
+.fuss-widgets {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: var(--abstand);
+	margin: 20px 0;
+}
+.fuss-widgets .widget { margin: 0; }
+.fuss-widgets ul { padding-left: 1.1em; }
+.fuss-widgets a { color: var(--text); }
+.fuss-zeile {
+	border-top: 1px solid var(--linie);
+	padding-top: 16px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px 24px;
+}
+.fuss-marke { display: flex; align-items: center; gap: 14px; }
+.fuss-logo img, .fuss-logo .custom-logo { max-height: 40px; width: auto; display: block; }
+.fuss-adresse { margin-top: 2px; }
+.fuss a { color: var(--text-leise); text-decoration: none; }
+.fuss a:hover { color: var(--text); text-decoration: underline; }
+.fuss-menue ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.fuss-menue li { margin: 0; }
+.fuss-menue svg { width: 20px; height: 20px; fill: currentColor; vertical-align: middle; }
+
+
+/* =========================================================
+   12. Wetter vom Platz  [lsv_wetter]
+   ========================================================= */
+.lsv-wetter { margin: 0 auto var(--abstand); }
+.entry-content > .lsv-wetter,
+.entry-content > .wp-block-shortcode > .lsv-wetter { max-width: var(--breite); }
+.lsv-wetter-kopf {
+	display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+	gap: 4px 16px; margin-bottom: 10px;
+}
+.lsv-wetter-titel { margin: 0; font-size: 1.3rem; color: var(--titel); }
+.lsv-wetter-stand { font-size: .85rem; color: var(--text-leise); }
+.lsv-wetter-stand.ist-veraltet { color: #ffb4aa; }
+.lsv-wetter-raster {
+	display: grid;
+	grid-template-columns: 1.35fr repeat(3, minmax(0, 1fr));
+	gap: var(--abstand);
+}
+.lsv-wetter-kachel {
+	background: var(--karte);
+	border-radius: var(--radius);
+	border-top: 3px solid var(--akzent);
+	padding: 12px 14px;
+	box-shadow: var(--schatten);
+	min-width: 0;
+}
+.lsv-wetter-kachel .k-name { font-size: .85rem; color: var(--text-leise); }
+.lsv-wetter-kachel .k-wert {
+	font-size: 1.6rem; font-weight: 600; line-height: 1.2; color: var(--text);
+	white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.lsv-wetter-kachel .k-wert small { font-size: .9rem; font-weight: 400; color: var(--text-leise); margin-left: 3px; }
+.lsv-wetter-kachel .k-zusatz { font-size: .85rem; color: var(--text-leise); margin-top: 2px; }
+.lsv-wetter-wind { grid-row: span 2; display: flex; flex-direction: column; gap: 8px; }
+.lsv-wetter-wind-zeile { display: flex; align-items: center; gap: 12px; }
+.lsv-wetter-pfeil { width: 52px; height: 52px; flex: 0 0 auto; color: var(--akzent); transition: transform .4s; }
+.lsv-wetter-wind .k-wert { font-size: 2rem; }
+.lsv-wetter-piste {
+	display: flex; align-items: center; gap: 12px;
+	background: var(--karte-hell); border-radius: var(--radius); padding: 8px 10px;
+	font-size: .9rem; line-height: 1.4;
+}
+.lsv-wetter-piste small { color: var(--text-leise); font-size: .85em; white-space: nowrap; }
+.lsv-wetter-rwy {
+	flex: 0 0 auto;
+	background: var(--blau-dunkel);
+	color: #fff;
+	font-weight: 700;
+	font-size: 1.05rem;
+	padding: 8px 10px;
+	border-radius: 3px;
+	border: 2px solid rgba(255, 255, 255, .55);
+	letter-spacing: .02em;
+}
+.lsv-wetter-link { margin: 10px 0 0; text-align: right; font-size: .9rem; }
+.lsv-wetter-link a { color: var(--titel); font-weight: 600; text-decoration: none; }
+.lsv-wetter-link a:hover { text-decoration: underline; }
+.lsv-wetter-kompakt .lsv-wetter-raster { grid-template-columns: 1.35fr repeat(3, minmax(0, 1fr)); }
+.lsv-wetter-kompakt .lsv-wetter-wind { grid-row: auto; }
+.lsv-wetter-fehler p:last-child { margin-bottom: 0; }
+@media (max-width: 1100px) {
+	.lsv-wetter-raster, .lsv-wetter-kompakt .lsv-wetter-raster { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	.lsv-wetter-wind { grid-column: 1 / -1; grid-row: auto; }
+}
+@media (max-width: 700px) {
+	.lsv-wetter-raster, .lsv-wetter-kompakt .lsv-wetter-raster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.lsv-wetter-wind { grid-column: 1 / -1; grid-row: auto; }
+}
+@media (max-width: 420px) {
+	.lsv-wetter-kachel .k-wert { font-size: 1.35rem; }
+	.lsv-wetter-raster { gap: 10px; }
+}
+
+/* =========================================================
+   11. Druck
+   ========================================================= */
+@media print {
+	body { background: #fff !important; color: #000; }
+	.kopf, .fuss, .menue-knopf, .hauptmenue, .post-navigation, .kommentare { display: none; }
+	.lsv-karte, .entry-content .wp-block-column, .is-style-lsv-karte, .is-style-lsv-kachel,
+	.entry-content .wp-block-table { background: #fff !important; box-shadow: none; border: 1px solid #ccc; color: #000; }
+	h1, h2, h3, a { color: #000 !important; }
+}
+
+/* Weniger Bewegung */
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+	*, *::before, *::after { transition: none !important; }
+}

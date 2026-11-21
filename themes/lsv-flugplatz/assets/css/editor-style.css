@@ -1,0 +1,59 @@
+/* Block-Editor im Stil von LSV Flugplatz */
+body,
+.editor-styles-wrapper {
+	background: #486d97 !important;
+	color: #f2f6fa;
+	font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.55;
+}
+.editor-styles-wrapper .wp-block { max-width: 900px; }
+.editor-styles-wrapper .wp-block[data-align="wide"] { max-width: 1280px; }
+.editor-styles-wrapper .wp-block[data-align="full"] { max-width: none; }
+
+.editor-styles-wrapper h1, .editor-styles-wrapper h2, .editor-styles-wrapper h3,
+.editor-styles-wrapper h4, .editor-styles-wrapper h5, .editor-styles-wrapper h6,
+.editor-styles-wrapper .editor-post-title__input,
+.editor-styles-wrapper .wp-block-post-title {
+	font-family: inherit;
+	font-weight: 600;
+	line-height: 1.25;
+	color: #f2f6fa;
+}
+.editor-styles-wrapper h2 { font-size: 1.45rem; color: #d3e3f4; }
+.editor-styles-wrapper h3 { font-size: 1.2rem; color: #d3e3f4; }
+.editor-styles-wrapper a { color: #f2f6fa; text-decoration-color: #8fb3dc; text-underline-offset: 3px; }
+
+.editor-styles-wrapper .wp-block-columns:not(.is-style-lsv-ohne-karten):not(.is-style-twentytwentyone-columns-overlap) > .wp-block-column,
+.editor-styles-wrapper .wp-block-group.is-style-lsv-karte,
+.editor-styles-wrapper .wp-block-group.is-style-twentytwentyone-border {
+	background: #2c4767;
+	border-radius: 4px;
+	padding: 14px 16px 16px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+}
+.editor-styles-wrapper .wp-block-columns .wp-block-column h2,
+.editor-styles-wrapper .wp-block-columns .wp-block-column h3 { font-size: 1.05rem; margin-top: 0; }
+.editor-styles-wrapper .wp-block-group.is-style-lsv-kachel {
+	background: #2c4767;
+	border-radius: 4px;
+	border-top: 3px solid #8fb3dc;
+	padding: 12px 14px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+}
+.editor-styles-wrapper .wp-block-cover,
+.editor-styles-wrapper .is-style-twentytwentyone-border { border: 0 !important; border-radius: 4px; overflow: hidden; }
+.editor-styles-wrapper .wp-block-image img { border-radius: 4px; }
+.editor-styles-wrapper .wp-block-button__link {
+	background: #385879;
+	color: #f2f6fa;
+	border: 1px solid rgba(255, 255, 255, .14);
+	border-radius: 4px;
+	font-weight: 600;
+}
+.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link { background: transparent; border-color: #8fb3dc; }
+.editor-styles-wrapper .wp-block-table { background: #2c4767; border-radius: 4px; padding: 6px 10px; }
+.editor-styles-wrapper .wp-block-table td,
+.editor-styles-wrapper .wp-block-table th { border: 0; border-bottom: 1px solid rgba(255, 255, 255, .14); }
+.editor-styles-wrapper .wp-block-quote { border-left: 3px solid #8fb3dc; padding-left: 16px; }
+.editor-styles-wrapper .wp-block-separator { border-top: 1px solid rgba(255, 255, 255, .14); border-bottom: 0; }

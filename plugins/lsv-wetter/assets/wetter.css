@@ -1,0 +1,161 @@
+/* LSV Wetter am Platz – funktioniert mit jedem Theme.
+   Farben lassen sich im Theme über diese Variablen anpassen. */
+.lsv-wetter {
+	--lsvw-karte: var(--karte, #2c4767);
+	--lsvw-karte-hell: var(--karte-hell, #385879);
+	--lsvw-blau-dunkel: var(--blau-dunkel, #3a5a7f);
+	--lsvw-text: var(--text, #f2f6fa);
+	--lsvw-leise: var(--text-leise, #b6c7da);
+	--lsvw-titel: var(--titel, #d3e3f4);
+	--lsvw-akzent: var(--akzent, #8fb3dc);
+	--lsvw-radius: var(--radius, 4px);
+	--lsvw-abstand: var(--abstand, 14px);
+	--lsvw-schatten: var(--schatten, 0 2px 8px rgba(0, 0, 0, .18));
+	box-sizing: border-box;
+	margin: 0 auto var(--lsvw-abstand);
+	font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+	line-height: 1.45;
+}
+.lsv-wetter *, .lsv-wetter *::before, .lsv-wetter *::after { box-sizing: border-box; }
+
+.wp-block-lsv-wetter { margin-bottom: 24px; }
+.entry-content > .lsv-wetter { max-width: var(--breite, 1280px); }
+
+.lsv-wetter-kopf {
+	display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+	gap: 4px 16px; margin-bottom: 10px;
+}
+.lsv-wetter .lsv-wetter-titel { margin: 0; font-size: 1.3rem; font-weight: 600; line-height: 1.25; }
+.lsv-wetter-stand { font-size: .85rem; opacity: .8; }
+.lsv-wetter-stand.ist-veraltet { color: #e05a4a; opacity: 1; }
+
+.lsv-wetter-raster {
+	display: grid;
+	grid-template-columns: 1.35fr repeat(3, minmax(0, 1fr));
+	gap: var(--lsvw-abstand);
+}
+.lsv-wetter-kachel,
+.lsv-wetter-fehler {
+	background: var(--lsvw-karte);
+	color: var(--lsvw-text);
+	border-radius: var(--lsvw-radius);
+	border-top: 3px solid var(--lsvw-akzent);
+	padding: 12px 14px;
+	box-shadow: var(--lsvw-schatten);
+	min-width: 0;
+}
+.lsv-wetter-fehler p { margin: 0 0 6px; }
+.lsv-wetter-fehler p:last-child { margin: 0; }
+.lsv-wetter-fehler a { color: var(--lsvw-titel); }
+.lsv-wetter-kachel .k-name { font-size: .85rem; color: var(--lsvw-leise); }
+.lsv-wetter-kachel .k-wert {
+	font-size: 1.6rem; font-weight: 600; line-height: 1.2; color: var(--lsvw-text);
+	white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.lsv-wetter-kachel .k-wert small { font-size: .9rem; font-weight: 400; color: var(--lsvw-leise); margin-left: 3px; }
+.lsv-wetter-kachel .k-zusatz { font-size: .85rem; color: var(--lsvw-leise); margin-top: 2px; }
+
+.lsv-wetter-wind { grid-row: span 2; display: flex; flex-direction: column; gap: 8px; }
+.lsv-wetter-wind-zeile { display: flex; align-items: center; gap: 12px; }
+.lsv-wetter-pfeil { width: 52px; height: 52px; flex: 0 0 auto; color: var(--lsvw-akzent); transition: transform .4s; }
+.lsv-wetter-wind .k-wert { font-size: 2rem; }
+.lsv-wetter-piste {
+	display: flex; align-items: center; gap: 12px;
+	background: var(--lsvw-karte-hell); border-radius: var(--lsvw-radius); padding: 8px 10px;
+	font-size: .9rem; line-height: 1.4;
+}
+.lsv-wetter-piste small { color: var(--lsvw-leise); font-size: .85em; white-space: nowrap; }
+.lsv-wetter-rwy {
+	flex: 0 0 auto;
+	background: var(--lsvw-blau-dunkel);
+	color: #fff;
+	font-weight: 700;
+	font-size: 1.05rem;
+	padding: 8px 10px;
+	border-radius: 3px;
+	border: 2px solid rgba(255, 255, 255, .55);
+	letter-spacing: .02em;
+}
+
+.lsv-wetter-link { margin: 10px 0 0; text-align: right; font-size: .9rem; }
+.lsv-wetter-link a { font-weight: 600; text-decoration: none; }
+.lsv-wetter-link a:hover { text-decoration: underline; }
+
+.lsv-wetter-kompakt .lsv-wetter-wind { grid-row: auto; }
+
+@media (max-width: 1100px) {
+	.lsv-wetter-raster { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	.lsv-wetter-wind { grid-column: 1 / -1; grid-row: auto; }
+}
+@media (max-width: 700px) {
+	.lsv-wetter-raster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 420px) {
+	.lsv-wetter-kachel .k-wert { font-size: 1.35rem; }
+	.lsv-wetter-raster { gap: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.lsv-wetter-pfeil { transition: none; }
+}
+
+/* =========================================================
+   Gelbes Pistenschild  [lsv_landerichtung]
+   ========================================================= */
+.lsv-schild-wrap {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	vertical-align: middle;
+	font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.lsv-schild {
+	display: inline-block;
+	background: #ffcc00;
+	color: #000 !important;
+	font-weight: 700;
+	font-size: 1.15rem;
+	line-height: 1;
+	letter-spacing: .03em;
+	padding: 10px 12px;
+	border-radius: 3px;
+	box-shadow: inset 0 0 0 2px #000, 0 1px 3px rgba(0, 0, 0, .35);
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+	text-decoration: none;
+}
+.lsv-schild-info { display: inline-flex; flex-direction: column; line-height: 1.3; }
+.lsv-schild-titel { font-weight: 600; }
+.lsv-schild-text { font-size: .85em; opacity: .8; }
+
+/* klein: passt in eine Textzeile */
+.lsv-schild-klein { gap: 6px; }
+.lsv-schild-klein .lsv-schild {
+	font-size: .85em;
+	padding: 3px 6px 4px;
+	box-shadow: inset 0 0 0 1.5px #000;
+	vertical-align: baseline;
+}
+.lsv-schild-klein.lsv-schild-wrap { vertical-align: baseline; }
+.lsv-schild-klein .lsv-schild-info { flex-direction: row; gap: 6px; flex-wrap: wrap; }
+.lsv-schild-klein .lsv-schild-text { font-size: 1em; }
+
+/* groß */
+.lsv-schild-gross { gap: 18px; }
+.lsv-schild-gross .lsv-schild {
+	font-size: 3rem;
+	padding: 16px 22px;
+	border-radius: 5px;
+	box-shadow: inset 0 0 0 4px #000, 0 2px 8px rgba(0, 0, 0, .35);
+}
+.lsv-schild-gross .lsv-schild-titel { font-size: 1.4rem; }
+.lsv-schild-gross .lsv-schild-text { font-size: 1rem; }
+
+@media (max-width: 480px) {
+	.lsv-schild-gross .lsv-schild { font-size: 2.2rem; padding: 12px 16px; }
+	.lsv-schild-gross .lsv-schild-titel { font-size: 1.15rem; }
+	.lsv-schild-wrap.mit-wind:not(.lsv-schild-klein) { flex-wrap: wrap; }
+}
+
+/* Einzelwerte */
+.lsv-wert { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lsv-wert-fehler { color: #a3261b; background: #fff; padding: 1px 5px; border-radius: 3px; font-weight: 600; }

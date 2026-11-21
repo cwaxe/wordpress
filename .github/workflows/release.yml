@@ -1,0 +1,49 @@
+# Baut bei einem Tag <paket>-v<version> die ZIP-Datei und legt ein Release an.
+name: Release
+
+on:
+  push:
+    tags:
+      - '*-v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Paket und Version aus dem Tag lesen
+        id: tag
+        run: |
+          tag="$GITHUB_REF_NAME"
+          echo "package=${tag%-v*}" >> "$GITHUB_OUTPUT"
+          echo "version=${tag##*-v}" >> "$GITHUB_OUTPUT"
+
+      - name: ZIP bauen
+        run: ./build.sh --expect-version "${{ steps.tag.outputs.version }}" "${{ steps.tag.outputs.package }}"
+
+      - name: Release-Text aus CHANGELOG.md
+        run: |
+          awk -v h="## ${{ steps.tag.outputs.package }} ${{ steps.tag.outputs.version }}" '
+            $0 == h { on = 1; next }
+            on && /^## / { exit }
+            on { print }
+          ' CHANGELOG.md > notes.md
+          if ! grep -q '[^[:space:]]' notes.md; then
+            echo "Kein Abschnitt in CHANGELOG.md gefunden." > notes.md
+          fi
+          cat notes.md
+
+      - name: Release anlegen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          package="${{ steps.tag.outputs.package }}"
+          version="${{ steps.tag.outputs.version }}"
+          gh release create "$GITHUB_REF_NAME" "dist/$package-$version.zip" \
+            --title "$package $version" \
+            --notes-file notes.md \
+            --latest=false
