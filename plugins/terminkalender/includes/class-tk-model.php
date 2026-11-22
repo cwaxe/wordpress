@@ -282,12 +282,43 @@ class TK_Model {
 		$ex = array_values( array_unique( $ex ) );
 		sort( $ex );
 
-		return [
+		$clean = [
 			'freq'     => $freq,
 			'interval' => $interval,
 			'until'    => $until,
 			'exdates'  => $ex,
 		];
+
+		// Wöchentlich: Wochentage (0 = Sonntag … 6 = Samstag). Der Tag des Beginns ist immer dabei.
+		if ( 'weekly' === $freq ) {
+			$days = [ (int) gmdate( 'w', self::ts( $first . ' 00:00' ) ) ];
+			if ( ! empty( $rule['days'] ) && is_array( $rule['days'] ) ) {
+				foreach ( $rule['days'] as $d ) {
+					if ( is_numeric( $d ) && (int) $d >= 0 && (int) $d <= 6 ) {
+						$days[] = (int) $d;
+					}
+				}
+			}
+			$days = array_values( array_unique( $days ) );
+			sort( $days );
+			$clean['days'] = $days;
+		}
+
+		return $clean;
+	}
+
+	/**
+	 * Wochentage einer wöchentlichen Serie (0 = Sonntag … 6 = Samstag).
+	 *
+	 * @param array<string,mixed> $rule  Serie.
+	 * @param string              $start Beginn.
+	 * @return int[]
+	 */
+	public static function rule_days( $rule, $start ) {
+		if ( ! empty( $rule['days'] ) && is_array( $rule['days'] ) ) {
+			return array_map( 'intval', $rule['days'] );
+		}
+		return [ (int) gmdate( 'w', self::ts( $start ) ) ];
 	}
 
 	/* ------------------------------------------------------------------ *
@@ -362,40 +393,75 @@ class TK_Model {
 		$weekday = (int) $base->format( 'w' );
 		$nth     = (int) ceil( $day / 7 );
 		$time    = $base->format( 'H:i' );
+		$first   = substr( $start, 0, 10 );
+
+		// Wöchentlich, auch an mehreren Tagen (z. B. Dienstag und Donnerstag).
+		if ( 'weekly' === $rule['freq'] ) {
+			$offsets = [];
+			foreach ( self::rule_days( $rule, $start ) as $d ) {
+				$offsets[] = ( $d + 6 ) % 7; // Abstand zum Montag.
+			}
+			$offsets = array_values( array_unique( $offsets ) );
+			sort( $offsets );
+
+			$monday = $base->modify( '-' . ( ( $weekday + 6 ) % 7 ) . ' days' );
+
+			for ( $w = 0; $w < 2000 && count( $out ) < self::MAX_OCCURRENCES; $w++ ) {
+				$week = $monday->modify( '+' . ( $w * 7 * $step ) . ' days' );
+				if ( $week->format( 'Y-m-d' ) > $until || $week->format( 'Y-m-d' ) > $to ) {
+					break;
+				}
+				foreach ( $offsets as $o ) {
+					$occ  = $week->modify( '+' . $o . ' days' );
+					$date = $occ->format( 'Y-m-d' );
+					if ( $date > $until || $date > $to ) {
+						break 2;
+					}
+					if ( $date < $first || in_array( $date, $ex, true ) ) {
+						continue;
+					}
+					$s_ts = $occ->getTimestamp();
+					if ( $overlaps( $s_ts, $s_ts + $dur ) ) {
+						$out[] = [
+							'start' => gmdate( 'Y-m-d H:i', $s_ts ),
+							'end'   => gmdate( 'Y-m-d H:i', $s_ts + $dur ),
+						];
+					}
+				}
+			}
+
+			return $out;
+		}
 
 		for ( $i = 0; $i < 5000 && count( $out ) < self::MAX_OCCURRENCES; $i++ ) {
-			$occ = null;
+			// Monatlich.
+			$occ         = null;
+			$month_first = $base->modify( 'first day of this month' )->modify( '+' . ( $i * $step ) . ' months' );
+			$y           = (int) $month_first->format( 'Y' );
+			$m           = (int) $month_first->format( 'n' );
+			$days_in     = (int) $month_first->format( 't' );
 
-			if ( 'weekly' === $rule['freq'] ) {
-				$occ = $base->modify( '+' . ( $i * 7 * $step ) . ' days' );
-			} else {
-				$month_first = $base->modify( 'first day of this month' )->modify( '+' . ( $i * $step ) . ' months' );
-				$y           = (int) $month_first->format( 'Y' );
-				$m           = (int) $month_first->format( 'n' );
-				$days_in     = (int) $month_first->format( 't' );
-
-				if ( 'monthly_day' === $rule['freq'] ) {
-					if ( $day <= $days_in ) {
-						$occ = self::make( $y, $m, $day, $time );
-					}
-				} elseif ( 'monthly_nth' === $rule['freq'] ) {
-					$first_wd = (int) self::make( $y, $m, 1, $time )->format( 'w' );
-					$d        = 1 + ( ( $weekday - $first_wd + 7 ) % 7 ) + ( $nth - 1 ) * 7;
-					if ( $d <= $days_in ) {
-						$occ = self::make( $y, $m, $d, $time );
-					}
-				} else { // monthly_last
-					$last_wd = (int) self::make( $y, $m, $days_in, $time )->format( 'w' );
-					$d       = $days_in - ( ( $last_wd - $weekday + 7 ) % 7 );
-					$occ     = self::make( $y, $m, $d, $time );
+			if ( 'monthly_day' === $rule['freq'] ) {
+				if ( $day <= $days_in ) {
+					$occ = self::make( $y, $m, $day, $time );
 				}
-
-				if ( ! $occ ) {
-					if ( sprintf( '%04d-%02d-01', $y, $m ) > $until ) {
-						break;
-					}
-					continue;
+			} elseif ( 'monthly_nth' === $rule['freq'] ) {
+				$first_wd = (int) self::make( $y, $m, 1, $time )->format( 'w' );
+				$d        = 1 + ( ( $weekday - $first_wd + 7 ) % 7 ) + ( $nth - 1 ) * 7;
+				if ( $d <= $days_in ) {
+					$occ = self::make( $y, $m, $d, $time );
 				}
+			} else { // monthly_last
+				$last_wd = (int) self::make( $y, $m, $days_in, $time )->format( 'w' );
+				$d       = $days_in - ( ( $last_wd - $weekday + 7 ) % 7 );
+				$occ     = self::make( $y, $m, $d, $time );
+			}
+
+			if ( ! $occ ) {
+				if ( sprintf( '%04d-%02d-01', $y, $m ) > $until ) {
+					break;
+				}
+				continue;
 			}
 
 			$date = $occ->format( 'Y-m-d' );
@@ -450,10 +516,11 @@ class TK_Model {
 
 		switch ( $rule['freq'] ) {
 			case 'weekly':
-				/* translators: %s: Wochentag. */
-				$text = 1 === $interval ? sprintf( __( 'jeden %s', 'terminkalender' ), $weekday )
-					/* translators: 1: Anzahl Wochen, 2: Wochentag. */
-					: sprintf( __( 'alle %1$d Wochen am %2$s', 'terminkalender' ), $interval, $weekday );
+				$names = self::weekday_list( self::rule_days( $rule, $data['start'] ) );
+				/* translators: %s: Wochentag(e), z. B. „Dienstag und Donnerstag“. */
+				$text = 1 === $interval ? sprintf( __( 'jeden %s', 'terminkalender' ), $names )
+					/* translators: 1: Anzahl Wochen, 2: Wochentag(e). */
+					: sprintf( __( 'alle %1$d Wochen am %2$s', 'terminkalender' ), $interval, $names );
 				break;
 			case 'monthly_day':
 				/* translators: %d: Tag im Monat. */
@@ -470,6 +537,34 @@ class TK_Model {
 
 		/* translators: 1: Serienbeschreibung, 2: Enddatum. */
 		return sprintf( __( '%1$s bis %2$s', 'terminkalender' ), $text, $until );
+	}
+
+	/**
+	 * „Dienstag und Donnerstag“ bzw. „Montag, Mittwoch und Freitag“ (Montag zuerst).
+	 *
+	 * @param int[] $days Wochentage (0 = Sonntag).
+	 * @return string
+	 */
+	public static function weekday_list( $days ) {
+		usort(
+			$days,
+			static function ( $a, $b ) {
+				return ( ( $a + 6 ) % 7 ) - ( ( $b + 6 ) % 7 );
+			}
+		);
+		// 7. Januar 2024 war ein Sonntag.
+		$names = array_map(
+			static function ( $d ) {
+				return self::fmt( 'l', self::ts( '2024-01-07 12:00' ) + $d * DAY_IN_SECONDS );
+			},
+			$days
+		);
+		if ( count( $names ) < 2 ) {
+			return (string) reset( $names );
+		}
+		$last = array_pop( $names );
+		/* translators: 1: Aufzählung, 2: letzter Eintrag. */
+		return sprintf( __( '%1$s und %2$s', 'terminkalender' ), implode( ', ', $names ), $last );
 	}
 
 	/* ------------------------------------------------------------------ *

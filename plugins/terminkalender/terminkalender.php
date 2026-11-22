@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Terminkalender
  * Description:       Schlanker Veranstaltungskalender mit einfachem Backend: Termine mit Datum, Ort, Veranstalter, Kategorie, Bild und einfachen Serien. Monats- und Listenansicht, Kategorie-Filter, eigene Terminseiten, iCal. Übernimmt alle Daten aus „The Events Calendar“.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 6.6
  * Requires PHP:      7.4
  * Author:            IT-Service Waxenberger
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TK_VERSION', '1.0.0' );
+define( 'TK_VERSION', '1.1.0' );
 define( 'TK_FILE', __FILE__ );
 define( 'TK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TK_URL', plugin_dir_url( __FILE__ ) );

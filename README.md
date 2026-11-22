@@ -12,7 +12,7 @@ Die fertigen ZIP-Dateien liegen unter [**Releases**](https://github.com/cwaxe/wo
 | [LSV Flugplatz](themes/lsv-flugplatz/) | Theme | 1.2.0 | [lsv-flugplatz-1.2.0.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-flugplatz-v1.2.0/lsv-flugplatz-1.2.0.zip) |
 | [WX Easy Template](themes/wx-easy-template/) | Theme | 1.10.1 | [wx-easy-template-1.10.1.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-template-v1.10.1/wx-easy-template-1.10.1.zip) |
 | [LSV Wetter am Platz](plugins/lsv-wetter/) | Plugin | 1.1.0 | [lsv-wetter-1.1.0.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-wetter-v1.1.0/lsv-wetter-1.1.0.zip) |
-| [Terminkalender](plugins/terminkalender/) | Plugin | 1.0.0 | [terminkalender-1.0.0.zip](https://github.com/cwaxe/wordpress/releases/download/terminkalender-v1.0.0/terminkalender-1.0.0.zip) |
+| [Terminkalender](plugins/terminkalender/) | Plugin | 1.1.0 | [terminkalender-1.1.0.zip](https://github.com/cwaxe/wordpress/releases/download/terminkalender-v1.1.0/terminkalender-1.1.0.zip) |
 | [WX Easy Backup](plugins/wx-easy-backup/) | Plugin | 1.1.0 | [wx-easy-backup-1.1.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-backup-v1.1.0/wx-easy-backup-1.1.0.zip) |
 | [WX Easy Calendar](plugins/wx-easy-calendar/) | Plugin | 1.4.0 | [wx-easy-calendar-1.4.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-calendar-v1.4.0/wx-easy-calendar-1.4.0.zip) |
 | [WX Lightbox](plugins/wx-lightbox/) | Plugin | 1.1.0 | [wx-lightbox-1.1.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-lightbox-v1.1.0/wx-lightbox-1.1.0.zip) |

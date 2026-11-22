@@ -4,7 +4,7 @@ Schlanker Veranstaltungskalender mit einfachem Backend. Übernimmt auf Knopfdruc
 
 - Backend auf das Nötigste reduziert: Titel, Box „Wann? Wo? Wer?“, Beschreibung, Kategorie, Bild
 - Orte (mit Adresse) und Veranstalter (mit Kontakt) zum Auswählen oder direkt im Termin neu anlegen
-- Einfache Serien: wöchentlich, alle 2 Wochen, monatlich am gleichen Tag, am gleichen oder letzten Wochentag – mit Enddatum und Ausfallterminen
+- Einfache Serien: wöchentlich oder alle 2 Wochen (auch an mehreren Tagen, z. B. Dienstag und Donnerstag), monatlich am gleichen Tag, am gleichen oder letzten Wochentag – mit Enddatum und Ausfallterminen
 - Terminliste getrennt nach kommenden und vergangenen Terminen, „Kopieren“ je Termin
 - Kalender mit Monats- und Listenansicht, Kategorie-Filter mit Mehrfachauswahl, Suche, Vorschau beim Darüberfahren und Detailfenster
 - Eigene Terminseite mit Infokasten, Kartenlink, „In Kalender eintragen“ (.ics) und strukturierten Daten für Google

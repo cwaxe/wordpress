@@ -156,3 +156,60 @@
 .tk-box textarea {
 	box-sizing: border-box;
 }
+
+/* Wochentage einer wöchentlichen Serie */
+.tk-box .tk-days {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+.tk-box .tk-days legend {
+	font-weight: 500;
+	margin-bottom: 4px;
+	padding: 0;
+}
+.tk-days__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+.tk-day {
+	cursor: pointer;
+	position: relative;
+}
+.tk-day input {
+	height: 1px;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	width: 1px;
+}
+.tk-day span {
+	align-items: center;
+	background: #fff;
+	border: 1px solid #8c8f94;
+	border-radius: 18px;
+	box-sizing: border-box;
+	display: inline-flex;
+	font-weight: 500;
+	height: 36px;
+	justify-content: center;
+	min-width: 44px;
+	padding: 0 10px;
+}
+.tk-day input:checked + span {
+	background: #2271b1;
+	border-color: #2271b1;
+	color: #fff;
+}
+.tk-day input:focus-visible + span {
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2271b1;
+}
+.tk-day.is-start {
+	cursor: default;
+}
+.tk-day.is-start span {
+	background: #135e96;
+	border-color: #135e96;
+}

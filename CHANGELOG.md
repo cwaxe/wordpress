@@ -3,6 +3,11 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## terminkalender 1.1.0
+
+- Wöchentliche Serien an mehreren Tagen, z. B. jeden Dienstag und Donnerstag oder alle 2 Wochen am Montag, Mittwoch und Freitag.
+- Der Wochentag des Beginns ist immer dabei; weitere Tage per Klick dazuwählen.
+
 ## terminkalender 1.0.0
 
 - Erste Version: eigener Veranstaltungskalender mit vereinfachtem Backend (Termine, Kategorien mit Farbe, Orte mit Adresse, Veranstalter mit Kontakt, Bild, einfache Serien).
