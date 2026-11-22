@@ -11,17 +11,30 @@ Die fertigen ZIP-Dateien liegen unter [**Releases**](https://github.com/cwaxe/wo
 |---|---|---|---|
 | [LSV Flugplatz](themes/lsv-flugplatz/) | Theme | 1.2.0 | [lsv-flugplatz-1.2.0.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-flugplatz-v1.2.0/lsv-flugplatz-1.2.0.zip) |
 | [WX Easy Template](themes/wx-easy-template/) | Theme | 1.12.0 | [wx-easy-template-1.12.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-template-v1.12.0/wx-easy-template-1.12.0.zip) |
-| [LSV Wetter am Platz](plugins/lsv-wetter/) | Plugin | 1.1.0 | [lsv-wetter-1.1.0.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-wetter-v1.1.0/lsv-wetter-1.1.0.zip) |
-| [Terminkalender](plugins/terminkalender/) | Plugin | 1.3.1 | [terminkalender-1.3.1.zip](https://github.com/cwaxe/wordpress/releases/download/terminkalender-v1.3.1/terminkalender-1.3.1.zip) |
-| [WX Easy Backup](plugins/wx-easy-backup/) | Plugin | 1.1.0 | [wx-easy-backup-1.1.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-backup-v1.1.0/wx-easy-backup-1.1.0.zip) |
-| [WX Easy Calendar](plugins/wx-easy-calendar/) | Plugin | 2.0.1 | [wx-easy-calendar-2.0.1.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-calendar-v2.0.1/wx-easy-calendar-2.0.1.zip) |
-| [WX Lightbox](plugins/wx-lightbox/) | Plugin | 1.1.0 | [wx-lightbox-1.1.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-lightbox-v1.1.0/wx-lightbox-1.1.0.zip) |
-| [WX Webcam Archive](plugins/wx-webcam-archive/) | Plugin | 1.5.0 | [wx-webcam-archive-1.5.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-webcam-archive-v1.5.0/wx-webcam-archive-1.5.0.zip) |
+| [LSV Wetter am Platz](plugins/lsv-wetter/) | Plugin | 1.2.0 | [lsv-wetter-1.2.0.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-wetter-v1.2.0/lsv-wetter-1.2.0.zip) |
+| [Terminkalender](plugins/terminkalender/) | Plugin | 1.4.0 | [terminkalender-1.4.0.zip](https://github.com/cwaxe/wordpress/releases/download/terminkalender-v1.4.0/terminkalender-1.4.0.zip) |
+| [WX Easy Backup](plugins/wx-easy-backup/) | Plugin | 1.2.0 | [wx-easy-backup-1.2.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-backup-v1.2.0/wx-easy-backup-1.2.0.zip) |
+| [WX Easy Calendar](plugins/wx-easy-calendar/) | Plugin | 2.1.0 | [wx-easy-calendar-2.1.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-calendar-v2.1.0/wx-easy-calendar-2.1.0.zip) |
+| [WX Lightbox](plugins/wx-lightbox/) | Plugin | 1.2.0 | [wx-lightbox-1.2.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-lightbox-v1.2.0/wx-lightbox-1.2.0.zip) |
+| [WX Webcam Archive](plugins/wx-webcam-archive/) | Plugin | 1.6.0 | [wx-webcam-archive-1.6.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-webcam-archive-v1.6.0/wx-webcam-archive-1.6.0.zip) |
 <!-- pakete:end -->
 
 Beschreibung, Einstellungen und Shortcodes stehen in der README des jeweiligen Pakets.
 
 ZIP-Datei in WordPress hochladen: Themes unter *Design → Themes → Theme hinzufügen → Theme hochladen*, Plugins unter *Plugins → Installieren → Plugin hochladen*. Bei einem Update bietet WordPress an, die vorhandene Version zu ersetzen. Die Einstellungen bleiben dabei erhalten. Alle Pakete benötigen PHP 7.4 oder neuer.
+
+## Automatische Updates
+
+Alle Plugins aktualisieren sich selbst aus den [Releases](https://github.com/cwaxe/wordpress/releases) dieses Repos. Neue Versionen erscheinen in WordPress wie gewohnt unter *Plugins* und *Dashboard → Aktualisierungen*. „Automatische Aktualisierungen“ ist beim ersten Mal eingeschaltet und lässt sich je Plugin in der Plugin-Liste abschalten; es bleibt dann aus. „Details ansehen“ zeigt die Änderungen aus `CHANGELOG.md`.
+
+WordPress fragt zweimal täglich nach Updates, die Antwort von GitHub wird 6 Stunden zwischengespeichert. Unter *Dashboard → Aktualisierungen → Erneut prüfen* wird sofort nachgesehen. Voraussetzung ist WordPress 5.8. Die erste Version mit Updater (z. B. Terminkalender 1.4.0) muss einmal von Hand hochgeladen werden.
+
+Optional in `wp-config.php`:
+
+```php
+define( 'WX_GITHUB_AUTO_UPDATE', false ); // automatische Aktualisierungen nicht vorab einschalten
+define( 'WX_GITHUB_TOKEN', 'github_pat_…' ); // nur bei vielen Seiten hinter einer IP: mehr API-Abfragen
+```
 
 **Umstieg von den alten Namen:** Fünf Pakete hießen früher anders (einfaches-template-wx, Einfacher Kalender, Soft Blur Lightbox, Webcam Archiv, WP Komplett-Backup & Umzug). WordPress behandelt die neuen Pakete als eigenständige Plugins bzw. als eigenes Theme, ein Update ersetzt die alte Version also nicht automatisch. Alle Einstellungen und Daten bleiben trotzdem erhalten:
 
@@ -33,6 +46,7 @@ ZIP-Datei in WordPress hochladen: Themes unter *Design → Themes → Theme hinz
 ```
 themes/<paket>/      Quellcode der Themes (Version im Kopf von style.css)
 plugins/<paket>/     Quellcode der Plugins (Version im Kopf von <paket>.php)
+lib/github-updater.php  Vorlage des Updaters, wird in jedes Plugin kopiert
 build.sh             baut die ZIP-Dateien nach dist/
 CHANGELOG.md         Änderungen je Paket und Version, erscheinen als Release-Text
 .github/workflows/   veröffentlicht neue Versionen automatisch als Release
@@ -58,5 +72,14 @@ Den Rest erledigt die GitHub Action:
 - Für jede Version ohne Release baut sie die ZIP und veröffentlicht sie als Release `<paket>-v<version>`.
 
 Ein neues Paket braucht nur einen eigenen Ordner in `themes/` oder `plugins/`. Es erscheint beim nächsten Push in der Tabelle und unter Releases.
+
+Damit ein neues Plugin Updates bekommt, im Kopf `Update URI: https://github.com/cwaxe/wordpress` eintragen und nach der `ABSPATH`-Prüfung einbauen:
+
+```php
+require_once __DIR__ . '/includes/github-updater.php';
+WX_GitHub_Updater::register( __FILE__ );
+```
+
+Die Datei `includes/github-updater.php` legt `./build.sh --sync` bzw. die Action an. Geändert wird nur die Vorlage in `lib/`; `./build.sh` bricht ab, wenn eine Kopie abweicht. Eine Änderung am Updater kommt erst mit der nächsten Version des jeweiligen Plugins auf die Seiten.
 
 Lokal macht `./build.sh --sync` dasselbe Nachziehen wie die Action, `./build.sh` baut alle ZIPs nach `dist/`. Von Hand starten lässt sich die Action unter *Actions → Release → Run workflow*.

@@ -2,9 +2,10 @@
 /**
  * Plugin Name:       Terminkalender
  * Description:       Schlanker Veranstaltungskalender mit einfachem Backend: Termine mit Datum, Ort, Veranstalter, Kategorie, Bild und einfachen Serien. Monats- und Listenansicht, Kategorie-Filter, eigene Terminseiten, iCal. Übernimmt alle Daten aus „The Events Calendar“.
- * Version:           1.3.1
+ * Version:           1.4.0
  * Requires at least: 6.6
  * Requires PHP:      7.4
+ * Update URI:        https://github.com/cwaxe/wordpress
  * Author:            IT-Service Waxenberger
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,7 +14,11 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TK_VERSION', '1.3.1' );
+// Updates aus den GitHub-Releases (siehe includes/github-updater.php).
+require_once __DIR__ . '/includes/github-updater.php';
+WX_GitHub_Updater::register( __FILE__ );
+
+define( 'TK_VERSION', '1.4.0' );
 define( 'TK_FILE', __FILE__ );
 define( 'TK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TK_URL', plugin_dir_url( __FILE__ ) );

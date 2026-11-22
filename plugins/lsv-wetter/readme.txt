@@ -3,7 +3,7 @@ Contributors: lsv-vilsbiburg
 Tags: wetter, flugplatz, weewx, qnh, wind
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 
 Aktuelle Wetterdaten vom Flugplatz Vilsbiburg (EDMP) auf jeder WordPress-Seite.

@@ -3,9 +3,10 @@
  * Plugin Name:       LSV Wetter am Platz
  * Plugin URI:        https://wetter.lsv-vilsbiburg.de
  * Description:       Zeigt die aktuellen Wetterdaten vom Flugplatz Vilsbiburg (EDMP) als Block oder per Shortcode [lsv_wetter] an – mit Pistenwahl, Gegen- und Seitenwind, QNH, QFE, Wolkenbasis und Dichtehöhe. Funktioniert mit jedem Theme.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
+ * Update URI:        https://github.com/cwaxe/wordpress
  * Author:            Luftsportverein Vilsbiburg e. V.
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,7 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LSVW_VERSION', '1.1.0' );
+// Updates aus den GitHub-Releases (siehe includes/github-updater.php).
+require_once __DIR__ . '/includes/github-updater.php';
+WX_GitHub_Updater::register( __FILE__ );
+
+define( 'LSVW_VERSION', '1.2.0' );
 define( 'LSVW_URL', plugin_dir_url( __FILE__ ) );
 
 /* =========================================================================
