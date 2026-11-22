@@ -1,0 +1,158 @@
+/* Terminkalender – Backend */
+
+/* Box „Wann? Wo? Wer?“ unter dem Titel */
+.tk-box {
+	margin: 16px 0 8px;
+	padding: 0;
+}
+.tk-box__section {
+	border-bottom: 1px solid #e2e4e7;
+	padding: 16px 20px 18px;
+}
+.tk-box__section:last-child {
+	border-bottom: 0;
+}
+.tk-box .tk-box__title {
+	font-size: 15px;
+	font-weight: 600;
+	margin: 0 0 12px;
+	padding: 0;
+}
+.tk-grid {
+	align-items: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 24px;
+}
+.tk-grid--repeat {
+	margin-top: 14px;
+}
+.tk-field {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.tk-field--wide {
+	flex: 1 1 320px;
+}
+.tk-field--check {
+	padding-bottom: 8px;
+}
+.tk-field label {
+	font-weight: 500;
+}
+.tk-field--check label {
+	font-weight: 400;
+}
+.tk-inline {
+	display: flex;
+	gap: 8px;
+}
+.tk-box input[type="date"],
+.tk-box input[type="time"],
+.tk-box input[type="text"],
+.tk-box input[type="email"],
+.tk-box input[type="tel"],
+.tk-box input[type="url"],
+.tk-box select,
+.tk-box textarea {
+	font-size: 14px;
+	min-height: 36px;
+}
+.tk-box input[type="text"],
+.tk-box input[type="email"],
+.tk-box input[type="tel"],
+.tk-box input[type="url"] {
+	width: 100%;
+}
+.tk-box select {
+	max-width: 100%;
+	min-width: 280px;
+}
+.tk-box textarea {
+	width: 100%;
+}
+.tk-box .tk-short {
+	width: 90px;
+}
+.tk-new {
+	background: #f6f7f7;
+	border-radius: 6px;
+	margin-top: 12px;
+	padding: 12px 14px;
+}
+.tk-desc-title {
+	font-size: 15px;
+	font-weight: 600;
+	margin: 20px 0 8px;
+	padding: 0;
+}
+.tk-dup {
+	padding-bottom: 8px;
+}
+
+/* Terminliste */
+.column-tk_when {
+	width: 26%;
+}
+.column-tk_where {
+	width: 18%;
+}
+.tk-badge {
+	background: #2271b1;
+	border-radius: 3px;
+	color: #fff;
+	display: inline-block;
+	font-size: 11px;
+	line-height: 1.6;
+	padding: 0 6px;
+}
+
+/* Orte, Veranstalter, Kategorien: unnötige Felder ausblenden */
+.taxonomy-tk_ort .term-description-wrap,
+.taxonomy-tk_ort .term-slug-wrap,
+.taxonomy-tk_veranstalter .term-description-wrap,
+.taxonomy-tk_veranstalter .term-slug-wrap,
+.taxonomy-tk_kategorie .term-parent-wrap,
+.taxonomy-tk_kategorie .term-description-wrap {
+	display: none;
+}
+.tk-swatch {
+	border-radius: 50%;
+	display: inline-block;
+	height: 14px;
+	vertical-align: -2px;
+	width: 14px;
+}
+
+/* Einstellungen */
+.tk-settings .tk-card {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	margin: 16px 0;
+	max-width: 900px;
+	padding: 4px 20px 16px;
+}
+.tk-settings .tk-slug {
+	width: 160px;
+}
+.tk-settings progress {
+	height: 18px;
+	width: 100%;
+}
+.tk-settings .tk-counts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 24px;
+	margin: 8px 0 16px;
+	padding: 0;
+}
+.tk-settings .tk-counts li {
+	margin: 0;
+}
+.tk-box input,
+.tk-box select,
+.tk-box textarea {
+	box-sizing: border-box;
+}

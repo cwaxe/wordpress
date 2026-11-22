@@ -3,6 +3,12 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## terminkalender 1.0.0
+
+- Erste Version: eigener Veranstaltungskalender mit vereinfachtem Backend (Termine, Kategorien mit Farbe, Orte mit Adresse, Veranstalter mit Kontakt, Bild, einfache Serien).
+- Monats- und Listenansicht, Kategorie-Filter mit Mehrfachauswahl, Suche, Detailfenster, eigene Terminseiten, iCal-Export und -Abo.
+- Übernimmt alle Daten aus „The Events Calendar“ und leitet dessen alte Adressen weiter.
+
 ## wx-easy-template 1.10.1
 
 - Hauptmenü und Seiten-Navigation zeigen beliebig viele Ebenen statt höchstens drei.
