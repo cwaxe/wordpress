@@ -3,7 +3,7 @@ Tags: lightbox, gallery, images, blur
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPL-2.0-or-later
 
 Schlanke Lightbox für Bilder und Galerien – der Hintergrund wird beim Öffnen sanft weichgezeichnet.

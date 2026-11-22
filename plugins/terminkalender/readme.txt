@@ -1,7 +1,7 @@
 === Terminkalender ===
 Requires at least: 6.6
 Requires PHP: 7.4
-Stable tag: 1.3.1
+Stable tag: 1.4.0
 License: GPLv2 or later
 
 Schlanker Veranstaltungskalender mit einfachem Backend. Übernimmt alle Daten aus „The Events Calendar“.

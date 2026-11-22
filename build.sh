@@ -7,6 +7,7 @@
 #   ./build.sh --list             Pakete mit Version auflisten
 #   ./build.sh --sync             Version aus dem Dateikopf überall nachziehen
 #                                 (…_VERSION, Stable tag, Tabelle in README.md)
+#                                 und lib/github-updater.php in die Plugins kopieren
 #
 # Ergebnis: dist/<paket>-<version>.zip, darin der Ordner <paket>/ ohne Version,
 # damit WordPress neue Versionen als Update der vorhandenen erkennt.
@@ -65,6 +66,7 @@ build() {
 	fi
 
 	php_check "$dir"
+	check_updater "$dir"
 
 	mkdir -p "$DIST"
 	zip="$PWD/$DIST/$name-$version.zip"
@@ -135,12 +137,36 @@ sync_readme() {
 	rm -f "$table"
 }
 
+# Gemeinsamen GitHub-Updater aus lib/ in jedes Plugin kopieren, das ihn nutzt
+# (erkennbar an WX_GitHub_Updater::register in der Hauptdatei).
+UPDATER=lib/github-updater.php
+sync_updater() {
+	local dir
+	[ -f "$UPDATER" ] || return 0
+	for dir in plugins/*/; do
+		dir=${dir%/}
+		grep -q 'WX_GitHub_Updater::register' "$(header_file "$dir")" 2>/dev/null || continue
+		mkdir -p "$dir/includes"
+		cmp -s "$UPDATER" "$dir/includes/github-updater.php" || cp "$UPDATER" "$dir/includes/github-updater.php"
+	done
+}
+
+# Beim Bauen abbrechen, wenn die Kopie im Plugin nicht zur Vorlage passt.
+check_updater() {
+	local dir=$1
+	case "$dir" in plugins/*) ;; *) return 0 ;; esac
+	grep -q 'WX_GitHub_Updater::register' "$(header_file "$dir")" || return 0
+	cmp -s "$UPDATER" "$dir/includes/github-updater.php" \
+		|| die "$dir/includes/github-updater.php weicht von $UPDATER ab, bitte ./build.sh --sync ausführen"
+}
+
 EXPECT=
 PACKAGES=()
 while [ $# -gt 0 ]; do
 	case "$1" in
 		--sync)
 			for p in $(all_packages); do sync_versions "$(package_dir "$p")"; done
+			sync_updater
 			sync_readme "${REPO_URL:-https://github.com/cwaxe/wordpress}"
 			exit 0 ;;
 		--list)
@@ -149,7 +175,7 @@ while [ $# -gt 0 ]; do
 			done
 			exit 0 ;;
 		--expect-version) EXPECT=${2:-}; shift ;;
-		-h|--help) sed -n '2,17p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+		-h|--help) sed -n '2,18p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
 		*) PACKAGES+=( "$1" ) ;;
 	esac
 	shift

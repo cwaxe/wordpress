@@ -2,9 +2,10 @@
 /**
  * Plugin Name:       WX Lightbox
  * Description:       Schlanke Lightbox für Bilder und Galerien – beim Öffnen wird der Seitenhintergrund sanft weichgezeichnet. Ohne jQuery, mit Tastatur- und Swipe-Steuerung.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Requires at least: 5.8
  * Requires PHP:      7.4
+ * Update URI:        https://github.com/cwaxe/wordpress
  * Author:            WX Lightbox
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -12,6 +13,10 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+// Updates aus den GitHub-Releases (siehe includes/github-updater.php).
+require_once __DIR__ . '/includes/github-updater.php';
+WX_GitHub_Updater::register( __FILE__ );
 
 /*
  * Übergang von der Vorgänger-Version „Soft Blur Lightbox“ (Ordner soft-blur-lightbox).
@@ -67,7 +72,7 @@ if ( defined( 'SBL_VERSION' ) ) {
 	return;
 }
 
-define( 'SBL_VERSION', '1.1.0' );
+define( 'SBL_VERSION', '1.2.0' );
 define( 'SBL_URL', plugin_dir_url( __FILE__ ) );
 define( 'SBL_OPTION', 'sbl_settings' );
 

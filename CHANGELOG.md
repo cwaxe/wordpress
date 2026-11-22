@@ -7,6 +7,41 @@ Der Abschnitt wird beim Release als Beschreibung übernommen.
 
 - Updates direkt aus dem GitHub-Repository: Neue Versionen erscheinen unter *Dashboard → Aktualisierungen* und *Design → Themes* und lassen sich mit einem Klick oder automatisch installieren.
 - Ist das Theme in einem anderen Ordner installiert (z. B. noch „dunkel-schlicht“), ersetzt das Update trotzdem das bestehende Theme.
+## lsv-wetter 1.2.0
+
+- Automatische Updates: Neue Versionen erscheinen direkt in WordPress unter *Plugins* und *Dashboard → Aktualisierungen*, bezogen aus den Releases auf GitHub. Automatische Aktualisierungen sind beim ersten Mal eingeschaltet und lassen sich in der Plugin-Liste abschalten.
+- „Details ansehen“ zeigt die Änderungen aller Versionen.
+- Diese Version muss noch einmal von Hand hochgeladen werden, alle folgenden kommen automatisch.
+
+## terminkalender 1.4.0
+
+- Automatische Updates: Neue Versionen erscheinen direkt in WordPress unter *Plugins* und *Dashboard → Aktualisierungen*, bezogen aus den Releases auf GitHub. Automatische Aktualisierungen sind beim ersten Mal eingeschaltet und lassen sich in der Plugin-Liste abschalten.
+- „Details ansehen“ zeigt die Änderungen aller Versionen.
+- Diese Version muss noch einmal von Hand hochgeladen werden, alle folgenden kommen automatisch.
+
+## wx-easy-backup 1.2.0
+
+- Automatische Updates: Neue Versionen erscheinen direkt in WordPress unter *Plugins* und *Dashboard → Aktualisierungen*, bezogen aus den Releases auf GitHub. Automatische Aktualisierungen sind beim ersten Mal eingeschaltet und lassen sich in der Plugin-Liste abschalten.
+- „Details ansehen“ zeigt die Änderungen aller Versionen.
+- Diese Version muss noch einmal von Hand hochgeladen werden, alle folgenden kommen automatisch.
+
+## wx-easy-calendar 2.1.0
+
+- Automatische Updates: Neue Versionen erscheinen direkt in WordPress unter *Plugins* und *Dashboard → Aktualisierungen*, bezogen aus den Releases auf GitHub. Automatische Aktualisierungen sind beim ersten Mal eingeschaltet und lassen sich in der Plugin-Liste abschalten.
+- „Details ansehen“ zeigt die Änderungen aller Versionen.
+- Diese Version muss noch einmal von Hand hochgeladen werden, alle folgenden kommen automatisch.
+
+## wx-lightbox 1.2.0
+
+- Automatische Updates: Neue Versionen erscheinen direkt in WordPress unter *Plugins* und *Dashboard → Aktualisierungen*, bezogen aus den Releases auf GitHub. Automatische Aktualisierungen sind beim ersten Mal eingeschaltet und lassen sich in der Plugin-Liste abschalten.
+- „Details ansehen“ zeigt die Änderungen aller Versionen.
+- Diese Version muss noch einmal von Hand hochgeladen werden, alle folgenden kommen automatisch.
+
+## wx-webcam-archive 1.6.0
+
+- Automatische Updates: Neue Versionen erscheinen direkt in WordPress unter *Plugins* und *Dashboard → Aktualisierungen*, bezogen aus den Releases auf GitHub. Automatische Aktualisierungen sind beim ersten Mal eingeschaltet und lassen sich in der Plugin-Liste abschalten.
+- „Details ansehen“ zeigt die Änderungen aller Versionen.
+- Diese Version muss noch einmal von Hand hochgeladen werden, alle folgenden kommen automatisch.
 
 ## wx-easy-template 1.11.0
 
