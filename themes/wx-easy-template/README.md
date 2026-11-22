@@ -12,4 +12,6 @@ Einstellungen: *Design → Customizer* (Abschnitte „Farbschema“, „Typograf
 
 Kalender (Stand WX Easy Calendar 2.0.1) und Lightbox funktionieren wie die einzelnen Plugins (gleiche Termine, Shortcodes und Einstellungen). Sind die Plugins zusätzlich aktiv, übernehmen sie die Aufgabe; sie können dann deaktiviert werden.
 
+**Updates:** Das Theme fragt die Releases in diesem Repository ab. Neue Versionen erscheinen unter *Dashboard → Aktualisierungen* und *Design → Themes*; dort lassen sich auch automatische Updates einschalten. „Erneut prüfen“ fragt sofort neu nach, sonst alle 12 Stunden (Ergebnis 6 Stunden zwischengespeichert).
+
 Zurück zur [Übersicht](../../README.md).
