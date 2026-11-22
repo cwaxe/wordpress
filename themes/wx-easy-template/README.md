@@ -10,6 +10,6 @@ Schlichtes Theme mit Logo oben rechts, zentriertem Hauptmenü mit gleitenden Unt
 
 Einstellungen: *Design → Customizer* (Abschnitte „Farbschema“, „Typografie“ und „Theme-Optionen“).
 
-Kalender und Lightbox funktionieren wie die einzelnen Plugins (gleiche Shortcodes und Einstellungen). Sind die Plugins zusätzlich aktiv, übernehmen sie die Aufgabe; sie können dann deaktiviert werden.
+Kalender (Stand WX Easy Calendar 2.0.1) und Lightbox funktionieren wie die einzelnen Plugins (gleiche Termine, Shortcodes und Einstellungen). Sind die Plugins zusätzlich aktiv, übernehmen sie die Aufgabe; sie können dann deaktiviert werden.
 
 Zurück zur [Übersicht](../../README.md).

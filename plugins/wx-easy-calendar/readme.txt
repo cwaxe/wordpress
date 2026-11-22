@@ -1,7 +1,7 @@
 === WX Easy Calendar ===
 Requires at least: 6.2
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 
 Ein schlanker Termin-Kalender mit Kategorien, Serien, Orten und Veranstaltern und Listen-, Wochen-, Monats- und Jahresansicht. Ohne Abhängigkeiten.
@@ -83,6 +83,9 @@ Theme-Farben als Vorschläge an. Die Schriftfarbe auf farbigen Flächen (Weiß o
 wird automatisch so gewählt, dass sie lesbar bleibt.
 
 == Changelog ==
+
+= 2.0.1 =
+* Erkennt die im WX Easy Template eingebaute Lightbox und nutzt sie statt der eigenen
 
 = 2.0.0 =
 * Wochenansicht, Kategorie-Filter mit Mehrfachauswahl, Suche

@@ -3,6 +3,18 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-easy-template 1.11.0
+
+- Eingebauter Kalender auf dem Stand von WX Easy Calendar 2.0.1: Wochenansicht, Kategorie-Filter mit Mehrfachauswahl, Suche, Bildvorschau beim Darüberfahren, Vorschaubilder, Detailfenster und vergrößerbare Bilder.
+- Im Backend: Serien an mehreren Wochentagen oder monatlich mit Ausfallterminen, Orte mit Adresse, Veranstalter, freie Ortseingabe, Termin kopieren und *Kalender → Aufräumen*.
+- „In Kalender eintragen“, Kalender-Abo (iCal), Karten-Link und Daten für die Google-Suche.
+- Farben folgen weiter dem gewählten Farbschema in Hell und Dunkel; Bilder öffnen sich in der eingebauten Lightbox.
+- Bestehende Termine, Kategorien, Einstellungen und Shortcodes bleiben unverändert. Benötigt WordPress 6.2 oder neuer.
+
+## wx-easy-calendar 2.0.1
+
+- Erkennt die im WX Easy Template eingebaute Lightbox und nutzt sie statt der eigenen, damit sich Bilder nicht doppelt öffnen.
+
 ## wx-easy-calendar 2.0.0
 
 Übernimmt die Verbesserungen aus dem Terminkalender, im bisherigen WX-Aussehen. Vorhandene Termine, Kategorien, Farben, Einstellungen und Shortcodes bleiben unverändert.

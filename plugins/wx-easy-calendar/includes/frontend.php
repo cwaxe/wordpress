@@ -12,9 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Dateien
  * ---------------------------------------------------------------------- */
 
-/** Ist WX Lightbox aktiv? Dann öffnet sie die Bilder, sonst die eigene kleine Lightbox. */
+/** Ist WX Lightbox aktiv (als Plugin oder im WX Easy Template)? Dann öffnet sie die Bilder, sonst die eigene kleine Lightbox. */
 function ek_lightbox_extern() {
-	return defined( 'SBL_VERSION' ) && apply_filters( 'sbl_enabled', true );
+	$aktiv = defined( 'SBL_VERSION' ) || function_exists( 'DunkelSchlicht\\Lightbox\\sbl_enqueue_assets' );
+	return $aktiv && apply_filters( 'sbl_enabled', true );
 }
 
 function ek_styles_registrieren() {
