@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Terminkalender
  * Description:       Schlanker Veranstaltungskalender mit einfachem Backend: Termine mit Datum, Ort, Veranstalter, Kategorie, Bild und einfachen Serien. Monats- und Listenansicht, Kategorie-Filter, eigene Terminseiten, iCal. Übernimmt alle Daten aus „The Events Calendar“.
- * Version:           1.2.0
+ * Version:           1.3.0
  * Requires at least: 6.6
  * Requires PHP:      7.4
  * Author:            IT-Service Waxenberger
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TK_VERSION', '1.2.0' );
+define( 'TK_VERSION', '1.3.0' );
 define( 'TK_FILE', __FILE__ );
 define( 'TK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TK_URL', plugin_dir_url( __FILE__ ) );
@@ -23,12 +23,14 @@ require_once TK_DIR . 'includes/class-tk-model.php';
 require_once TK_DIR . 'includes/class-tk-admin.php';
 require_once TK_DIR . 'includes/class-tk-import.php';
 require_once TK_DIR . 'includes/class-tk-frontend.php';
+require_once TK_DIR . 'includes/class-tk-cleanup.php';
 
 TK_Model::init();
 TK_Settings::init();
 TK_Admin::init();
 TK_Import::init();
 TK_Frontend::init();
+TK_Cleanup::init();
 
 register_activation_hook(
 	__FILE__,
@@ -49,6 +51,7 @@ register_activation_hook(
 register_deactivation_hook(
 	__FILE__,
 	static function () {
+		TK_Cleanup::unschedule();
 		flush_rewrite_rules();
 	}
 );
