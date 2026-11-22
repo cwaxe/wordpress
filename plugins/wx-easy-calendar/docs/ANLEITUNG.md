@@ -1,12 +1,12 @@
-# Terminkalender – Kurzanleitung
+# WX Easy Calendar – Kurzanleitung
 
 Anleitung für Redakteure · Stand: November 2026 · IT-Service Waxenberger
 
-Als PDF zum Ausdrucken: [Terminkalender-Kurzanleitung.pdf](Terminkalender-Kurzanleitung.pdf)
+Als PDF zum Ausdrucken: [Kalender-Kurzanleitung.pdf](Kalender-Kurzanleitung.pdf)
 
 ## 1. Überblick
 
-Alles rund um Termine findest du im WordPress-Backend links im Menü **Termine**.
+Alles rund um Termine findest du im WordPress-Backend links im Menü **Kalender**.
 
 | Menüpunkt | Wofür |
 | --- | --- |
@@ -16,17 +16,17 @@ Alles rund um Termine findest du im WordPress-Backend links im Menü **Termine**
 | Orte | Gespeicherte Orte mit Adresse |
 | Veranstalter | Vereine und Veranstalter mit Kontakt |
 | Aufräumen | Alte Termine entfernen |
-| Einstellungen | Kalenderseite und Darstellung (nur Administratoren) |
+| Einstellungen | Akzentfarbe und Übernahme aus anderen Kalendern (nur Administratoren) |
 
 ## 2. Neuen Termin anlegen
 
 Ein Termin ist in wenigen Minuten erfasst: Titel, Wann, Wo, Wer, dann veröffentlichen.
 
-1. **Termine → Neuer Termin** öffnen.
-2. **Titel** eingeben, z. B. „Theater Binabiburg“.
+1. **Kalender → Neuer Termin** öffnen.
+2. **Titel** eingeben, z. B. „Sommerfest“.
 3. **Wann?** Beginn mit Datum und Uhrzeit eintragen. Das Ende wird automatisch vorgeschlagen, bitte prüfen. Für Termine ohne Uhrzeit **Ganztägig** ankreuzen.
 4. **Wo?** Einen Ort aus der Liste wählen. Fehlt er:
-   - **Ort frei eingeben** – nur für diesen Termin, z. B. „Sportplatz Aich“, optional mit Adresse für den Kartenlink.
+   - **Ort frei eingeben** – nur für diesen Termin, z. B. „Sportplatz“, optional mit Adresse für den Kartenlink.
    - **Neuen Ort in der Ortsliste anlegen** – für Orte, die immer wieder vorkommen.
 5. **Wer?** Den Veranstalter wählen oder über „+ Neuen Veranstalter anlegen“ mit Telefon, E-Mail und Webseite erfassen.
 6. **Beschreibung** in das Textfeld schreiben. Bilder, die du hier einfügst, lassen sich auf der Webseite per Klick vergrößern.
@@ -51,7 +51,7 @@ Regelmäßige Termine legst du einmal an, der Kalender zeigt dann alle Wiederhol
 
 ## 4. Termine bearbeiten und kopieren
 
-Unter **Termine → Alle Termine** siehst du zuerst die kommenden Termine, sortiert nach Datum.
+Unter **Kalender → Alle Termine** siehst du zuerst die kommenden Termine, sortiert nach Datum.
 
 - Oben wechselst du zwischen **Kommende**, **Vergangene** und **Alle**.
 - **Bearbeiten:** auf den Titel klicken, ändern, **Aktualisieren** klicken.
@@ -65,7 +65,7 @@ Diese Listen pflegst du einmal und wählst sie dann bei jedem Termin aus.
 
 | Liste | Felder | Hinweis |
 | --- | --- | --- |
-| Kategorien | Name, Farbe | Farbe leer lassen = automatische Farbe. Die Farbe erscheint im Kalender als Punkt, Streifen und im Filter. |
+| Kategorien | Name, Farbe | Die Farbe erscheint im Kalender und im Filter. Der Farbwähler schlägt die Farben des Themes vor. |
 | Orte | Name, Straße, PLZ, Ort | Die Adresse erzeugt auf der Terminseite den Link „Auf der Karte anzeigen“. |
 | Veranstalter | Name, Telefon, E-Mail, Webseite | Kontaktdaten erscheinen auf der Terminseite. |
 
@@ -73,7 +73,7 @@ Diese Listen pflegst du einmal und wählst sie dann bei jedem Termin aus.
 
 ## 6. Alte Termine aufräumen
 
-Unter **Termine → Aufräumen** entfernst du vergangene Termine in einem Schritt.
+Unter **Kalender → Aufräumen** entfernst du vergangene Termine in einem Schritt.
 
 1. Zeitraum wählen, z. B. „älter als 1 Jahr“. Dahinter steht, wie viele Termine betroffen sind.
 2. **In den Papierkorb verschieben** wählen (empfohlen). Aus dem Papierkorb lässt sich alles 30 Tage lang wiederherstellen.
@@ -85,11 +85,12 @@ Wer möchte, stellt auf derselben Seite **Automatisch aufräumen** ein, z. B. �
 
 ## 7. Was Besucher sehen
 
-Besucher finden den Kalender auf der Seite **/kalender** in drei Ansichten: **Monat**, **Woche** und **Liste**.
+Besucher finden den Kalender auf der Kalenderseite in vier Ansichten: **Liste**, **Woche**, **Monat** und **Jahr**.
 
 - Mit den farbigen Knöpfen filtern sie nach Kategorien, auch mehrere gleichzeitig. Dazu gibt es eine Suche.
 - Beim Zeigen mit der Maus erscheint eine Vorschau mit Bild. Ein Klick öffnet das Detailfenster.
-- Jeder Termin hat eine eigene Seite mit Datum, Ort samt Kartenlink, Veranstalter und „In Kalender eintragen“.
+- Jeder Termin hat eine eigene Seite mit Datum, Ort samt Kartenlink, Veranstalter, „In Kalender eintragen“ und „Zum Kalender“.
+- Unter dem Kalender steht der Link **Kalender abonnieren (iCal)** für Outlook, Google Kalender oder das Handy.
 
 ## 8. Tipps
 

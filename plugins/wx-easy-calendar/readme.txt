@@ -1,7 +1,7 @@
 === WX Easy Calendar ===
 Requires at least: 6.2
 Requires PHP: 7.4
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPLv2 or later
 
 Ein schlanker Termin-Kalender mit Kategorien, Serien, Orten und Veranstaltern und Listen-, Wochen-, Monats- und Jahresansicht. Ohne Abhängigkeiten.
@@ -82,7 +82,22 @@ Jede Kategorie hat ihre eigene Farbe (Kalender > Kategorien). Der Farbwähler bi
 Theme-Farben als Vorschläge an. Die Schriftfarbe auf farbigen Flächen (Weiß oder Dunkel)
 wird automatisch so gewählt, dass sie lesbar bleibt.
 
+== Umstieg vom Terminkalender und von The Events Calendar ==
+
+Ist das Plugin "Terminkalender" installiert, schaltet WX Easy Calendar es ab und übernimmt
+beim nächsten Aufruf im Backend alle Termine, Serien, Kategorien (mit Farben), Orte,
+Veranstalter, Bilder und Einstellungen. [terminkalender] und [veranstaltungskalender]
+funktionieren weiter, alte Terminseiten und iCal-Links werden weitergeleitet.
+
+Daten aus "The Events Calendar" übernimmst du unter "Kalender > Einstellungen".
+
 == Changelog ==
+
+= 2.2.0 =
+* Übernimmt alle Daten aus dem Plugin "Terminkalender", das hier aufgeht
+* Shortcodes [terminkalender] und [veranstaltungskalender], alte Links und iCal-Abos funktionieren weiter
+* Übernahme aus "The Events Calendar" mit Weiterleitung der alten Adressen
+* Kurzanleitung für Redakteure (PDF) unter "Kalender > Einstellungen"
 
 = 2.0.1 =
 * Erkennt die im WX Easy Template eingebaute Lightbox und nutzt sie statt der eigenen

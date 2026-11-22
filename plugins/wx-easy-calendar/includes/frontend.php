@@ -56,7 +56,7 @@ function ek_kalenderseite_url() {
 	if ( false === $id ) {
 		global $wpdb;
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$id = (int) $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE post_status = 'publish' AND post_type IN ('page','post') AND post_content LIKE '%[einfacher\\_kalender%' ORDER BY post_type = 'page' DESC, ID ASC LIMIT 1" );
+		$id = (int) $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE post_status = 'publish' AND post_type IN ('page','post') AND ( post_content LIKE '%[einfacher\\_kalender%' OR post_content LIKE '%[terminkalender%' OR post_content LIKE '%[veranstaltungskalender%' ) ORDER BY post_type = 'page' DESC, ID ASC LIMIT 1" );
 		set_transient( 'ek_kalenderseite', $id, 12 * HOUR_IN_SECONDS );
 	}
 	return $id ? get_permalink( (int) $id ) : '';

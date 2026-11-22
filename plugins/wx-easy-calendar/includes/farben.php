@@ -118,8 +118,9 @@ function ek_einstellungen() {
 	return wp_parse_args(
 		(array) get_option( 'ek_einstellungen', array() ),
 		array(
-			'akzent'       => 'auto',
-			'eigene_farbe' => EK_STANDARDFARBE,
+			'akzent'           => 'auto',
+			'eigene_farbe'     => EK_STANDARDFARBE,
+			'tec_weiterleiten' => 1,
 		)
 	);
 }
@@ -197,8 +198,9 @@ function ek_einstellungen_bereinigen( $eingabe ) {
 	}
 	$farbe = isset( $eingabe['eigene_farbe'] ) ? sanitize_hex_color( $eingabe['eigene_farbe'] ) : '';
 	return array(
-		'akzent'       => $akzent,
-		'eigene_farbe' => $farbe ? $farbe : EK_STANDARDFARBE,
+		'akzent'           => $akzent,
+		'eigene_farbe'     => $farbe ? $farbe : EK_STANDARDFARBE,
+		'tec_weiterleiten' => empty( $eingabe['tec_weiterleiten'] ) ? 0 : 1,
 	);
 }
 
@@ -218,6 +220,7 @@ function ek_einstellungen_seite() {
 	?>
 	<div class="wrap">
 		<h1>Kalender-Einstellungen</h1>
+		<p><a href="<?php echo esc_url( EK_URL . 'docs/Kalender-Kurzanleitung.pdf' ); ?>" target="_blank" rel="noopener">Kurzanleitung für Redakteure (PDF)</a></p>
 		<form method="post" action="options.php">
 			<?php settings_fields( 'ek_einstellungen' ); ?>
 			<table class="form-table" role="presentation">
@@ -265,9 +268,21 @@ function ek_einstellungen_seite() {
 						</fieldset>
 					</td>
 				</tr>
+				<?php if ( get_option( 'ek_tec_pfade' ) || ek_tec_bestand()['termine'] ) : ?>
+					<tr>
+						<th scope="row">Alte Adressen</th>
+						<td>
+							<label><input type="checkbox" name="ek_einstellungen[tec_weiterleiten]" value="1" <?php checked( (int) $e['tec_weiterleiten'], 1 ); ?>> Alte Links von The Events Calendar auf die neuen Seiten weiterleiten</label>
+							<p class="description">Wirkt, sobald The Events Calendar deaktiviert ist. Alte Termin-Links führen dann zur neuen Terminseite, die alte Übersicht zur Kalenderseite und der alte iCal-Link zum Kalender-Abo.</p>
+						</td>
+					</tr>
+				<?php else : ?>
+					<input type="hidden" name="ek_einstellungen[tec_weiterleiten]" value="<?php echo (int) $e['tec_weiterleiten']; ?>">
+				<?php endif; ?>
 			</table>
 			<?php submit_button(); ?>
 		</form>
+		<?php ek_tec_abschnitt(); ?>
 	</div>
 	<?php
 }

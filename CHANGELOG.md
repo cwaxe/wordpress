@@ -3,6 +3,16 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-easy-calendar 2.2.0
+
+Der Terminkalender geht in WX Easy Calendar auf – ein Kalender-Plugin statt zwei.
+
+- **Umstieg vom Terminkalender:** Ist er installiert, wird er abgeschaltet. Beim nächsten Aufruf im Backend werden alle Termine, Serien, Kategorien (mit Farben), Orte, Veranstalter, Bilder und Einstellungen übernommen. Die Termine behalten ihre ID. Gleichnamige Kategorien, Orte und Veranstalter werden zusammengelegt.
+- `[terminkalender]` und `[veranstaltungskalender]` funktionieren weiter, alte Terminseiten (`/termin/…`) und iCal-Abos werden weitergeleitet.
+- **Übernahme aus The Events Calendar** unter *Kalender → Einstellungen*, wiederholbar, mit Weiterleitung der alten Links.
+- Kurzanleitung für Redakteure als PDF, verlinkt unter *Kalender → Einstellungen*.
+- Diese Version muss auf Seiten mit dem Terminkalender einmal von Hand hochgeladen werden.
+
 ## wx-easy-template 1.12.0
 
 - Updates direkt aus dem GitHub-Repository: Neue Versionen erscheinen unter *Dashboard → Aktualisierungen* und *Design → Themes* und lassen sich mit einem Klick oder automatisch installieren.

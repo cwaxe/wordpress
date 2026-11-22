@@ -12,9 +12,8 @@ Die fertigen ZIP-Dateien liegen unter [**Releases**](https://github.com/cwaxe/wo
 | [LSV Flugplatz](themes/lsv-flugplatz/) | Theme | 1.2.0 | [lsv-flugplatz-1.2.0.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-flugplatz-v1.2.0/lsv-flugplatz-1.2.0.zip) |
 | [WX Easy Template](themes/wx-easy-template/) | Theme | 1.12.0 | [wx-easy-template-1.12.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-template-v1.12.0/wx-easy-template-1.12.0.zip) |
 | [LSV Wetter am Platz](plugins/lsv-wetter/) | Plugin | 1.2.0 | [lsv-wetter-1.2.0.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-wetter-v1.2.0/lsv-wetter-1.2.0.zip) |
-| [Terminkalender](plugins/terminkalender/) | Plugin | 1.4.0 | [terminkalender-1.4.0.zip](https://github.com/cwaxe/wordpress/releases/download/terminkalender-v1.4.0/terminkalender-1.4.0.zip) |
 | [WX Easy Backup](plugins/wx-easy-backup/) | Plugin | 1.2.0 | [wx-easy-backup-1.2.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-backup-v1.2.0/wx-easy-backup-1.2.0.zip) |
-| [WX Easy Calendar](plugins/wx-easy-calendar/) | Plugin | 2.1.0 | [wx-easy-calendar-2.1.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-calendar-v2.1.0/wx-easy-calendar-2.1.0.zip) |
+| [WX Easy Calendar](plugins/wx-easy-calendar/) | Plugin | 2.2.0 | [wx-easy-calendar-2.2.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-calendar-v2.2.0/wx-easy-calendar-2.2.0.zip) |
 | [WX Lightbox](plugins/wx-lightbox/) | Plugin | 1.2.0 | [wx-lightbox-1.2.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-lightbox-v1.2.0/wx-lightbox-1.2.0.zip) |
 | [WX Webcam Archive](plugins/wx-webcam-archive/) | Plugin | 1.6.0 | [wx-webcam-archive-1.6.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-webcam-archive-v1.6.0/wx-webcam-archive-1.6.0.zip) |
 <!-- pakete:end -->
@@ -27,7 +26,7 @@ ZIP-Datei in WordPress hochladen: Themes unter *Design → Themes → Theme hinz
 
 Alle Plugins aktualisieren sich selbst aus den [Releases](https://github.com/cwaxe/wordpress/releases) dieses Repos. Neue Versionen erscheinen in WordPress wie gewohnt unter *Plugins* und *Dashboard → Aktualisierungen*. „Automatische Aktualisierungen“ ist beim ersten Mal eingeschaltet und lässt sich je Plugin in der Plugin-Liste abschalten; es bleibt dann aus. „Details ansehen“ zeigt die Änderungen aus `CHANGELOG.md`.
 
-WordPress fragt zweimal täglich nach Updates, die Antwort von GitHub wird 6 Stunden zwischengespeichert. Unter *Dashboard → Aktualisierungen → Erneut prüfen* wird sofort nachgesehen. Voraussetzung ist WordPress 5.8. Die erste Version mit Updater (z. B. Terminkalender 1.4.0) muss einmal von Hand hochgeladen werden.
+WordPress fragt zweimal täglich nach Updates, die Antwort von GitHub wird 6 Stunden zwischengespeichert. Unter *Dashboard → Aktualisierungen → Erneut prüfen* wird sofort nachgesehen. Voraussetzung ist WordPress 5.8. Die erste Version mit Updater (z. B. WX Easy Calendar 2.1.0) muss einmal von Hand hochgeladen werden.
 
 Optional in `wp-config.php`:
 
@@ -40,6 +39,8 @@ define( 'WX_GITHUB_TOKEN', 'github_pat_…' ); // nur bei vielen Seiten hinter e
 
 1. Neues Paket hochladen und aktivieren. Ein Plugin schaltet seine alte Version dabei selbst ab und übernimmt deren Einstellungen und Daten. Das Theme übernimmt beim ersten Aktivieren die Customizer-Einstellungen, Menüs, Logo und das zusätzliche CSS.
 2. Danach die alte Version unter *Plugins* bzw. *Design → Themes* löschen, **während die neue aktiv ist**. Bei Webcam Archiv und Soft Blur Lightbox verhindert die neue Version dabei, dass die alte beim Löschen die gemeinsamen Daten entfernt.
+
+**Umstieg vom Terminkalender:** Das Plugin „Terminkalender“ ist in WX Easy Calendar aufgegangen und wird nicht mehr weiterentwickelt. WX Easy Calendar (ab 2.2.0) einmal von Hand hochladen und aktivieren: Es schaltet den Terminkalender ab und übernimmt beim nächsten Aufruf im Backend alle Termine, Serien, Kategorien (mit Farben), Orte, Veranstalter, Bilder und Einstellungen. Die Termine behalten ihre ID. `[terminkalender]`, alte Terminseiten und alte iCal-Abos funktionieren weiter. Danach den Terminkalender löschen. Vorher eine Sicherung anlegen, z. B. mit WX Easy Backup.
 
 ## Aufbau des Repos
 
