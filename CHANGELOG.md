@@ -3,6 +3,13 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## terminkalender 1.2.0
+
+- Neue Wochenansicht (Monat | Woche | Liste), auf dem Handy als Tagesliste. Auch als Startansicht und per `[terminkalender ansicht="woche"]`.
+- Bildvorschau: beim Darüberfahren mit der Maus, als Vorschaubild in der Terminliste und in der Woche, groß im Detailfenster.
+- Bilder sind automatisch anklickbar und öffnen sich vergrößert – in der Terminbeschreibung, beim Beitragsbild und im Detailfenster. Ist WX Lightbox aktiv, übernimmt sie, sonst eine eigene kleine Lightbox.
+- Ort frei eingeben: Ort und optional Adresse nur für diesen Termin, ohne ihn in der Ortsliste zu speichern.
+
 ## terminkalender 1.1.0
 
 - Wöchentliche Serien an mehreren Tagen, z. B. jeden Dienstag und Donnerstag oder alle 2 Wochen am Montag, Mittwoch und Freitag.

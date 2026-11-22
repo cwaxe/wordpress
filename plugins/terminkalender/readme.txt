@@ -1,7 +1,7 @@
 === Terminkalender ===
 Requires at least: 6.6
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 
 Schlanker Veranstaltungskalender mit einfachem Backend. Übernimmt alle Daten aus „The Events Calendar“.
@@ -11,7 +11,7 @@ Schlanker Veranstaltungskalender mit einfachem Backend. Übernimmt alle Daten au
 Menü „Termine“:
 * Alle Termine – Liste mit Datum und Ort, getrennt nach Kommende / Vergangene, „Kopieren“ je Termin
 * Neuer Termin – Titel, Box „Wann? Wo? Wer?“, Beschreibung, Kategorie, Bild
-* Kategorien (mit Farbe), Orte (mit Adresse), Veranstalter (mit Kontakt)
+* Kategorien (mit Farbe), Orte (mit Adresse, oder frei je Termin), Veranstalter (mit Kontakt)
 * Einstellungen – Kalenderseite, Darstellung, Übernahme aus The Events Calendar
 
 Serien: jede Woche oder alle 2 Wochen (auch an mehreren Tagen, z. B. Di und Do), jeden Monat am gleichen Tag, am gleichen Wochentag
@@ -19,7 +19,7 @@ Serien: jede Woche oder alle 2 Wochen (auch an mehreren Tagen, z. B. Di und Do),
 
 == Frontend ==
 
-* Shortcode [terminkalender] (auch [veranstaltungskalender]): Monat und Liste, Kategorie-Filter
+* Shortcode [terminkalender] (auch [veranstaltungskalender]): Monat, Woche und Liste, Bildvorschau, Kategorie-Filter
   mit Mehrfachauswahl, Suche, Vorschau beim Darüberfahren, Detailfenster
 * Eigene Terminseite je Termin (/termin/name/) mit Datum, Ort und Karte, Veranstalter,
   weiteren Serienterminen, „In Kalender eintragen“ (.ics) und Daten für Google
@@ -34,6 +34,9 @@ Serien: jede Woche oder alle 2 Wochen (auch an mehreren Tagen, z. B. Di und Do),
    Alte Links (/termine/…, /veranstaltung/…, iCal) werden automatisch weitergeleitet.
 
 == Changelog ==
+
+= 1.2.0 =
+* Wochenansicht, Bildvorschau, anklickbare Bilder (Lightbox), Ort frei eingeben.
 
 = 1.1.0 =
 * Wöchentliche Serien an mehreren Wochentagen.

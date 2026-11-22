@@ -75,7 +75,7 @@ class TK_Settings {
 		return [
 			'page_id'       => isset( $input['page_id'] ) ? absint( $input['page_id'] ) : 0,
 			'accent'        => $accent ? $accent : $d['accent'],
-			'default_view'  => ( isset( $input['default_view'] ) && 'list' === $input['default_view'] ) ? 'list' : 'month',
+			'default_view'  => ( isset( $input['default_view'] ) && in_array( $input['default_view'], [ 'list', 'week' ], true ) ) ? $input['default_view'] : 'month',
 			'max_per_day'   => isset( $input['max_per_day'] ) ? max( 1, min( 10, (int) $input['max_per_day'] ) ) : 3,
 			'show_end_time' => empty( $input['show_end_time'] ) ? 0 : 1,
 			'single_slug'   => $slug ? $slug : $d['single_slug'],

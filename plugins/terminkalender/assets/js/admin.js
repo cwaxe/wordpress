@@ -104,13 +104,18 @@
 			$repeat.on( 'change', toggleSeries );
 
 			$( '.tk-picker' ).on( 'change', function () {
-				var box = document.getElementById( $( this ).data( 'new' ) );
-				if ( box ) {
-					box.hidden = $( this ).val() !== 'new';
-					if ( ! box.hidden ) {
-						$( box ).find( 'input' ).first().trigger( 'focus' );
+				var val = $( this ).val();
+				[ [ 'new', $( this ).data( 'new' ) ], [ 'free', $( this ).data( 'free' ) ] ].forEach( function ( pair ) {
+					var box = pair[ 1 ] ? document.getElementById( pair[ 1 ] ) : null;
+					if ( box ) {
+						var show = val === pair[ 0 ];
+						var wasHidden = box.hidden;
+						box.hidden = ! show;
+						if ( show && wasHidden ) {
+							$( box ).find( 'input' ).first().trigger( 'focus' );
+						}
 					}
-				}
+				} );
 			} );
 
 			toggleAllday();
