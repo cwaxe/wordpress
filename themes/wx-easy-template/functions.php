@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'DUNKEL_VERSION', '1.10.1' );
+define( 'DUNKEL_VERSION', '1.11.0' );
 
 /**
  * Übernimmt beim ersten Aktivieren die Customizer-Einstellungen (Farben,

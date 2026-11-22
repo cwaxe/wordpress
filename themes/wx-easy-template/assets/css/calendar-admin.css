@@ -1,0 +1,189 @@
+/* Terminkalender – Backend */
+
+/* Box „Wann? Wo? Wer?“ unter dem Titel */
+.ek-box {
+	margin: 16px 0 8px;
+	padding: 0;
+}
+.ek-box__teil {
+	border-bottom: 1px solid #e2e4e7;
+	padding: 16px 20px 18px;
+}
+.ek-box__teil:last-child {
+	border-bottom: 0;
+}
+.ek-box .ek-box__titel {
+	font-size: 15px;
+	font-weight: 600;
+	margin: 0 0 12px;
+	padding: 0;
+}
+.ek-raster {
+	align-items: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 24px;
+}
+.ek-raster--serie {
+	margin-top: 14px;
+}
+.ek-feld {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.ek-feld--breit {
+	flex: 1 1 320px;
+}
+.ek-feld--haken {
+	padding-bottom: 8px;
+}
+.ek-feld label {
+	font-weight: 500;
+}
+.ek-feld--haken label {
+	font-weight: 400;
+}
+.ek-zeile {
+	display: flex;
+	gap: 8px;
+}
+.ek-box input[type="date"],
+.ek-box input[type="time"],
+.ek-box input[type="text"],
+.ek-box input[type="email"],
+.ek-box input[type="tel"],
+.ek-box input[type="url"],
+.ek-box select,
+.ek-box textarea {
+	font-size: 14px;
+	min-height: 36px;
+}
+.ek-box input[type="text"],
+.ek-box input[type="email"],
+.ek-box input[type="tel"],
+.ek-box input[type="url"] {
+	width: 100%;
+}
+.ek-box select {
+	max-width: 100%;
+	min-width: 280px;
+}
+.ek-box textarea {
+	width: 100%;
+}
+.ek-box .ek-kurz {
+	width: 90px;
+}
+.ek-neu {
+	background: #f6f7f7;
+	border-radius: 6px;
+	margin-top: 12px;
+	padding: 12px 14px;
+}
+.ek-beschreibung-titel {
+	font-size: 15px;
+	font-weight: 600;
+	margin: 20px 0 8px;
+	padding: 0;
+}
+.ek-kopieren {
+	padding-bottom: 8px;
+}
+
+/* Terminliste */
+.column-ek_datum {
+	width: 26%;
+}
+.column-ek_ort {
+	width: 18%;
+}
+.ek-serie-badge {
+	background: #2271b1;
+	border-radius: 3px;
+	color: #fff;
+	display: inline-block;
+	font-size: 11px;
+	line-height: 1.6;
+	padding: 0 6px;
+}
+
+/* Orte und Veranstalter: unnötige Felder ausblenden */
+.taxonomy-ek_ort .term-description-wrap,
+.taxonomy-ek_ort .term-slug-wrap,
+.taxonomy-ek_veranstalter .term-description-wrap,
+.taxonomy-ek_veranstalter .term-slug-wrap {
+	display: none;
+}
+
+/* Aufräumen */
+.ek-einstellungen .ek-karte {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	margin: 16px 0;
+	max-width: 900px;
+	padding: 4px 20px 16px;
+}
+.ek-box input,
+.ek-box select,
+.ek-box textarea {
+	box-sizing: border-box;
+}
+
+/* Wochentage einer wöchentlichen Serie */
+.ek-box .ek-tage {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+.ek-box .ek-tage legend {
+	font-weight: 500;
+	margin-bottom: 4px;
+	padding: 0;
+}
+.ek-tage__liste {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+.ek-tag-wahl {
+	cursor: pointer;
+	position: relative;
+}
+.ek-tag-wahl input {
+	height: 1px;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	width: 1px;
+}
+.ek-tag-wahl span {
+	align-items: center;
+	background: #fff;
+	border: 1px solid #8c8f94;
+	border-radius: 18px;
+	box-sizing: border-box;
+	display: inline-flex;
+	font-weight: 500;
+	height: 36px;
+	justify-content: center;
+	min-width: 44px;
+	padding: 0 10px;
+}
+.ek-tag-wahl input:checked + span {
+	background: #2271b1;
+	border-color: #2271b1;
+	color: #fff;
+}
+.ek-tag-wahl input:focus-visible + span {
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2271b1;
+}
+.ek-tag-wahl.ist-start {
+	cursor: default;
+}
+.ek-tag-wahl.ist-start span {
+	background: #135e96;
+	border-color: #135e96;
+}

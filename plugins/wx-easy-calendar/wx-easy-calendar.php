@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       WX Easy Calendar
  * Description:       Einfacher Termin-Kalender mit Kategorien, Orten, Veranstaltern, Bildern und Serien. Per Shortcode [einfacher_kalender] als Liste, Woche, Monat oder Jahr – mit Filter, Suche, Vorschau, Terminseiten und iCal.
- * Version:           2.0.0
+ * Version:           2.0.1
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Author:            WX Easy Calendar
@@ -50,7 +50,7 @@ if ( defined( 'EK_VERSION' ) ) {
 	return;
 }
 
-define( 'EK_VERSION', '2.0.0' );
+define( 'EK_VERSION', '2.0.1' );
 define( 'EK_URL', plugin_dir_url( __FILE__ ) );
 define( 'EK_DIR', plugin_dir_path( __FILE__ ) );
 
