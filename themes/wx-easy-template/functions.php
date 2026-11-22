@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'DUNKEL_VERSION', '1.11.0' );
+define( 'DUNKEL_VERSION', '1.12.0' );
 
 /**
  * Übernimmt beim ersten Aktivieren die Customizer-Einstellungen (Farben,
@@ -38,6 +38,9 @@ if ( ! function_exists( 'ek_register_post_type' ) ) {
 if ( ! function_exists( 'sbl_enqueue_assets' ) ) {
 	require_once __DIR__ . '/inc/lightbox.php';
 }
+
+// Updates aus dem GitHub-Repository (Dashboard → Aktualisierungen).
+require_once __DIR__ . '/inc/updater.php';
 
 /**
  * Theme-Unterstützung und Menüs registrieren.

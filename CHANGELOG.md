@@ -3,6 +3,11 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-easy-template 1.12.0
+
+- Updates direkt aus dem GitHub-Repository: Neue Versionen erscheinen unter *Dashboard → Aktualisierungen* und *Design → Themes* und lassen sich mit einem Klick oder automatisch installieren.
+- Ist das Theme in einem anderen Ordner installiert (z. B. noch „dunkel-schlicht“), ersetzt das Update trotzdem das bestehende Theme.
+
 ## wx-easy-template 1.11.0
 
 - Eingebauter Kalender auf dem Stand von WX Easy Calendar 2.0.1: Wochenansicht, Kategorie-Filter mit Mehrfachauswahl, Suche, Bildvorschau beim Darüberfahren, Vorschaubilder, Detailfenster und vergrößerbare Bilder.
