@@ -19,6 +19,7 @@ class TK_Model {
 	const META_ALLDAY = '_tk_allday';
 	const META_LAST   = '_tk_last';   // Letzter Tag (Y-m-d), bei Serien das Ende der Serie.
 	const META_RULE   = '_tk_rule';   // Serie (Array) oder leer.
+	const META_PLACE  = '_tk_ort_frei'; // Frei eingegebener Ort: [ 'name' => …, 'address' => … ].
 
 	const GEN_OPTION = 'tk_cache_generation';
 
@@ -687,7 +688,18 @@ class TK_Model {
 	public static function place( $post_id ) {
 		$term = self::first_term( $post_id, self::TAX_PLACE );
 		if ( ! $term ) {
-			return null;
+			// Frei eingegebener Ort (nicht in der Ortsliste gespeichert).
+			$free = self::free_place( $post_id );
+			if ( ! $free ) {
+				return null;
+			}
+			return [
+				'name'   => $free['name'],
+				'street' => $free['address'],
+				'zip'    => '',
+				'city'   => '',
+				'free'   => true,
+			];
 		}
 
 		return [
@@ -695,6 +707,23 @@ class TK_Model {
 			'street' => (string) get_term_meta( $term->term_id, 'tk_strasse', true ),
 			'zip'    => (string) get_term_meta( $term->term_id, 'tk_plz', true ),
 			'city'   => (string) get_term_meta( $term->term_id, 'tk_stadt', true ),
+		];
+	}
+
+	/**
+	 * Frei eingegebener Ort eines Termins.
+	 *
+	 * @param int $post_id Termin.
+	 * @return array{name:string,address:string}|null
+	 */
+	public static function free_place( $post_id ) {
+		$free = get_post_meta( $post_id, self::META_PLACE, true );
+		if ( ! is_array( $free ) || empty( $free['name'] ) ) {
+			return null;
+		}
+		return [
+			'name'    => (string) $free['name'],
+			'address' => isset( $free['address'] ) ? (string) $free['address'] : '',
 		];
 	}
 

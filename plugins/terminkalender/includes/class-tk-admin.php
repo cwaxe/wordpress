@@ -154,6 +154,7 @@ class TK_Admin {
 		$exdates = $rule ? implode( "\n", array_map( [ __CLASS__, 'de_date' ], $rule['exdates'] ) ) : '';
 
 		$place = TK_Model::first_term( $post->ID, TK_Model::TAX_PLACE );
+		$free  = $place ? null : TK_Model::free_place( $post->ID );
 		$org   = TK_Model::first_term( $post->ID, TK_Model::TAX_ORG );
 
 		$places = get_terms( [ 'taxonomy' => TK_Model::TAX_PLACE, 'hide_empty' => false, 'orderby' => 'name' ] );
@@ -228,7 +229,7 @@ class TK_Admin {
 				<h2 class="tk-box__title"><?php esc_html_e( 'Wo?', 'terminkalender' ); ?></h2>
 				<div class="tk-field">
 					<label for="tk-place"><?php esc_html_e( 'Ort', 'terminkalender' ); ?></label>
-					<select id="tk-place" name="tk[place]" class="tk-picker" data-new="tk-place-new">
+					<select id="tk-place" name="tk[place]" class="tk-picker" data-new="tk-place-new" data-free="tk-place-free">
 						<option value=""><?php esc_html_e( '— kein Ort —', 'terminkalender' ); ?></option>
 						<?php if ( ! is_wp_error( $places ) ) : ?>
 							<?php foreach ( $places as $t ) : ?>
@@ -239,8 +240,16 @@ class TK_Admin {
 								<option value="<?php echo esc_attr( $t->term_id ); ?>" <?php selected( $place && (int) $place->term_id === (int) $t->term_id ); ?>><?php echo esc_html( $name ); ?></option>
 							<?php endforeach; ?>
 						<?php endif; ?>
-						<option value="new"><?php esc_html_e( '+ Neuen Ort anlegen …', 'terminkalender' ); ?></option>
+						<option value="free" <?php selected( (bool) $free ); ?>><?php esc_html_e( 'Ort frei eingeben (nur für diesen Termin) …', 'terminkalender' ); ?></option>
+						<option value="new"><?php esc_html_e( '+ Neuen Ort in der Ortsliste anlegen …', 'terminkalender' ); ?></option>
 					</select>
+				</div>
+				<div class="tk-new" id="tk-place-free" <?php echo $free ? '' : 'hidden'; ?>>
+					<div class="tk-grid">
+						<div class="tk-field tk-field--wide"><label for="tk-pf-name"><?php esc_html_e( 'Ort', 'terminkalender' ); ?></label><input type="text" id="tk-pf-name" name="tk[place_free][name]" value="<?php echo esc_attr( $free ? $free['name'] : '' ); ?>" placeholder="<?php esc_attr_e( 'z. B. Sportplatz Aich', 'terminkalender' ); ?>"></div>
+						<div class="tk-field tk-field--wide"><label for="tk-pf-address"><?php esc_html_e( 'Adresse (optional, für den Kartenlink)', 'terminkalender' ); ?></label><input type="text" id="tk-pf-address" name="tk[place_free][address]" value="<?php echo esc_attr( $free ? $free['address'] : '' ); ?>" placeholder="<?php esc_attr_e( 'z. B. Sportplatzweg 2, 84155 Bodenkirchen', 'terminkalender' ); ?>"></div>
+					</div>
+					<p class="description"><?php esc_html_e( 'Wird nur bei diesem Termin angezeigt und nicht in die Ortsliste übernommen.', 'terminkalender' ); ?></p>
 				</div>
 				<div class="tk-new" id="tk-place-new" hidden>
 					<div class="tk-grid">
@@ -366,18 +375,43 @@ class TK_Admin {
 
 		TK_Model::save( $post_id, $start, $end, $allday, $rule );
 
-		// Ort und Veranstalter.
-		self::save_term_choice(
-			$post_id,
-			TK_Model::TAX_PLACE,
-			isset( $in['place'] ) ? (string) $in['place'] : '',
-			isset( $in['place_new'] ) && is_array( $in['place_new'] ) ? $in['place_new'] : [],
-			[
-				'street' => 'tk_strasse',
-				'zip'    => 'tk_plz',
-				'city'   => 'tk_stadt',
-			]
-		);
+		// Ort: frei eingegeben oder aus der Ortsliste.
+		$place_choice = isset( $in['place'] ) ? (string) $in['place'] : '';
+		if ( 'free' === $place_choice ) {
+			$pf   = isset( $in['place_free'] ) && is_array( $in['place_free'] ) ? $in['place_free'] : [];
+			$name = isset( $pf['name'] ) ? sanitize_text_field( $pf['name'] ) : '';
+			if ( '' !== $name ) {
+				update_post_meta(
+					$post_id,
+					TK_Model::META_PLACE,
+					[
+						'name'    => $name,
+						'address' => isset( $pf['address'] ) ? sanitize_text_field( $pf['address'] ) : '',
+					]
+				);
+			} else {
+				delete_post_meta( $post_id, TK_Model::META_PLACE );
+			}
+			wp_set_object_terms( $post_id, [], TK_Model::TAX_PLACE );
+			$place_choice = 'skip';
+		} else {
+			delete_post_meta( $post_id, TK_Model::META_PLACE );
+		}
+
+		// Ort (Liste) und Veranstalter.
+		if ( 'skip' !== $place_choice ) {
+			self::save_term_choice(
+				$post_id,
+				TK_Model::TAX_PLACE,
+				$place_choice,
+				isset( $in['place_new'] ) && is_array( $in['place_new'] ) ? $in['place_new'] : [],
+				[
+					'street' => 'tk_strasse',
+					'zip'    => 'tk_plz',
+					'city'   => 'tk_stadt',
+				]
+			);
+		}
 		self::save_term_choice(
 			$post_id,
 			TK_Model::TAX_ORG,
@@ -539,6 +573,10 @@ class TK_Admin {
 		$thumb = get_post_thumbnail_id( $id );
 		if ( $thumb ) {
 			set_post_thumbnail( $new_id, $thumb );
+		}
+		$free = get_post_meta( $id, TK_Model::META_PLACE, true );
+		if ( $free ) {
+			update_post_meta( $new_id, TK_Model::META_PLACE, $free );
 		}
 		foreach ( [ TK_Model::TAX_CAT, TK_Model::TAX_PLACE, TK_Model::TAX_ORG ] as $tax ) {
 			$ids = wp_get_object_terms( $id, $tax, [ 'fields' => 'ids' ] );
@@ -936,6 +974,7 @@ class TK_Admin {
 						<td>
 							<select id="tk-view" name="<?php echo esc_attr( $opt ); ?>[default_view]">
 								<option value="month" <?php selected( TK_Settings::get( 'default_view' ), 'month' ); ?>><?php esc_html_e( 'Monat', 'terminkalender' ); ?></option>
+								<option value="week" <?php selected( TK_Settings::get( 'default_view' ), 'week' ); ?>><?php esc_html_e( 'Woche', 'terminkalender' ); ?></option>
 								<option value="list" <?php selected( TK_Settings::get( 'default_view' ), 'list' ); ?>><?php esc_html_e( 'Liste', 'terminkalender' ); ?></option>
 							</select>
 						</td>
@@ -976,6 +1015,7 @@ class TK_Admin {
 				<h2><?php esc_html_e( 'Shortcode', 'terminkalender' ); ?></h2>
 				<p><code>[terminkalender]</code> – <?php esc_html_e( 'kompletter Kalender', 'terminkalender' ); ?></p>
 				<p><code>[terminkalender ansicht="liste"]</code> – <?php esc_html_e( 'startet in der Listenansicht', 'terminkalender' ); ?></p>
+				<p><code>[terminkalender ansicht="woche"]</code> – <?php esc_html_e( 'startet in der Wochenansicht', 'terminkalender' ); ?></p>
 				<p><code>[terminkalender kategorien="theater,feste"]</code> – <?php esc_html_e( 'nur diese Kategorien', 'terminkalender' ); ?></p>
 			</div>
 		</div>

@@ -91,11 +91,17 @@
 		var today = parseYmd( this.cfg.today );
 
 		this.today = today;
-		this.view = params.get( 'ansicht' ) === 'liste' ? 'list' : ( params.get( 'ansicht' ) === 'monat' ? 'month' : this.cfg.view );
+		var a = params.get( 'ansicht' );
+		this.view = { liste: 'list', woche: 'week', monat: 'month' }[ a ] || this.cfg.view;
 		this.month = firstOfMonth( today );
 		var m = params.get( 'monat' );
 		if ( m && /^\d{4}-\d{2}$/.test( m ) ) {
 			this.month = parseYmd( m + '-01' );
+		}
+		this.weekStart = this.startOfWeek( today );
+		var w = params.get( 'woche' );
+		if ( w && /^\d{4}-\d{2}-\d{2}$/.test( w ) ) {
+			this.weekStart = this.startOfWeek( parseYmd( w ) );
 		}
 		this.selected = null;
 		this.query = '';
@@ -145,13 +151,43 @@
 				return;
 			}
 			var url = new URL( window.location.href );
-			url.searchParams.set( 'ansicht', this.view === 'list' ? 'liste' : 'monat' );
-			url.searchParams.set( 'monat', this.month.getFullYear() + '-' + pad( this.month.getMonth() + 1 ) );
+			url.searchParams.set( 'ansicht', { list: 'liste', week: 'woche' }[ this.view ] || 'monat' );
+			if ( this.view === 'week' ) {
+				url.searchParams.set( 'woche', ymd( this.weekStart ) );
+				url.searchParams.delete( 'monat' );
+			} else {
+				url.searchParams.set( 'monat', this.month.getFullYear() + '-' + pad( this.month.getMonth() + 1 ) );
+				url.searchParams.delete( 'woche' );
+			}
 			url.searchParams.delete( 'kategorie' );
 			window.history.replaceState( null, '', url.toString() );
 		},
 
 		/* ---------- Daten ---------- */
+
+		startOfWeek: function ( d ) {
+			return addDays( d, -( ( d.getDay() - this.cfg.startOfWeek + 7 ) % 7 ) );
+		},
+
+		/** Zeitraum der aktuellen Ansicht. */
+		currentRange: function () {
+			if ( this.view === 'week' ) {
+				return { start: ymd( this.weekStart ), end: ymd( addDays( this.weekStart, 6 ) ) };
+			}
+			return this.gridRange( this.month );
+		},
+
+		/** Bereits geladene Termine, die den Zeitraum vollständig abdecken. */
+		cachedFor: function ( range ) {
+			var keys = Object.keys( this.cache );
+			for ( var i = 0; i < keys.length; i++ ) {
+				var p = keys[ i ].split( '|' );
+				if ( p[ 0 ] <= range.start && p[ 1 ] >= range.end ) {
+					return this.cache[ keys[ i ] ];
+				}
+			}
+			return null;
+		},
 
 		gridRange: function ( month ) {
 			var sow = this.cfg.startOfWeek;
@@ -176,8 +212,9 @@
 			var key = range.start + '|' + range.end;
 			var self = this;
 
-			if ( this.cache[ key ] ) {
-				return Promise.resolve( this.cache[ key ] );
+			var have = this.cachedFor( range );
+			if ( have ) {
+				return Promise.resolve( have );
 			}
 			if ( this.pending[ key ] ) {
 				return this.pending[ key ];
@@ -315,6 +352,18 @@
 
 		/* ---------- Texte ---------- */
 
+		weekTitle: function ( s ) {
+			var e = addDays( s, 6 );
+			var m = this.t.months;
+			if ( s.getMonth() === e.getMonth() ) {
+				return s.getDate() + '.–' + e.getDate() + '. ' + m[ e.getMonth() ] + ' ' + e.getFullYear();
+			}
+			if ( s.getFullYear() === e.getFullYear() ) {
+				return s.getDate() + '. ' + m[ s.getMonth() ] + ' – ' + e.getDate() + '. ' + m[ e.getMonth() ] + ' ' + e.getFullYear();
+			}
+			return s.getDate() + '. ' + m[ s.getMonth() ] + ' ' + s.getFullYear() + ' – ' + e.getDate() + '. ' + m[ e.getMonth() ] + ' ' + e.getFullYear();
+		},
+
 		monthTitle: function ( d ) {
 			return this.t.months[ d.getMonth() ] + ' ' + d.getFullYear();
 		},
@@ -382,6 +431,7 @@
 						'</label>' +
 						'<div class="tk-seg" role="group" aria-label="' + esc( t.view ) + '">' +
 							'<button type="button" class="tk-seg__btn" data-view="month">' + esc( t.month ) + '</button>' +
+							'<button type="button" class="tk-seg__btn" data-view="week">' + esc( t.week ) + '</button>' +
 							'<button type="button" class="tk-seg__btn" data-view="list">' + esc( t.list ) + '</button>' +
 						'</div>' +
 					'</div>' +
@@ -439,6 +489,13 @@
 		/* ---------- Ereignisse ---------- */
 
 		onClick: function ( e ) {
+			// Bild im Detailfenster: Fenster schließen, die Lightbox übernimmt.
+			var zoom = e.target.closest( '.tk-zoom' );
+			if ( zoom && this.dialog.contains( zoom ) ) {
+				this.dialog.close();
+				return;
+			}
+
 			var el = e.target.closest( '[data-act],[data-view],[data-cat],[data-ev],[data-day],[data-more]' );
 			if ( ! el || ! this.root.contains( el ) ) {
 				return;
@@ -455,7 +512,16 @@
 			}
 
 			if ( el.hasAttribute( 'data-view' ) ) {
-				this.view = el.getAttribute( 'data-view' );
+				var nv = el.getAttribute( 'data-view' );
+				if ( nv === 'week' && this.view !== 'week' ) {
+					// Woche mit heute, wenn heute im angezeigten Monat liegt, sonst die erste Woche des Monats.
+					var inMonth = this.today.getMonth() === this.month.getMonth() && this.today.getFullYear() === this.month.getFullYear();
+					this.weekStart = this.startOfWeek( inMonth ? this.today : this.month );
+				} else if ( nv !== 'week' && this.view === 'week' ) {
+					this.month = firstOfMonth( addDays( this.weekStart, 3 ) );
+				}
+				this.view = nv;
+				this.showPast = false;
 				this.render();
 				return;
 			}
@@ -496,6 +562,11 @@
 
 			switch ( el.getAttribute( 'data-act' ) ) {
 				case 'prev':
+					if ( this.view === 'week' ) {
+						this.weekStart = addDays( this.weekStart, -7 );
+						this.render();
+						break;
+					}
 					this.month = addMonths( this.month, -1 );
 					this.selected = null;
 					this.showPast = false;
@@ -503,12 +574,18 @@
 					break;
 				case 'next':
 				case 'next-month':
+					if ( this.view === 'week' ) {
+						this.weekStart = addDays( this.weekStart, 7 );
+						this.render();
+						break;
+					}
 					this.month = addMonths( this.month, 1 );
 					this.selected = null;
 					this.showPast = false;
 					this.render();
 					break;
 				case 'today':
+					this.weekStart = this.startOfWeek( this.today );
 					this.month = firstOfMonth( this.today );
 					this.selected = this.cfg.today;
 					this.showPast = false;
@@ -538,17 +615,20 @@
 
 		render: function () {
 			var self = this;
-			var range = this.gridRange( this.month );
-			var key = range.start + '|' + range.end;
+			var range = this.currentRange();
+			var have = this.cachedFor( range );
+			var token = this.view + range.start;
 
 			this.ready = true;
+			this.token = token;
 			this.hideHover();
-			this.titleEl.textContent = this.monthTitle( this.month );
+			this.titleEl.textContent = this.view === 'week' ? this.weekTitle( this.weekStart ) : this.monthTitle( this.month );
+			this.updateNavLabels();
 			this.updateControls();
 			this.updateUrl();
 
-			if ( this.cache[ key ] ) {
-				this.draw( this.cache[ key ], range );
+			if ( have ) {
+				this.draw( have, range );
 				this.prefetch();
 				return;
 			}
@@ -556,9 +636,8 @@
 			this.root.classList.add( 'is-loading' );
 			this.body.setAttribute( 'aria-busy', 'true' );
 
-			var month = this.month;
 			this.fetchRange( range ).then( function ( events ) {
-				if ( month !== self.month ) {
+				if ( token !== self.token ) {
 					return; // Inzwischen weitergeblättert.
 				}
 				self.root.classList.remove( 'is-loading' );
@@ -566,7 +645,7 @@
 				self.draw( events, range );
 				self.prefetch();
 			} ).catch( function () {
-				if ( month !== self.month ) {
+				if ( token !== self.token ) {
 					return;
 				}
 				self.root.classList.remove( 'is-loading' );
@@ -579,8 +658,23 @@
 		prefetch: function () {
 			var self = this;
 			[ -1, 1 ].forEach( function ( n ) {
-				self.fetchRange( self.gridRange( addMonths( self.month, n ) ) ).catch( function () {} );
+				var r;
+				if ( self.view === 'week' ) {
+					var ws = addDays( self.weekStart, 7 * n );
+					r = { start: ymd( ws ), end: ymd( addDays( ws, 6 ) ) };
+				} else {
+					r = self.gridRange( addMonths( self.month, n ) );
+				}
+				self.fetchRange( r ).catch( function () {} );
 			} );
+		},
+
+		updateNavLabels: function () {
+			var week = this.view === 'week';
+			var prev = this.root.querySelector( '[data-act=prev]' );
+			var next = this.root.querySelector( '[data-act=next]' );
+			prev.setAttribute( 'aria-label', week ? this.t.prevWeek : this.t.prev );
+			next.setAttribute( 'aria-label', week ? this.t.nextWeek : this.t.next );
 		},
 
 		updateControls: function () {
@@ -597,10 +691,14 @@
 				c.setAttribute( 'aria-pressed', on ? 'true' : 'false' );
 			} );
 			this.root.classList.toggle( 'is-list', this.view === 'list' );
+			this.root.classList.toggle( 'is-week', this.view === 'week' );
 		},
 
 		draw: function ( events, range ) {
-			if ( this.view === 'list' ) {
+			this.current = { events: events, range: range };
+			if ( this.view === 'week' ) {
+				this.body.innerHTML = this.compact ? this.renderWeekList( events, range ) : this.renderWeek( events, range );
+			} else if ( this.view === 'list' ) {
 				this.body.innerHTML = this.renderList( events );
 			} else if ( this.compact ) {
 				this.body.innerHTML = this.renderCompactMonth( events, range );
@@ -623,7 +721,7 @@
 		dayClasses: function ( d, base ) {
 			var c = base;
 			var k = ymd( d );
-			if ( d.getMonth() !== this.month.getMonth() ) {
+			if ( this.view !== 'week' && d.getMonth() !== this.month.getMonth() ) {
 				c += ' is-out';
 			}
 			if ( k === this.cfg.today ) {
@@ -759,6 +857,91 @@
 			return '<div class="tk-cmonth">' + this.weekdayHead() + '<div class="tk-cmonth__grid">' + cells + '</div></div>' + agenda;
 		},
 
+		renderWeek: function ( events, range ) {
+			var self = this;
+			var map = this.byDay( events, range.start, range.end );
+			var d = parseYmd( range.start );
+			var cols = '';
+			var any = false;
+
+			for ( var i = 0; i < 7; i++ ) {
+				var k = ymd( d );
+				var list = map[ k ] || [];
+				if ( list.length ) {
+					any = true;
+				}
+				var label = this.dayTitle( d ) + ', ' + ( list.length ? this.countText( list.length ) : this.t.noEvents );
+				var items = list.map( function ( ev ) {
+					return self.renderWeekItem( ev, k );
+				} ).join( '' );
+
+				cols += '<div class="' + this.dayClasses( d, 'tk-week__col' ) + '">' +
+					'<button type="button" class="tk-week__head" data-day="' + k + '" aria-label="' + esc( label ) + '"' +
+					( k === this.cfg.today ? ' aria-current="date"' : '' ) + '>' +
+					'<span class="tk-week__wd">' + esc( this.t.weekdaysAbbr[ d.getDay() ] ) + '</span>' +
+					'<span class="tk-week__num">' + d.getDate() + '</span>' +
+					'</button>' +
+					'<div class="tk-week__items">' + items + '</div>' +
+					'</div>';
+				d = addDays( d, 1 );
+			}
+
+			var notice = '';
+			if ( ! any ) {
+				notice = this.active.length || this.query
+					? this.noMatchNotice()
+					: '<div class="tk-empty"><p>' + esc( this.t.noWeek ) + '</p></div>';
+			}
+
+			return notice + '<div class="tk-week">' + cols + '</div>';
+		},
+
+		renderWeekItem: function ( ev, day ) {
+			var allday = ev.ad || this.isMultiDay( ev );
+			return '<a class="tk-wev' + ( allday ? ' is-allday' : '' ) + ( ev.f ? ' is-featured' : '' ) + '" href="' + esc( ev.u ) + '" data-ev="' + esc( ev.id ) + '"' + this.colorStyle( ev ) + '>' +
+				( ev.m ? '<span class="tk-wev__img"><img src="' + esc( ev.m ) + '" alt="" loading="lazy"></span>' : '' ) +
+				'<span class="tk-wev__time">' + esc( this.timeText( ev, day ) ) + '</span>' +
+				'<span class="tk-wev__title">' + esc( ev.t ) + '</span>' +
+				( ev.v ? '<span class="tk-wev__place">' + esc( ev.v ) + '</span>' : '' ) +
+				'</a>';
+		},
+
+		/** Woche auf schmalen Bildschirmen: Tage untereinander. */
+		renderWeekList: function ( events, range ) {
+			var self = this;
+			var map = this.byDay( events, range.start, range.end );
+			var d = parseYmd( range.start );
+			var html = '';
+			var any = false;
+
+			for ( var i = 0; i < 7; i++ ) {
+				var k = ymd( d );
+				var list = map[ k ] || [];
+				if ( list.length ) {
+					any = true;
+				}
+				html += '<section class="tk-group' + ( k < this.cfg.today ? ' is-past' : '' ) + '">' +
+					'<h3 class="tk-dayhead">' +
+						'<span class="tk-dayhead__wd">' + esc( this.t.weekdays[ d.getDay() ] ) + '</span> ' +
+						esc( d.getDate() + '. ' + this.t.months[ d.getMonth() ] ) +
+						( k === this.cfg.today ? ' <span class="tk-badge">' + esc( this.t.today ) + '</span>' : '' ) +
+					'</h3>' +
+					( list.length
+						? '<div class="tk-rows">' + list.map( function ( ev ) {
+							return self.renderRow( ev, k );
+						} ).join( '' ) + '</div>'
+						: '<p class="tk-muted tk-none">' + esc( this.t.noEvents ) + '</p>' ) +
+					'</section>';
+				d = addDays( d, 1 );
+			}
+
+			if ( ! any && ( this.active.length || this.query ) ) {
+				return this.noMatchNotice();
+			}
+
+			return '<div class="tk-list tk-list--week">' + html + '</div>';
+		},
+
 		renderRow: function ( ev, day ) {
 			var self = this;
 			var sub = '';
@@ -773,13 +956,14 @@
 				return '<span class="tk-tag" style="--c:' + esc( c.color ) + '">' + esc( c.name ) + '</span>';
 			} ).join( '' );
 
-			return '<a class="tk-row' + ( ev.f ? ' is-featured' : '' ) + '" href="' + esc( ev.u ) + '" data-ev="' + ev.id + '"' + this.colorStyle( ev ) + '>' +
+			return '<a class="tk-row' + ( ev.f ? ' is-featured' : '' ) + ( ev.m ? ' has-img' : '' ) + '" href="' + esc( ev.u ) + '" data-ev="' + esc( ev.id ) + '"' + this.colorStyle( ev ) + '>' +
 				'<span class="tk-row__time">' + esc( this.timeText( ev, day ) ) + sub + '</span>' +
 				'<span class="tk-row__main">' +
 					'<span class="tk-row__title">' + esc( ev.t ) + '</span>' +
 					( place ? '<span class="tk-row__meta">' + ICONS.pin + '<span>' + esc( place ) + '</span></span>' : '' ) +
 				'</span>' +
-				( tags ? '<span class="tk-row__tags">' + tags + '</span>' : '' ) +
+				( tags ? '<span class="tk-row__tags">' + tags + '</span>' : '<span class="tk-row__tags"></span>' ) +
+				( ev.m ? '<span class="tk-row__img"><img src="' + esc( ev.m ) + '" alt="" loading="lazy"></span>' : '' ) +
 				ICONS.chevron +
 				'</a>';
 		},
@@ -908,7 +1092,7 @@
 			this.hoverTimer = null;
 
 			this.root.addEventListener( 'mouseover', function ( e ) {
-				var el = e.target.closest ? e.target.closest( '.tk-month [data-ev]' ) : null;
+				var el = e.target.closest ? e.target.closest( '.tk-month [data-ev], .tk-week [data-ev]' ) : null;
 				if ( ! el || el === self.hoverEl ) {
 					return;
 				}
@@ -950,6 +1134,7 @@
 			var place = [ ev.v, ev.c ].filter( Boolean ).join( ', ' );
 
 			this.hover.innerHTML =
+				( ev.m ? '<div class="tk-hover__img"><img src="' + esc( ev.m ) + '" alt=""></div>' : '' ) +
 				( cats ? '<div class="tk-dlg__cats">' + cats + '</div>' : '' ) +
 				'<div class="tk-hover__title">' + esc( ev.t ) + '</div>' +
 				'<ul class="tk-dlg__meta">' +
@@ -1014,6 +1199,7 @@
 
 			this.hideHover();
 			this.showDialog(
+				( ev.m ? '<a class="tk-dlg__img tk-zoom" href="' + esc( ev.M || ev.m ) + '" data-lightbox="tk-termin" aria-label="' + esc( this.t.zoom ) + '"><img src="' + esc( ev.m ) + '" alt=""></a>' : '' ) +
 				( cats ? '<div class="tk-dlg__cats">' + cats + '</div>' : '' ) +
 				'<h3 class="tk-dlg__title" id="' + this.root.id + '-dlg-title" tabindex="-1">' + esc( ev.t ) + '</h3>' +
 				'<ul class="tk-dlg__meta">' +
@@ -1031,8 +1217,8 @@
 
 		openDay: function ( day ) {
 			var self = this;
-			var range = this.gridRange( this.month );
-			var events = this.cache[ range.start + '|' + range.end ] || [];
+			var range = this.current ? this.current.range : this.currentRange();
+			var events = this.current ? this.current.events : ( this.cachedFor( range ) || [] );
 			var list = this.byDay( events, range.start, range.end )[ day ] || [];
 			var d = parseYmd( day );
 

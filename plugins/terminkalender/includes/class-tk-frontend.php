@@ -20,6 +20,8 @@ class TK_Frontend {
 		add_action( 'wp_enqueue_scripts', [ __CLASS__, 'register_assets' ] );
 		add_action( 'template_redirect', [ __CLASS__, 'ics' ], 0 );
 		add_filter( 'the_content', [ __CLASS__, 'single_content' ], 20 );
+		add_filter( 'the_content', [ __CLASS__, 'clickable_images' ], 25 );
+		add_filter( 'post_thumbnail_html', [ __CLASS__, 'clickable_thumbnail' ], 20, 3 );
 		add_action( 'wp_head', [ __CLASS__, 'json_ld' ] );
 	}
 
@@ -35,12 +37,24 @@ class TK_Frontend {
 		wp_register_style( self::HANDLE, TK_URL . 'assets/css/kalender.css', [], TK_VERSION );
 		wp_register_script( self::HANDLE, TK_URL . 'assets/js/kalender.js', [], TK_VERSION, true );
 		wp_register_style( 'tk-termin', TK_URL . 'assets/css/termin.css', [], TK_VERSION );
+		wp_register_style( 'tk-lightbox', TK_URL . 'assets/css/lightbox.css', [], TK_VERSION );
+		wp_register_script( 'tk-lightbox', TK_URL . 'assets/js/lightbox.js', [], TK_VERSION, true );
+		wp_localize_script(
+			'tk-lightbox',
+			'tkLightboxL10n',
+			[
+				'close' => __( 'Schließen', 'terminkalender' ),
+				'prev'  => __( 'Vorheriges Bild', 'terminkalender' ),
+				'next'  => __( 'Nächstes Bild', 'terminkalender' ),
+			]
+		);
 
 		$page_id = (int) TK_Settings::get( 'page_id' );
 		if ( $page_id && is_page( $page_id ) ) {
 			wp_enqueue_style( self::HANDLE );
 		}
 		if ( is_singular( TK_Model::CPT ) ) {
+			self::enqueue_lightbox();
 			wp_enqueue_style( 'tk-termin' );
 			$accent = sanitize_hex_color( (string) TK_Settings::get( 'accent' ) );
 			wp_add_inline_style( 'tk-termin', '.tk-info{--tk-accent:' . ( $accent ? $accent : '#0b5cad' ) . ';}' );
@@ -171,9 +185,14 @@ class TK_Frontend {
 		$cats  = ( empty( $terms ) || is_wp_error( $terms ) ) ? [] : array_map( 'intval', wp_list_pluck( $terms, 'term_id' ) );
 
 		$city = $place ? $place['city'] : '';
+		if ( $place && ! empty( $place['free'] ) ) {
+			$city = $place['street']; // Frei eingegebene Adresse.
+		}
 		if ( $place && $city && false !== mb_stripos( $place['name'], $city ) ) {
 			$city = '';
 		}
+
+		$thumb = get_post_thumbnail_id( $id );
 
 		$post = get_post( $id );
 		$text = has_excerpt( $id ) ? $post->post_excerpt : $post->post_content;
@@ -187,6 +206,8 @@ class TK_Frontend {
 			'k' => $cats,
 			'f' => false,
 			'x' => wp_trim_words( self::plain( strip_shortcodes( $text ) ), 35, ' …' ),
+			'm' => $thumb ? (string) wp_get_attachment_image_url( $thumb, 'medium_large' ) : '',
+			'M' => $thumb ? (string) wp_get_attachment_image_url( $thumb, 'full' ) : '',
 		];
 	}
 
@@ -223,6 +244,7 @@ class TK_Frontend {
 		self::$count++;
 		wp_enqueue_style( self::HANDLE );
 		wp_enqueue_script( self::HANDLE );
+		self::enqueue_lightbox();
 
 		$now   = current_datetime();
 		$sow   = (int) get_option( 'start_of_week', 1 );
@@ -242,6 +264,8 @@ class TK_Frontend {
 		$view = TK_Settings::get( 'default_view' );
 		if ( in_array( $atts['ansicht'], [ 'liste', 'list' ], true ) ) {
 			$view = 'list';
+		} elseif ( in_array( $atts['ansicht'], [ 'woche', 'week' ], true ) ) {
+			$view = 'week';
 		} elseif ( in_array( $atts['ansicht'], [ 'monat', 'month' ], true ) ) {
 			$view = 'month';
 		}
@@ -304,6 +328,11 @@ class TK_Frontend {
 			'today'        => __( 'Heute', 'terminkalender' ),
 			'prev'         => __( 'Vorheriger Monat', 'terminkalender' ),
 			'next'         => __( 'Nächster Monat', 'terminkalender' ),
+			'week'         => __( 'Woche', 'terminkalender' ),
+			'prevWeek'     => __( 'Vorherige Woche', 'terminkalender' ),
+			'nextWeek'     => __( 'Nächste Woche', 'terminkalender' ),
+			'noWeek'       => __( 'In dieser Woche sind keine Termine eingetragen.', 'terminkalender' ),
+			'zoom'         => __( 'Bild vergrößern', 'terminkalender' ),
 			'search'       => __( 'Termin suchen', 'terminkalender' ),
 			'all'          => __( 'Alle', 'terminkalender' ),
 			'filter'       => __( 'Nach Kategorien filtern (mehrere möglich)', 'terminkalender' ),
@@ -347,6 +376,122 @@ class TK_Frontend {
 		$end        = $last->modify( '+' . $end_offset . ' days' );
 
 		return [ $start->format( 'Y-m-d' ), $end->format( 'Y-m-d' ) ];
+	}
+
+	/* ------------------------------------------------------------------ *
+	 * Bilder anklickbar (Lightbox)
+	 * ------------------------------------------------------------------ */
+
+	/**
+	 * Ist WX Lightbox aktiv? Dann öffnet sie die Bilder, sonst die eigene kleine Lightbox.
+	 *
+	 * @return bool
+	 */
+	public static function external_lightbox() {
+		return defined( 'SBL_VERSION' ) && apply_filters( 'sbl_enabled', true );
+	}
+
+	public static function enqueue_lightbox() {
+		if ( self::external_lightbox() ) {
+			return;
+		}
+		wp_enqueue_style( 'tk-lightbox' );
+		wp_enqueue_script( 'tk-lightbox' );
+	}
+
+	/**
+	 * @return bool Terminseite, Hauptinhalt.
+	 */
+	private static function on_single_main() {
+		return is_singular( TK_Model::CPT ) && in_the_loop() && is_main_query();
+	}
+
+	/**
+	 * Alle Bilder in der Beschreibung öffnen sich vergrößert.
+	 *
+	 * @param string $content Inhalt.
+	 * @return string
+	 */
+	public static function clickable_images( $content ) {
+		if ( ! self::on_single_main() || false === stripos( $content, '<img' ) ) {
+			return $content;
+		}
+		return self::link_images( $content );
+	}
+
+	/**
+	 * Verlinkt Bilder auf ihre Originalgröße. Vorhandene Links auf Bilddateien
+	 * werden markiert, andere Links (z. B. auf Seiten) bleiben unverändert.
+	 *
+	 * @param string $html HTML.
+	 * @return string
+	 */
+	public static function link_images( $html ) {
+		$parts = preg_split( '#(<a\b[^>]*>.*?</a>)#is', $html, -1, PREG_SPLIT_DELIM_CAPTURE );
+		if ( ! is_array( $parts ) ) {
+			return $html;
+		}
+
+		foreach ( $parts as $i => $part ) {
+			if ( preg_match( '#^<a\b#i', $part ) ) {
+				if ( preg_match( '#<img\b#i', $part )
+					&& preg_match( '#^<a\b[^>]*\bhref=(["\'])[^"\']+\.(?:jpe?g|png|gif|webp|avif)(?:\?[^"\']*)?\1#i', $part )
+					&& false === strpos( $part, 'tk-zoom' ) ) {
+					$parts[ $i ] = preg_replace( '#^<a\b#i', '<a data-lightbox="tk-termin"', $part, 1 );
+					$parts[ $i ] = preg_match( '#^<a\b[^>]*\bclass=(["\'])#i', $parts[ $i ] )
+						? preg_replace( '#^(<a\b[^>]*\bclass=(["\']))#i', '$1tk-zoom ', $parts[ $i ], 1 )
+						: preg_replace( '#^<a\b#i', '<a class="tk-zoom"', $parts[ $i ], 1 );
+				}
+				continue;
+			}
+
+			$parts[ $i ] = preg_replace_callback(
+				'#<img\b[^>]*>#i',
+				static function ( $m ) {
+					$tag = $m[0];
+					if ( preg_match( '#class=(["\'])[^"\']*\b(wp-smiley|emoji|no-lightbox)\b#i', $tag ) ) {
+						return $tag;
+					}
+					$full = '';
+					if ( preg_match( '#\bwp-image-(\d+)\b#', $tag, $id ) ) {
+						$full = (string) wp_get_attachment_image_url( (int) $id[1], 'full' );
+					}
+					if ( ! $full && preg_match( '#\bsrc=(["\'])([^"\']+)\1#i', $tag, $src ) ) {
+						$full = html_entity_decode( $src[2], ENT_QUOTES, 'UTF-8' );
+					}
+					if ( ! $full ) {
+						return $tag;
+					}
+					return '<a href="' . esc_url( $full ) . '" class="tk-zoom" data-lightbox="tk-termin">' . $tag . '</a>';
+				},
+				$part
+			);
+		}
+
+		return implode( '', $parts );
+	}
+
+	/**
+	 * Beitragsbild auf der Terminseite vergrößerbar machen.
+	 *
+	 * @param string $html     HTML.
+	 * @param int    $post_id  Beitrag.
+	 * @param int    $thumb_id Bild.
+	 * @return string
+	 */
+	public static function clickable_thumbnail( $html, $post_id, $thumb_id ) {
+		if ( ! $html || ! $thumb_id || ! is_singular( TK_Model::CPT ) || (int) $post_id !== (int) get_queried_object_id() ) {
+			return $html;
+		}
+		if ( false !== strpos( $html, '<a ' ) ) {
+			return $html;
+		}
+		$full = wp_get_attachment_image_url( $thumb_id, 'full' );
+		if ( ! $full ) {
+			return $html;
+		}
+		self::enqueue_lightbox();
+		return '<a href="' . esc_url( $full ) . '" class="tk-zoom" data-lightbox="tk-termin">' . $html . '</a>';
 	}
 
 	/* ------------------------------------------------------------------ *
@@ -426,7 +571,7 @@ class TK_Frontend {
 	 * @return string
 	 */
 	public static function single_content( $content ) {
-		if ( ! is_singular( TK_Model::CPT ) || ! in_the_loop() || ! is_main_query() ) {
+		if ( ! self::on_single_main() ) {
 			return $content;
 		}
 
