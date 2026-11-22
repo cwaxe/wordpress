@@ -1,7 +1,7 @@
 === Terminkalender ===
 Requires at least: 6.6
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPLv2 or later
 
 Schlanker Veranstaltungskalender mit einfachem Backend. Übernimmt alle Daten aus „The Events Calendar“.
@@ -12,6 +12,7 @@ Menü „Termine“:
 * Alle Termine – Liste mit Datum und Ort, getrennt nach Kommende / Vergangene, „Kopieren“ je Termin
 * Neuer Termin – Titel, Box „Wann? Wo? Wer?“, Beschreibung, Kategorie, Bild
 * Kategorien (mit Farbe), Orte (mit Adresse, oder frei je Termin), Veranstalter (mit Kontakt)
+* Aufräumen – alte Termine in den Papierkorb verschieben oder löschen, auf Wunsch automatisch
 * Einstellungen – Kalenderseite, Darstellung, Übernahme aus The Events Calendar
 
 Serien: jede Woche oder alle 2 Wochen (auch an mehreren Tagen, z. B. Di und Do), jeden Monat am gleichen Tag, am gleichen Wochentag
@@ -34,6 +35,9 @@ Serien: jede Woche oder alle 2 Wochen (auch an mehreren Tagen, z. B. Di und Do),
    Alte Links (/termine/…, /veranstaltung/…, iCal) werden automatisch weitergeleitet.
 
 == Changelog ==
+
+= 1.3.0 =
+* Alte Termine aufräumen (von Hand oder automatisch).
 
 = 1.2.0 =
 * Wochenansicht, Bildvorschau, anklickbare Bilder (Lightbox), Ort frei eingeben.

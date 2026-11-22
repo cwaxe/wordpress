@@ -6,9 +6,11 @@
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
-foreach ( [ 'tk_settings', 'tk_cache_generation', 'tk_import_map', 'tk_tec_slugs', 'tk_import_done', 'tk_flush_rewrite' ] as $option ) {
+foreach ( [ 'tk_settings', 'tk_cache_generation', 'tk_import_map', 'tk_tec_slugs', 'tk_import_done', 'tk_flush_rewrite', 'tk_auto_cleanup' ] as $option ) {
 	delete_option( $option );
 }
+
+wp_clear_scheduled_hook( 'tk_daily_cleanup' );
 
 global $wpdb;
 // phpcs:ignore WordPress.DB.DirectDatabaseQuery

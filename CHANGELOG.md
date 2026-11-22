@@ -3,6 +3,12 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## terminkalender 1.3.0
+
+- Neue Seite *Termine → Aufräumen*: alte Termine (älter als 1, 3, 6, 12 oder 24 Monate) in den Papierkorb verschieben oder endgültig löschen. Die Anzahl steht vorher dabei, es wird jedes Mal nachgefragt.
+- Bei Serien zählt das Ende der Serie; laufende Serien bleiben erhalten. Kategorien, Orte, Veranstalter und Bilder bleiben unverändert.
+- Optional automatisch: täglich alte Termine in den Papierkorb verschieben.
+
 ## terminkalender 1.2.0
 
 - Neue Wochenansicht (Monat | Woche | Liste), auf dem Handy als Tagesliste. Auch als Startansicht und per `[terminkalender ansicht="woche"]`.
