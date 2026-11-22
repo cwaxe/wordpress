@@ -48,8 +48,8 @@
 				var daysIn = new Date( d.getFullYear(), d.getMonth() + 1, 0 ).getDate();
 				var isLast = day + 7 > daysIn;
 
-				$repeat.find( 'option[value=weekly]' ).text( fmt( t.weekly, wd ) );
-				$repeat.find( 'option[value=weekly2]' ).text( fmt( t.weekly2, wd ) );
+				$repeat.find( 'option[value=weekly]' ).text( t.weekly );
+				$repeat.find( 'option[value=weekly2]' ).text( t.weekly2 );
 				$repeat.find( 'option[value=monthly_day]' ).text( fmt( t.monthlyDay, day ) );
 				$repeat.find( 'option[value=monthly_nth]' ).text( fmt( t.monthlyNth, nth, wd ) ).prop( 'hidden', nth > 4 );
 				$repeat.find( 'option[value=monthly_last]' ).text( fmt( t.monthlyLast, wd ) ).prop( 'hidden', ! isLast );
@@ -60,9 +60,28 @@
 			};
 
 			var toggleSeries = function () {
-				var on = !! $repeat.val();
+				var v = $repeat.val();
+				var on = !! v;
 				$( '.tk-series' ).prop( 'hidden', ! on );
+				$( '.tk-days' ).prop( 'hidden', v !== 'weekly' && v !== 'weekly2' );
 				$( '#tk-until' ).prop( 'required', on );
+			};
+
+			// Wochentag des Beginns ist bei wöchentlichen Serien immer dabei.
+			var lockStartDay = function () {
+				var v = $start.val();
+				var $boxes = $( '.tk-days input[type=checkbox]' );
+				$boxes.prop( 'disabled', false ).closest( '.tk-day' ).removeClass( 'is-start' ).removeAttr( 'data-hint' );
+				if ( ! v ) {
+					return;
+				}
+				var p = v.split( '-' );
+				var wd = new Date( +p[ 0 ], +p[ 1 ] - 1, +p[ 2 ] ).getDay();
+				$boxes.filter( '[value="' + wd + '"]' )
+					.prop( 'checked', true )
+					.prop( 'disabled', true )
+					.closest( '.tk-day' ).addClass( 'is-start' ).attr( 'data-hint', t.startDay || '' )
+					.attr( 'title', t.startDay || '' );
 			};
 
 			$start.on( 'change', function () {
@@ -70,6 +89,7 @@
 					$end.val( $start.val() );
 				}
 				updateRepeat();
+				lockStartDay();
 			} );
 
 			$sTime.on( 'change', function () {
@@ -96,6 +116,7 @@
 			toggleAllday();
 			updateRepeat();
 			toggleSeries();
+			lockStartDay();
 		}
 
 		/* ---------- Import ---------- */

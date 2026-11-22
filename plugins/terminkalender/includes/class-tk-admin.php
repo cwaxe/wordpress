@@ -94,8 +94,9 @@ class TK_Admin {
 					'ajax'     => admin_url( 'admin-ajax.php' ),
 					'nonce'    => wp_create_nonce( 'tk_import' ),
 					'i18n'     => [
-						'weekly'       => __( 'jede Woche am %s', 'terminkalender' ),
-						'weekly2'      => __( 'alle 2 Wochen am %s', 'terminkalender' ),
+						'weekly'       => __( 'jede Woche', 'terminkalender' ),
+						'weekly2'      => __( 'alle 2 Wochen', 'terminkalender' ),
+						'startDay'     => __( 'Tag des Beginns – immer dabei', 'terminkalender' ),
 						'monthlyDay'   => __( 'jeden Monat am %d.', 'terminkalender' ),
 						'monthlyNth'   => __( 'jeden Monat am %1$d. %2$s', 'terminkalender' ),
 						'monthlyLast'  => __( 'jeden Monat am letzten %s', 'terminkalender' ),
@@ -195,6 +196,23 @@ class TK_Admin {
 							<option value="monthly_last" <?php selected( $repeat, 'monthly_last' ); ?>><?php esc_html_e( 'jeden Monat am letzten Wochentag', 'terminkalender' ); ?></option>
 						</select>
 					</div>
+					<fieldset class="tk-field tk-days" <?php echo ( 'weekly' === $repeat || 'weekly2' === $repeat ) ? '' : 'hidden'; ?>>
+						<legend><?php esc_html_e( 'an diesen Tagen', 'terminkalender' ); ?></legend>
+						<div class="tk-days__list">
+							<?php
+							global $wp_locale;
+							$start_wd = $s_date ? (int) gmdate( 'w', TK_Model::ts( $s_date . ' 00:00' ) ) : -1;
+							$sel_days = $rule && 'weekly' === $rule['freq'] ? TK_Model::rule_days( $rule, $start ) : [ $start_wd ];
+							foreach ( [ 1, 2, 3, 4, 5, 6, 0 ] as $wd ) :
+								$wd_name = $wp_locale->get_weekday( $wd );
+								?>
+								<label class="tk-day" title="<?php echo esc_attr( $wd_name ); ?>">
+									<input type="checkbox" name="tk[days][]" value="<?php echo esc_attr( $wd ); ?>" <?php checked( in_array( $wd, $sel_days, true ) ); ?>>
+									<span><?php echo esc_html( $wp_locale->get_weekday_abbrev( $wd_name ) ); ?></span>
+								</label>
+							<?php endforeach; ?>
+						</div>
+					</fieldset>
 					<div class="tk-field tk-series">
 						<label for="tk-until"><?php esc_html_e( 'bis einschließlich', 'terminkalender' ); ?></label>
 						<input type="date" id="tk-until" name="tk[until]" value="<?php echo esc_attr( $rule ? $rule['until'] : '' ); ?>">
@@ -342,6 +360,7 @@ class TK_Admin {
 				'interval' => 'weekly2' === $repeat ? 2 : 1,
 				'until'    => self::parse_date( isset( $in['until'] ) ? (string) $in['until'] : '' ),
 				'exdates'  => $ex,
+				'days'     => isset( $in['days'] ) && is_array( $in['days'] ) ? array_map( 'intval', $in['days'] ) : [],
 			];
 		}
 
