@@ -18,6 +18,8 @@ Einstellungen und Übernahme: *Termine → Einstellungen*.
 
 **Umstieg von The Events Calendar:** Plugin aktivieren, unter *Termine → Einstellungen* auf „Jetzt übernehmen“ klicken (wiederholbar, nichts wird doppelt angelegt), prüfen, dann The Events Calendar deaktivieren. Alte Links (`/termine/…`, `/veranstaltung/…`, iCal) werden danach automatisch weitergeleitet.
 
+**Anleitung für Redakteure:** [lesen](docs/ANLEITUNG.md) · [als PDF](docs/Terminkalender-Kurzanleitung.pdf) – die PDF liegt auch im Plugin und ist unter *Termine → Einstellungen* verlinkt.
+
 Urheber: IT-Service Waxenberger
 
 Zurück zur [Übersicht](../../README.md).

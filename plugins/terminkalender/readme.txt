@@ -1,7 +1,7 @@
 === Terminkalender ===
 Requires at least: 6.6
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 
 Schlanker Veranstaltungskalender mit einfachem Backend. Übernimmt alle Daten aus „The Events Calendar“.
@@ -35,6 +35,9 @@ Serien: jede Woche oder alle 2 Wochen (auch an mehreren Tagen, z. B. Di und Do),
    Alte Links (/termine/…, /veranstaltung/…, iCal) werden automatisch weitergeleitet.
 
 == Changelog ==
+
+= 1.3.1 =
+* Kurzanleitung für Redakteure (PDF) beigelegt und unter Einstellungen verlinkt.
 
 = 1.3.0 =
 * Alte Termine aufräumen (von Hand oder automatisch).
