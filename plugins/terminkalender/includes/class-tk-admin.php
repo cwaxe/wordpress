@@ -929,6 +929,7 @@ class TK_Admin {
 		?>
 		<div class="wrap tk-settings">
 			<h1><?php esc_html_e( 'Terminkalender – Einstellungen', 'terminkalender' ); ?></h1>
+			<p><a href="<?php echo esc_url( TK_URL . 'docs/Terminkalender-Kurzanleitung.pdf' ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Kurzanleitung für Redakteure (PDF)', 'terminkalender' ); ?></a></p>
 
 			<?php TK_Import::render_section(); ?>
 

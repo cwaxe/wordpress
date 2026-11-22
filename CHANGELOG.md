@@ -3,6 +3,10 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## terminkalender 1.3.1
+
+- Kurzanleitung für Redakteure beigelegt: als PDF im Plugin (verlinkt unter *Termine → Einstellungen*) und zum Lesen auf GitHub unter `plugins/terminkalender/docs/ANLEITUNG.md`.
+
 ## terminkalender 1.3.0
 
 - Neue Seite *Termine → Aufräumen*: alte Termine (älter als 1, 3, 6, 12 oder 24 Monate) in den Papierkorb verschieben oder endgültig löschen. Die Anzahl steht vorher dabei, es wird jedes Mal nachgefragt.
