@@ -3,6 +3,26 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## lsv-wetter 1.2.1
+
+- Hersteller ist jetzt IT-Service Waxenberger.
+
+## wx-easy-backup 1.2.1
+
+- Hersteller ist jetzt IT-Service Waxenberger.
+
+## wx-easy-calendar 2.2.1
+
+- Hersteller ist jetzt IT-Service Waxenberger.
+
+## wx-lightbox 1.2.1
+
+- Hersteller ist jetzt IT-Service Waxenberger.
+
+## wx-webcam-archive 1.6.1
+
+- Hersteller ist jetzt IT-Service Waxenberger.
+
 ## wx-easy-calendar 2.2.0
 
 Der Terminkalender geht in WX Easy Calendar auf – ein Kalender-Plugin statt zwei.

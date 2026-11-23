@@ -1,7 +1,7 @@
 === WX Easy Calendar ===
 Requires at least: 6.2
 Requires PHP: 7.4
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPLv2 or later
 
 Ein schlanker Termin-Kalender mit Kategorien, Serien, Orten und Veranstaltern und Listen-, Wochen-, Monats- und Jahresansicht. Ohne Abhängigkeiten.
@@ -92,6 +92,9 @@ funktionieren weiter, alte Terminseiten und iCal-Links werden weitergeleitet.
 Daten aus "The Events Calendar" übernimmst du unter "Kalender > Einstellungen".
 
 == Changelog ==
+
+= 2.2.1 =
+* Hersteller ist jetzt IT-Service Waxenberger.
 
 = 2.2.0 =
 * Übernimmt alle Daten aus dem Plugin "Terminkalender", das hier aufgeht

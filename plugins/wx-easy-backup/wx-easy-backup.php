@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       WX Easy Backup
  * Description:       Sichert die komplette WordPress-Installation (Datenbank, wp-content, Kerndateien) in ein Archiv und spielt es auf demselben oder einem anderen Server wieder ein – inkl. automatischer Anpassung von URLs, Pfaden und Tabellen-Präfix.
- * Version:           1.2.0
+ * Version:           1.2.1
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Update URI:        https://github.com/cwaxe/wordpress
@@ -54,7 +54,7 @@ if ( defined( 'WPKB_VERSION' ) ) {
 	return;
 }
 
-define( 'WPKB_VERSION', '1.2.0' );
+define( 'WPKB_VERSION', '1.2.1' );
 define( 'WPKB_FILE', __FILE__ );
 define( 'WPKB_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WPKB_URL', plugin_dir_url( __FILE__ ) );
