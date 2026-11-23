@@ -1,7 +1,7 @@
 === WX Webcam Archive ===
 Requires at least: 5.8
 Requires PHP: 7.4
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPL-2.0-or-later
 
 Archiviert Webcam-Bilder automatisch und macht sie über einen Kalender wieder abrufbar.
@@ -74,6 +74,9 @@ GET /wp-json/wca/v1/images?kamera=cam1&date=2026-11-09
 GET /wp-json/wca/v1/latest?kamera=cam1
 
 == Changelog ==
+
+= 1.6.1 =
+* Hersteller ist jetzt IT-Service Waxenberger.
 
 = 1.4.0 =
 * Farben unter Einstellungen → WX Webcam Archive → Farben anpassbar; Schemas LSV-Blau, Hell, Anthrazit, Grün.

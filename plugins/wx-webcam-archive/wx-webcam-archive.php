@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       WX Webcam Archive
  * Description:       Archiviert Webcam-Bilder automatisch (per Bild-URL oder FTP-Upload-Ordner, beliebig viele Kameras) und macht sie über einen Kalender mit Tagesansicht und Zeitraffer wieder abrufbar. Shortcodes: [webcam_archiv] und [webcam_aktuell].
- * Version:           1.6.0
+ * Version:           1.6.1
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Update URI:        https://github.com/cwaxe/wordpress
@@ -72,7 +72,7 @@ if ( defined( 'WCA_VERSION' ) ) {
 	return;
 }
 
-define( 'WCA_VERSION', '1.6.0' );
+define( 'WCA_VERSION', '1.6.1' );
 define( 'WCA_FILE', __FILE__ );
 define( 'WCA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WCA_URL', plugin_dir_url( __FILE__ ) );

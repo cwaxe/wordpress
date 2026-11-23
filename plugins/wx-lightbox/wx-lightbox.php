@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       WX Lightbox
  * Description:       Schlanke Lightbox für Bilder und Galerien – beim Öffnen wird der Seitenhintergrund sanft weichgezeichnet. Ohne jQuery, mit Tastatur- und Swipe-Steuerung.
- * Version:           1.2.0
+ * Version:           1.2.1
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Update URI:        https://github.com/cwaxe/wordpress
@@ -72,7 +72,7 @@ if ( defined( 'SBL_VERSION' ) ) {
 	return;
 }
 
-define( 'SBL_VERSION', '1.2.0' );
+define( 'SBL_VERSION', '1.2.1' );
 define( 'SBL_URL', plugin_dir_url( __FILE__ ) );
 define( 'SBL_OPTION', 'sbl_settings' );
 
