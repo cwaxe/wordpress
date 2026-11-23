@@ -6,7 +6,7 @@
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Update URI:        https://github.com/cwaxe/wordpress
- * Author:            WX Easy Backup
+ * Author:            IT-Service Waxenberger
  * License:           GPL-2.0-or-later
  * Text Domain:       wx-easy-backup
  */
