@@ -3,6 +3,11 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-easy-maintenance 1.0.0
+
+- Erste Version: Wartungsmodus mit Wartungsseite (HTTP 503), einstellbarer Berechtigung, optionalem Enddatum, Schnell-Umschalter in der Admin-Leiste sowie anpassbarer Überschrift, Nachricht und Farben.
+- Automatische Updates aus den Releases auf GitHub.
+
 ## lsv-wetter 1.2.1
 
 - Hersteller ist jetzt IT-Service Waxenberger.
