@@ -3,6 +3,12 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## waxenberger 1.3.0
+
+- Erste Version im Repository: Theme für edv-waxenberger.de im Stil der früheren Joomla-Seite, mit Logo, Animationen (Einblenden, mitlaufendes Menü, „Nach oben“-Pfeil), Gestaltung für Werbeseiten und Weiterleitungen von den alten Joomla-Adressen.
+- Favicon aus dem Logo (das „x“ mit dem Bogen), solange kein eigenes Website-Icon eingestellt ist.
+- Updates direkt aus dem GitHub-Repository. Diese Version muss einmal von Hand hochgeladen werden, alle folgenden kommen automatisch.
+
 ## wx-easy-maintenance 1.0.0
 
 - Erste Version: Wartungsmodus mit Wartungsseite (HTTP 503), einstellbarer Berechtigung, optionalem Enddatum, Schnell-Umschalter in der Admin-Leiste sowie anpassbarer Überschrift, Nachricht und Farben.

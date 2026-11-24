@@ -1,0 +1,35 @@
+EINRICHTUNG – Waxenberger IT-Service Theme
+==========================================
+
+1. Theme installieren
+   Design > Themes > Theme hinzufügen > Theme hochladen > waxenberger.zip > Aktivieren.
+
+2. Seiten anlegen
+   - "Willkommen": neue Seite, im Block-Editor oben rechts ⋮ > Code-Editor,
+     Inhalt von willkommen.html einfügen.
+   - "Mein Service für Sie:": neue Seite (dieser Titel erscheint als Überschrift),
+     Inhalt von service.html einfügen.
+   - "Gemeinde-App": Inhalt von gemeinde-app.html einfügen. Die Platzhalter
+     {{img:…}} und {{pdf:…}} durch die Adressen der Bilder und PDFs aus der
+     Mediathek ersetzen.
+   - "Impressum" und "Datenschutz": Texte von der alten Seite übernehmen.
+
+3. Startseite festlegen
+   Einstellungen > Lesen > "Eine statische Seite" > Startseite: Willkommen.
+   (Auf der Startseite wird der Seitentitel automatisch ausgeblendet.)
+
+4. Menü
+   Design > Menüs > neues Menü, Position "Hauptmenü":
+   Willkommen · Service · Teamviewer · Impressum · Datenschutz
+   Teamviewer als "Individueller Link": https://get.teamviewer.com/waxenberger
+   Tipp: Den Menüpunkt für die Service-Seite auf "Service" umbenennen.
+
+5. Logo und Favicon
+   Logo und Favicon sind im Theme enthalten. Ersetzen lassen sie sich unter
+   Design > Customizer > Website-Informationen (Logo bzw. Website-Icon).
+
+6. Fußzeile
+   Design > Customizer > Fußzeile > Text anpassen.
+
+Hinweis: Das Theme lädt keine externen Schriften (Arial wie auf der alten Seite)
+und keine Skripte von Drittanbietern.
