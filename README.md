@@ -10,7 +10,6 @@ Die fertigen ZIP-Dateien liegen unter [**Releases**](https://github.com/cwaxe/wo
 | Paket | Art | Version | Download |
 |---|---|---|---|
 | [LSV Flugplatz](themes/lsv-flugplatz/) | Theme | 1.2.0 | [lsv-flugplatz-1.2.0.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-flugplatz-v1.2.0/lsv-flugplatz-1.2.0.zip) |
-| [Waxenberger IT-Service](themes/waxenberger/) | Theme | 1.3.0 | [waxenberger-1.3.0.zip](https://github.com/cwaxe/wordpress/releases/download/waxenberger-v1.3.0/waxenberger-1.3.0.zip) |
 | [WX Easy Template](themes/wx-easy-template/) | Theme | 1.12.0 | [wx-easy-template-1.12.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-template-v1.12.0/wx-easy-template-1.12.0.zip) |
 | [LSV Wetter am Platz](plugins/lsv-wetter/) | Plugin | 1.2.1 | [lsv-wetter-1.2.1.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-wetter-v1.2.1/lsv-wetter-1.2.1.zip) |
 | [WX Easy Backup](plugins/wx-easy-backup/) | Plugin | 1.2.1 | [wx-easy-backup-1.2.1.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-backup-v1.2.1/wx-easy-backup-1.2.1.zip) |
