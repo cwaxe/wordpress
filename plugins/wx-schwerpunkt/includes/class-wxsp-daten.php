@@ -46,7 +46,7 @@ final class WXSP_Daten {
 				'mac_vorderkante' => 412.6,
 				'mac'             => 1349.7,
 				'tank_arm'        => 606,
-				'tank_max'        => 0,
+				'tank_max'        => 120,
 				'kg_pro_liter'    => 0.72,
 				'verbrauch'       => 19,
 				'handbuch'        => '/wp-content/uploads/Betriebshandbuch-D-MDMP.pdf',
