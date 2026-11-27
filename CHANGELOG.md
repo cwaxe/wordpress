@@ -3,6 +3,12 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-webcam-archive 1.6.2
+
+- `[webcam_aktuell]` holt das neueste Bild sofort beim Laden der Seite und beim Zurückwechseln in den Tab, nicht erst nach Ablauf des Intervalls. Damit stimmt das Bild auch, wenn die Seite aus einem Cache kommt.
+- Neu: `link="bild"` – ein Klick öffnet das aktuelle Bild in voller Größe.
+- Der Link ins Archiv zeigt nach einer Aktualisierung auf den Tag des neuen Bildes.
+
 ## wx-easy-maintenance 1.0.0
 
 - Erste Version: Wartungsmodus mit Wartungsseite (HTTP 503), einstellbarer Berechtigung, optionalem Enddatum, Schnell-Umschalter in der Admin-Leiste sowie anpassbarer Überschrift, Nachricht und Farben.

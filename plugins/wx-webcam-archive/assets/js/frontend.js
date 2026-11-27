@@ -696,20 +696,36 @@
 		try { fmt = new Intl.DateTimeFormat(cfg.locale || 'de-DE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
 		catch (e) { fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
 
-		setInterval(function () {
-			if (document.hidden) { return; }
+		var link = root.querySelector('a');
+		var busy = false;
+
+		function update() {
+			if (document.hidden || busy) { return; }
+			busy = true;
 			api(cfg, 'latest', cfg.camera ? { kamera: cfg.camera } : {}).then(function (r) {
+				busy = false;
 				var im = r.image;
 				if (!im || img.getAttribute('src') === im.full) { return; }
 				var pre = new Image();
 				pre.onload = function () {
 					img.src = im.full;
+					img.removeAttribute('srcset');
+					if (im.w && im.h) { img.width = im.w; img.height = im.h; }
+					// Link auf das Bild selbst mitziehen; Links ins Archiv auf den Tag des Bildes setzen.
+					if (link && cfg.linkImage) { link.href = im.full; }
+					else if (link && cfg.linkArchive) { link.href = cfg.linkArchive + '#wca=' + im.date + '&kamera=' + cfg.camera; }
 					var p = im.date.split('-'), t = im.time.split(':');
 					if (cap) { cap.textContent = fmt.format(new Date(+p[0], +p[1] - 1, +p[2], +t[0], +t[1])) + ' Uhr'; }
 				};
 				pre.src = im.full;
-			}).catch(function () {});
-		}, cfg.refresh * 1000);
+			}).catch(function () { busy = false; });
+		}
+
+		// Sofort nachsehen: Kommt die Seite aus einem Seiten-Cache, ist das Bild im HTML evtl. veraltet.
+		update();
+		setInterval(update, cfg.refresh * 1000);
+		// Nach dem Zurückwechseln in den Tab nicht bis zum nächsten Intervall warten.
+		document.addEventListener('visibilitychange', update);
 	}
 
 	/* ------------------------------------------------------------------ */

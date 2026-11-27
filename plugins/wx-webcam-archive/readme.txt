@@ -46,6 +46,10 @@ Archiviert Webcam-Bilder automatisch und macht sie über einen Kalender wieder a
 
 [webcam_aktuell kamera="cam2" refresh="60" archiv="/webcam-archiv/"]
   Zeigt das neueste Bild einer Kamera und aktualisiert es alle 60 Sekunden.
+  Beim Laden der Seite wird sofort nachgesehen, auch wenn sie aus einem Cache kommt.
+  Optional: link="bild"   (Klick öffnet das Bild in voller Größe)
+            archiv="…"    (Klick öffnet das Archiv am Tag des Bildes)
+            refresh="0"   (nicht automatisch aktualisieren)
 
 == Zuverlässige Aufnahmen ==
 
@@ -74,6 +78,10 @@ GET /wp-json/wca/v1/images?kamera=cam1&date=2026-11-09
 GET /wp-json/wca/v1/latest?kamera=cam1
 
 == Changelog ==
+
+= 1.6.2 =
+* [webcam_aktuell] lädt das neueste Bild sofort beim Seitenaufruf (auch bei Seiten-Cache).
+* Neu: link="bild" öffnet das Bild in voller Größe.
 
 = 1.6.1 =
 * Hersteller ist jetzt IT-Service Waxenberger.

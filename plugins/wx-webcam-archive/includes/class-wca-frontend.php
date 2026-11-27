@@ -6,6 +6,7 @@
  *   [webcam_archiv kamera="cam1,cam3"]      Auswahl mehrerer Kameras
  *   [webcam_archiv datum="2026-11-09" tempo="6"]
  *   [webcam_aktuell kamera="cam2" refresh="60" archiv="/webcam-archiv/"]
+ *   [webcam_aktuell kamera="cam2" link="bild"]   Klick öffnet das Bild in voller Größe
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -165,6 +166,7 @@ final class WCA_Frontend {
 				'kamera'  => '',
 				'refresh' => 60,
 				'archiv'  => '',
+				'link'    => '', // "bild" = Klick öffnet das Bild in voller Größe (wenn kein Archiv-Link gesetzt ist)
 			),
 			$atts,
 			'webcam_aktuell'
@@ -189,6 +191,11 @@ final class WCA_Frontend {
 		unset( $cfg['i18n'] );
 		$cfg['refresh'] = max( 0, (int) $atts['refresh'] );
 		$cfg['camera']  = $cam_id;
+		if ( $atts['archiv'] && false === strpos( $atts['archiv'], '#' ) ) {
+			$cfg['linkArchive'] = esc_url_raw( $atts['archiv'] );
+		} elseif ( ! $atts['archiv'] && 'bild' === strtolower( $atts['link'] ) ) {
+			$cfg['linkImage'] = true;
+		}
 
 		if ( ! $img ) {
 			return '<div class="wca-latest"><p class="wca-message">Noch kein Bild von ' . esc_html( $cam['name'] ) . ' vorhanden.</p></div>';
@@ -208,6 +215,8 @@ final class WCA_Frontend {
 		if ( $atts['archiv'] ) {
 			$link  = $atts['archiv'] . ( false === strpos( $atts['archiv'], '#' ) ? '#wca=' . $img['date'] . '&kamera=' . $cam_id : '' );
 			$inner = sprintf( '<a href="%s">%s</a>', esc_url( $link ), $inner );
+		} elseif ( 'bild' === strtolower( $atts['link'] ) ) {
+			$inner = sprintf( '<a href="%s" target="_blank" rel="noopener">%s</a>', esc_url( $img['full'] ), $inner );
 		}
 		$html .= $inner;
 		$html .= sprintf( '<figcaption><span class="wca-latest-name">%s</span><span class="wca-latest-time">%s</span></figcaption></figure>', esc_html( $cam['name'] ), esc_html( $when ) );

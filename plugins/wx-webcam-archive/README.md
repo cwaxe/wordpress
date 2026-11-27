@@ -16,6 +16,7 @@ Einstellungen: *Einstellungen → WX Webcam Archive*.
 [webcam_archiv]                                   Archiv mit allen Kameras
 [webcam_archiv kamera="cam2" tempo="6" titel="Webcams EDMP"]
 [webcam_aktuell kamera="cam2" refresh="60"]       neuestes Bild, aktualisiert sich selbst
+[webcam_aktuell kamera="cam2" link="bild"]        Klick öffnet das Bild in voller Größe
 ```
 
 Tipp: Für exakte Aufnahme-Intervalle statt WP-Cron einen echten Cronjob auf die Trigger-URL aus den Einstellungen einrichten (siehe `readme.txt` im Plugin).
