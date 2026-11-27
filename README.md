@@ -9,13 +9,14 @@ Die fertigen ZIP-Dateien liegen unter [**Releases**](https://github.com/cwaxe/wo
 <!-- pakete:start -->
 | Paket | Art | Version | Download |
 |---|---|---|---|
-| [LSV Flugplatz](themes/lsv-flugplatz/) | Theme | 1.2.5 | [lsv-flugplatz-1.2.5.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-flugplatz-v1.2.5/lsv-flugplatz-1.2.5.zip) |
+| [LSV Flugplatz](themes/lsv-flugplatz/) | Theme | 1.2.6 | [lsv-flugplatz-1.2.6.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-flugplatz-v1.2.6/lsv-flugplatz-1.2.6.zip) |
 | [WX Easy Template](themes/wx-easy-template/) | Theme | 1.12.0 | [wx-easy-template-1.12.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-template-v1.12.0/wx-easy-template-1.12.0.zip) |
 | [LSV Wetter am Platz](plugins/lsv-wetter/) | Plugin | 1.2.1 | [lsv-wetter-1.2.1.zip](https://github.com/cwaxe/wordpress/releases/download/lsv-wetter-v1.2.1/lsv-wetter-1.2.1.zip) |
 | [WX Easy Backup](plugins/wx-easy-backup/) | Plugin | 1.2.1 | [wx-easy-backup-1.2.1.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-backup-v1.2.1/wx-easy-backup-1.2.1.zip) |
 | [WX Easy Calendar](plugins/wx-easy-calendar/) | Plugin | 2.2.1 | [wx-easy-calendar-2.2.1.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-calendar-v2.2.1/wx-easy-calendar-2.2.1.zip) |
 | [WX Easy Maintenance](plugins/wx-easy-maintenance/) | Plugin | 1.0.0 | [wx-easy-maintenance-1.0.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-maintenance-v1.0.0/wx-easy-maintenance-1.0.0.zip) |
 | [WX Lightbox](plugins/wx-lightbox/) | Plugin | 1.2.1 | [wx-lightbox-1.2.1.zip](https://github.com/cwaxe/wordpress/releases/download/wx-lightbox-v1.2.1/wx-lightbox-1.2.1.zip) |
+| [WX Schwerpunkt](plugins/wx-schwerpunkt/) | Plugin | 1.0.0 | [wx-schwerpunkt-1.0.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-schwerpunkt-v1.0.0/wx-schwerpunkt-1.0.0.zip) |
 | [WX Webcam Archive](plugins/wx-webcam-archive/) | Plugin | 1.6.2 | [wx-webcam-archive-1.6.2.zip](https://github.com/cwaxe/wordpress/releases/download/wx-webcam-archive-v1.6.2/wx-webcam-archive-1.6.2.zip) |
 <!-- pakete:end -->
 

@@ -1,0 +1,20 @@
+/* WX Schwerpunkt – Einstellungsseite */
+.wxsp-admin .wxsp-flugzeug { max-width: 1100px; margin-top: 16px; }
+.wxsp-admin .postbox-header h2 { padding: 10px 14px; margin: 0; font-size: 15px; }
+.wxsp-admin .inside h3 { margin: 18px 0 6px; font-size: 14px; }
+.wxsp-admin .inside h3:first-of-type { margin-top: 6px; }
+.wxsp-admin .wxsp-raster { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px 18px; }
+.wxsp-admin .wxsp-feld { display: flex; flex-direction: column; gap: 3px; }
+.wxsp-admin .wxsp-feld > span:first-child { font-weight: 600; }
+.wxsp-admin .wxsp-wert { display: flex; align-items: center; gap: 6px; }
+.wxsp-admin .wxsp-wert input { width: 100%; }
+.wxsp-admin .wxsp-feld small { color: #646970; }
+.wxsp-admin em { font-style: normal; color: #646970; white-space: nowrap; }
+.wxsp-admin .wxsp-posten { max-width: 900px; }
+.wxsp-admin .wxsp-posten td { vertical-align: middle; }
+.wxsp-admin .wxsp-posten input[type="text"] { width: 100%; max-width: 110px; }
+.wxsp-admin .wxsp-posten td:first-child input { max-width: none; min-width: 200px; }
+.wxsp-admin .wxsp-mitte { text-align: center; }
+.wxsp-admin .wxsp-zeile-weg { color: #b32d2e; font-size: 16px; text-decoration: none; }
+.wxsp-admin .wxsp-shortcode { background: #f0f6fc; border-left: 3px solid #72aee6; padding: 6px 10px; }
+.wxsp-admin .wxsp-entfernen { margin-top: 18px; color: #b32d2e; }

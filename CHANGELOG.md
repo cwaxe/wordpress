@@ -3,6 +3,17 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-schwerpunkt 1.0.0
+
+- Erste Version: Rechner für Masse und Schwerpunkt mit `[schwerpunkt]`, bisher Teil des Themes LSV Flugplatz.
+- Flugzeuge, Hebelarme, Grenzen, Kraftstoffdaten und Zuladungsposten unter *Einstellungen → Schwerpunkt* pflegbar; beliebig viele Flugzeuge mit `[schwerpunkt flugzeug="…"]`.
+- Datum der Wägung wird unter dem Rechner angezeigt, optionale Prüfung des nutzbaren Tankinhalts.
+- Automatische Updates aus den Releases auf GitHub.
+
+## lsv-flugplatz 1.2.6
+
+- Der Schwerpunktrechner ist in das Plugin WX Schwerpunkt umgezogen. Vor diesem Update das Plugin installieren, sonst zeigt `[schwerpunkt]` nichts mehr an.
+
 ## lsv-flugplatz 1.2.5
 
 - Schwerpunktrechner: Alle Eingabefelder sind bei jedem Aufruf leer, auch beim Zurückblättern im Browser. Ergebnisse erscheinen, sobald das Pilotengewicht eingetragen ist.

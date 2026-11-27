@@ -1,0 +1,41 @@
+/* WX Schwerpunkt – Rechner im Frontend. Nutzt die Farbvariablen des Themes (--karte, --text …), sonst die Standardfarben. */
+.wxsp { --sp-karte: var(--karte, #2c4767); --sp-hell: var(--karte-hell, #385879); --sp-text: var(--text, #f2f6fa); --sp-leise: var(--text-leise, #b6c7da); --sp-akzent: var(--akzent, #8fb3dc); --sp-gut: var(--gut, #2e8b57); --sp-warn: var(--warn, #c0392b); --sp-linie: var(--linie, rgba(255,255,255,.14)); --sp-r: var(--radius, 4px);
+	background: var(--sp-karte); color: var(--sp-text); border-radius: var(--sp-r); padding: 16px; box-shadow: var(--schatten, 0 2px 8px rgba(0,0,0,.18)); margin-top: 0; margin-bottom: 1.5em; }
+.wxsp h2 { margin: 0 0 4px; font-size: 1.2rem; color: var(--titel, #d3e3f4); }
+.wxsp-kopf p { margin: 0 0 12px; color: var(--sp-leise); font-size: .9rem; }
+.wxsp-tab { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.wxsp-tab th { text-align: left; font-weight: 600; color: var(--sp-leise); font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; padding: 6px 8px; border-bottom: 1px solid var(--sp-linie); }
+.wxsp-tab td { padding: 6px 8px; border-bottom: 1px solid var(--sp-linie); vertical-align: middle; }
+.wxsp-tab small { display: block; color: var(--sp-leise); font-size: .78rem; }
+.wxsp-n, .wxsp-tab th.wxsp-n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.wxsp-ein { display: inline-flex; align-items: center; gap: 6px; }
+.wxsp-ein input::placeholder { color: var(--sp-leise); opacity: .6; }
+.wxsp-ein input { width: 5.5em; padding: 6px 8px; border: 1px solid var(--sp-akzent); border-radius: var(--sp-r); background: var(--sp-hell); color: var(--sp-text); font: inherit; text-align: right; }
+.wxsp-ein input.wxsp-zuviel { border-color: var(--sp-warn); box-shadow: 0 0 0 1px var(--sp-warn); }
+.wxsp-ein span { color: var(--sp-leise); }
+.wxsp-erg { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 16px 0 12px; }
+.wxsp-kachel { background: var(--sp-hell); border-radius: var(--sp-r); border-top: 3px solid var(--sp-akzent); padding: 10px 12px; }
+.wxsp-kachel span { display: block; font-size: .8rem; color: var(--sp-leise); }
+.wxsp-kachel strong { display: block; font-size: 1.5rem; font-weight: 600; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.wxsp-kachel small { color: var(--sp-leise); font-size: .82rem; }
+.wxsp-kachel.ist-gut { border-top-color: var(--sp-gut); }
+.wxsp-kachel.ist-schlecht { border-top-color: var(--sp-warn); background: color-mix(in srgb, var(--sp-warn) 25%, var(--sp-hell)); }
+.wxsp-skala { position: relative; margin: 6px 0 14px; padding-top: 4px; }
+.wxsp-band { height: 10px; border-radius: 5px; background: linear-gradient(90deg, var(--sp-warn) 0 10%, var(--sp-gut) 10% 90%, var(--sp-warn) 90% 100%); opacity: .85; }
+.wxsp-marke { position: absolute; top: 0; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; border: 2px solid #fff; transition: left .2s; }
+.wxsp-marke-start { background: #fff; }
+.wxsp-marke-leer { background: transparent; }
+.wxsp-skala-text { display: flex; justify-content: space-between; font-size: .78rem; color: var(--sp-leise); margin-top: 6px; }
+.wxsp-hinweise { margin: 0 0 10px; padding: 0; list-style: none; }
+.wxsp-hinweise li { padding: 8px 10px; border-radius: var(--sp-r); margin-bottom: 6px; font-size: .92rem; background: color-mix(in srgb, var(--sp-warn) 30%, var(--sp-karte)); border-left: 3px solid var(--sp-warn); }
+.wxsp-hinweise li.info { background: var(--sp-hell); border-left-color: var(--sp-akzent); }
+.wxsp-hinweise li.ok { background: color-mix(in srgb, var(--sp-gut) 25%, var(--sp-karte)); border-left-color: var(--sp-gut); }
+.wxsp-fuss { margin: 0; font-size: .82rem; color: var(--sp-leise); }
+.wxsp-fuss a { color: var(--sp-akzent); }
+@media (max-width: 560px) {
+	.wxsp { padding: 12px; }
+	.wxsp-tab th:nth-child(3), .wxsp-tab td:nth-child(3) { display: none; }
+	.wxsp-ein input::placeholder { color: var(--sp-leise); opacity: .6; }
+.wxsp-ein input { width: 4.5em; }
+}
+.wxsp-stand { margin: 6px 0 0; font-size: .78rem; color: var(--sp-leise); }
