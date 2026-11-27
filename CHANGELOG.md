@@ -3,6 +3,10 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-schwerpunkt 1.1.3
+
+- Wandert der Schwerpunkt mit leerem Tank aus dem zulässigen Bereich, nennt der Hinweis jetzt die Mindestmenge, die bis zur Landung im Tank bleiben muss.
+
 ## wx-schwerpunkt 1.1.2
 
 - Einstellung „Tankinhalt nutzbar“ heißt jetzt „Max. Tankinhalt“ – gemeint ist die Menge, die getankt werden kann (Bristell: 120 l, davon 119 l ausfliegbar).

@@ -139,7 +139,12 @@
 			if (!masseOk) { h.unshift('Startmasse überschritten: ' + fmt(masse, 1) + ' kg statt max. ' + fmt(A.mtom, 0) + ' kg.'); }
 			if (cg < A.vorn) { h.push('Schwerpunkt beim Start zu weit vorn (' + fmt(cg, 1) + ' mm, Grenze ' + fmt(A.vorn, 0) + ' mm).'); }
 			if (cg > A.hinten) { h.push('Schwerpunkt beim Start zu weit hinten (' + fmt(cg, 1) + ' mm, Grenze ' + fmt(A.hinten, 0) + ' mm).'); }
-			if (cgOk && !cg0Ok) { h.push('Mit leerem Tank wandert der Schwerpunkt aus dem zulässigen Bereich (' + fmt(cg0, 1) + ' mm).'); }
+			if (cgOk && !cg0Ok) {
+				// Der Tank liegt vor dem Schwerpunktbereich: Verbrauch schiebt den Schwerpunkt nach hinten.
+				// sp.min ist die Menge, ab der er wieder hinter der hinteren Grenze bleibt – die muss bis zur Landung im Tank bleiben.
+				h.push('Mit leerem Tank wandert der Schwerpunkt aus dem zulässigen Bereich (' + fmt(cg0, 1) + ' mm).'
+					+ (sp.moeglich && sp.min > 0 ? ' Bis zur Landung müssen mindestens ' + fmt(sp.min, 0) + ' l im Tank bleiben.' : ''));
+			}
 			if (!sp.moeglich) {
 				h.push('Mit dieser Beladung ist keine Kraftstoffmenge zulässig – Masse oder Schwerpunkt passen nicht.');
 			} else if (liter > sp.max) {
