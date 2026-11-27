@@ -30,11 +30,12 @@ schadet aber nicht und dient als Rückfallebene.
 
 * Spalten erscheinen automatisch als dunkelblaue Karten.
   Abschalten: Spalten-Block auswählen → Stile → "Ohne Karten".
+  Ausnahme: Enthält eine Spalte nur ein Bild oder ein Webcambild
+  ([webcam_aktuell]), hat sie keine Karte. Bilder bekommen nie einen Rahmen.
 * Gruppe → Stil "LSV Karte": dunkelblaue Karte.
 * Gruppe → Stil "LSV Kachel": Kachel wie QNH/QFE auf der Wetterseite.
   Aufbau: 1. Absatz = Bezeichnung (klein), 2. Absatz mit fettem Wert (groß),
   weitere Absätze = Zusatzinfo (klein).
-* Bild → Stil "LSV Karte".
 * Farbpalette mit den LSV-Farben.
 
 == Wetter auf der Startseite ==

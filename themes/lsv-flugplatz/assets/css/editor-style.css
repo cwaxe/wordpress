@@ -57,3 +57,13 @@ body,
 .editor-styles-wrapper .wp-block-table th { border: 0; border-bottom: 1px solid rgba(255, 255, 255, .14); }
 .editor-styles-wrapper .wp-block-quote { border-left: 3px solid #8fb3dc; padding-left: 16px; }
 .editor-styles-wrapper .wp-block-separator { border-top: 1px solid rgba(255, 255, 255, .14); border-bottom: 0; }
+
+/* Wie im Frontend: Spalten mit nur einem Bild oder Webcambild ohne Karte */
+.editor-styles-wrapper .wp-block-columns > .wp-block-column:has(> .wp-block-image:only-child),
+.editor-styles-wrapper .wp-block-columns > .wp-block-column:has(> .wp-block-shortcode:only-child) {
+	background: none;
+	padding: 0;
+	box-shadow: none;
+}
+.editor-styles-wrapper .wp-block-image.is-style-twentytwentyone-border,
+.editor-styles-wrapper .wp-block-image.is-style-twentytwentyone-image-frame img { box-shadow: none; padding: 0; background: none; }

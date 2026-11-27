@@ -3,6 +3,13 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## lsv-flugplatz 1.2.2
+
+- Keine Rahmen mehr um Bilder im ganzen Theme: Spalten mit nur einem Bild oder Webcambild haben auf allen Seiten keine Karte, die Karte von `[webcam_aktuell]` ist überall abgeschaltet.
+- Bildstile „Rahmen“ und „Bilderrahmen“ zeigen nur noch abgerundete Ecken, ohne Schatten oder blauen Rand.
+- Der Bildstil „LSV Karte“ entfällt.
+- Der Block-Editor zeigt die Spalten genauso an.
+
 ## lsv-flugplatz 1.2.1
 
 - Startseite: Spalten mit nur einem Bild oder Webcambild haben keine blaue Karte mehr, die Bilder liegen direkt auf dem Seitenhintergrund.

@@ -3,7 +3,7 @@ Theme Name:   LSV Flugplatz
 Theme URI:    https://lsv-vilsbiburg.de
 Description:  Eigenständiges Theme für den Luftsportverein Vilsbiburg im Stil von wetter.lsv-vilsbiburg.de: blauer Hintergrund, dunkelblaue Karten, klare Kopfzeile. Kompatibel mit Inhalten, Menüs und Widgets aus Twenty Twenty-One.
 Author:       Luftsportverein Vilsbiburg e. V.
-Version:      1.2.1
+Version:      1.2.2
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
@@ -378,8 +378,7 @@ th { color: var(--text-leise); font-weight: 600; }
    5. Karten & Kacheln
    ========================================================= */
 .lsv-karte,
-.entry-content .wp-block-group.is-style-lsv-karte,
-.entry-content .wp-block-image.is-style-lsv-karte {
+.entry-content .wp-block-group.is-style-lsv-karte {
 	background: var(--karte);
 	border-radius: var(--radius);
 	padding: 14px 16px 16px;
@@ -415,25 +414,24 @@ th { color: var(--text-leise); font-weight: 600; }
 .entry-content .wp-block-column figcaption,
 .entry-content .wp-block-column .wp-element-caption { margin: 8px 0 0; }
 
-/* Startseite: Spalten, die nur ein Bild oder ein Webcambild enthalten, ohne Karte –
-   das Bild liegt direkt auf dem Seitenhintergrund. */
-.home .entry-content .wp-block-columns > .wp-block-column:has(> .wp-block-image:only-child),
-.home .entry-content .wp-block-columns > .wp-block-column:has(> .wca-latest:only-child) {
+/* Bilder nie in einer Karte: Spalten, die nur ein Bild oder ein Webcambild enthalten,
+   bekommen keinen Hintergrund – das Bild liegt direkt auf dem Seitenhintergrund. */
+.entry-content .wp-block-columns > .wp-block-column:has(> .wp-block-image:only-child),
+.entry-content .wp-block-columns > .wp-block-column:has(> .wca-latest:only-child) {
 	background: none;
 	padding: 0;
 	box-shadow: none;
 }
-/* Karte des Plugins WX Webcam Archive ([webcam_aktuell]) auf der Startseite abschalten */
-.home .entry-content .wca-latest {
-	margin: 0;
+/* Karte des Plugins WX Webcam Archive ([webcam_aktuell]) abschalten */
+.entry-content .wca-latest {
+	margin: 0 0 var(--abstand);
 	padding: 0;
 	background: none;
 	border-top: 0;
 	box-shadow: none;
 }
-.home .entry-content .wca-latest figcaption { margin-top: 8px; }
-/* Bildstil "Rahmen" legt sonst einen Schatten um Bild und Bildunterschrift */
-.home .entry-content .wp-block-column > .wp-block-image.is-style-twentytwentyone-border { box-shadow: none; }
+.entry-content .wp-block-column > .wca-latest { margin-bottom: 0; }
+.entry-content .wca-latest figcaption { margin-top: 8px; }
 
 /* Kachel (wie QNH / QFE auf der Wetterseite) */
 .lsv-kachel,
@@ -579,7 +577,7 @@ input[type="submit"]:hover, input[type="button"]:hover, button.such-knopf:hover,
 /* =========================================================
    7. Twenty-Twenty-One-Kompatibilität
    ========================================================= */
-/* Rahmen-Stile → im LSV-Look als Karte statt weißem Rahmen */
+/* Rahmen-Stile → bei Bildern kein Rahmen, kein Schatten, nur abgerundete Ecken */
 .is-style-twentytwentyone-border,
 .wp-block-image.is-style-twentytwentyone-border img,
 .wp-block-image.is-style-twentytwentyone-image-frame img,
@@ -587,9 +585,9 @@ input[type="submit"]:hover, input[type="button"]:hover, button.such-knopf:hover,
 .wp-block-gallery.is-style-twentytwentyone-border img {
 	border: 0 !important;
 	border-radius: var(--radius);
-	box-shadow: var(--schatten);
 }
-.wp-block-image.is-style-twentytwentyone-image-frame img { padding: 8px; background: var(--karte); }
+.wp-block-group.is-style-twentytwentyone-border,
+.wp-block-media-text.is-style-twentytwentyone-border { box-shadow: var(--schatten); }
 .wp-block-group.is-style-twentytwentyone-border { background: var(--karte); padding: 14px 16px 16px; }
 .wp-block-separator.is-style-twentytwentyone-separator-thick { border-top-width: 3px; }
 .wp-block-latest-posts.is-style-twentytwentyone-latest-posts-borders li {

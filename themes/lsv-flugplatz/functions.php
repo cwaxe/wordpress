@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LSV_VERSION', '1.2.1' );
+define( 'LSV_VERSION', '1.2.2' );
 
 // Wetter-Block: nur laden, wenn das Plugin "LSV Wetter am Platz" nicht aktiv ist.
 if ( ! defined( 'LSVW_VERSION' ) ) {
@@ -146,7 +146,6 @@ function lsv_block_styles() {
 	register_block_style( 'core/group',   array( 'name' => 'lsv-karte',       'label' => 'LSV Karte' ) );
 	register_block_style( 'core/group',   array( 'name' => 'lsv-kachel',      'label' => 'LSV Kachel' ) );
 	register_block_style( 'core/columns', array( 'name' => 'lsv-ohne-karten', 'label' => 'Ohne Karten' ) );
-	register_block_style( 'core/image',   array( 'name' => 'lsv-karte',       'label' => 'LSV Karte' ) );
 
 	// Kompatibilität mit Twenty Twenty-One.
 	$tt1 = array(
