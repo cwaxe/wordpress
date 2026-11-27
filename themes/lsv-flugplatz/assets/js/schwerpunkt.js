@@ -26,7 +26,20 @@
 	out('grenze-vorn', f(A.vorn, 0) + ' mm'); out('grenze-hinten', f(A.hinten, 0) + ' mm');
 	out('verbrauch', 'bei ' + f(A.lh, 0) + ' l/h');
 
+	var leer = function () {
+		['m-pilot', 'm-passagier', 'm-gepaeck', 'm-fluegel-l', 'm-fluegel-r', 'm-tank', 'tank-kg', 'masse', 'masse-info', 'cg', 'cg-mac', 'cg0', 'cg0-mac', 'flugzeit'].forEach(function (k) { out(k, k.indexOf('m-') === 0 ? '' : '–'); });
+		out('m-leer', f(A.leerKg * A.leerArm, 0)); out('masse-info', ''); out('cg-mac', ''); out('cg0-mac', ''); out('tank-kg', '');
+		['masse', 'cg', 'cg0'].forEach(function (k) { var b = root.querySelector('[data-box="' + k + '"]'); b.classList.remove('ist-gut', 'ist-schlecht'); });
+		root.querySelectorAll('[data-marke]').forEach(function (m) { m.style.display = 'none'; });
+		Object.keys(inp).forEach(function (k) { inp[k].classList.remove('lsv-sp-zuviel'); });
+		var ul = root.querySelector('[data-out="hinweise"]'); ul.innerHTML = '';
+		var li = document.createElement('li'); li.className = 'info'; li.textContent = 'Bitte mindestens das Pilotengewicht und die Kraftstoffmenge eintragen.'; ul.appendChild(li);
+	};
+
 	function rechne() {
+		// Ohne Pilotengewicht ist keine sinnvolle Rechnung möglich.
+		if (!val('pilot')) { leer(); return; }
+		root.querySelectorAll('[data-marke]').forEach(function (m) { m.style.display = ''; });
 		var tankKg = val('liter') * A.kgL;
 		var posten = [
 			['leer', A.leerKg, A.leerArm], ['pilot', val('pilot'), A.sitze], ['passagier', val('passagier'), A.sitze],
@@ -73,7 +86,10 @@
 		});
 	}
 	Object.keys(inp).forEach(function (k) { inp[k].addEventListener('input', rechne); });
-	rechne();
+	// Bei jedem Aufruf leer starten – auch wenn der Browser die Seite aus dem Verlauf wiederherstellt.
+	var zuruecksetzen = function () { Object.keys(inp).forEach(function (k) { inp[k].value = ''; }); rechne(); };
+	window.addEventListener('pageshow', zuruecksetzen);
+	zuruecksetzen();
 	}
 	document.querySelectorAll('.lsv-sp[data-mtom]').forEach(init);
 })();

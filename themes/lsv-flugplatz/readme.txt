@@ -44,7 +44,7 @@ schadet aber nicht und dient als Rückfallebene.
 Nach einer neuen Wägung die Werte als Attribute angeben, z. B.
   [schwerpunkt leermasse="368,2" leerarm="731,5"]
 Weitere Attribute: kennzeichen, arm_sitze, arm_gepaeck, arm_fluegel, arm_tank,
-kg_pro_liter, verbrauch, liter, mtom, cg_vorn, cg_hinten, mac_vorderkante, mac,
+kg_pro_liter, verbrauch, mtom, cg_vorn, cg_hinten, mac_vorderkante, mac,
 pilot_min, pilot_max, max_gepaeck, max_fluegel, handbuch.
 
 == Wetter auf der Startseite ==

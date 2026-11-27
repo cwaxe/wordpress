@@ -7,8 +7,9 @@
 .lsv-sp-tab th { text-align: left; font-weight: 600; color: var(--sp-leise); font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; padding: 6px 8px; border-bottom: 1px solid var(--sp-linie); }
 .lsv-sp-tab td { padding: 6px 8px; border-bottom: 1px solid var(--sp-linie); vertical-align: middle; }
 .lsv-sp-tab small { display: block; color: var(--sp-leise); font-size: .78rem; }
-.lsv-sp-n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lsv-sp-n, .lsv-sp-tab th.lsv-sp-n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .lsv-sp-ein { display: inline-flex; align-items: center; gap: 6px; }
+.lsv-sp-ein input::placeholder { color: var(--sp-leise); opacity: .6; }
 .lsv-sp-ein input { width: 5.5em; padding: 6px 8px; border: 1px solid var(--sp-akzent); border-radius: var(--sp-r); background: var(--sp-hell); color: var(--sp-text); font: inherit; text-align: right; }
 .lsv-sp-ein input.lsv-sp-zuviel { border-color: var(--sp-warn); box-shadow: 0 0 0 1px var(--sp-warn); }
 .lsv-sp-ein span { color: var(--sp-leise); }
@@ -27,11 +28,13 @@
 .lsv-sp-skala-text { display: flex; justify-content: space-between; font-size: .78rem; color: var(--sp-leise); margin-top: 6px; }
 .lsv-sp-hinweise { margin: 0 0 10px; padding: 0; list-style: none; }
 .lsv-sp-hinweise li { padding: 8px 10px; border-radius: var(--sp-r); margin-bottom: 6px; font-size: .92rem; background: color-mix(in srgb, var(--sp-warn) 30%, var(--sp-karte)); border-left: 3px solid var(--sp-warn); }
+.lsv-sp-hinweise li.info { background: var(--sp-hell); border-left-color: var(--sp-akzent); }
 .lsv-sp-hinweise li.ok { background: color-mix(in srgb, var(--sp-gut) 25%, var(--sp-karte)); border-left-color: var(--sp-gut); }
 .lsv-sp-fuss { margin: 0; font-size: .82rem; color: var(--sp-leise); }
 .lsv-sp-fuss a { color: var(--sp-akzent); }
 @media (max-width: 560px) {
 	.lsv-sp { padding: 12px; }
 	.lsv-sp-tab th:nth-child(3), .lsv-sp-tab td:nth-child(3) { display: none; }
-	.lsv-sp-ein input { width: 4.5em; }
+	.lsv-sp-ein input::placeholder { color: var(--sp-leise); opacity: .6; }
+.lsv-sp-ein input { width: 4.5em; }
 }

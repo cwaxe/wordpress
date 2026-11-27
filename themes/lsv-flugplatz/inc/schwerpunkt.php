@@ -41,7 +41,6 @@ function lsv_schwerpunkt_html( $atts = array() ) {
 			'arm_tank'        => '606',
 			'kg_pro_liter'    => '0.72',
 			'verbrauch'       => '19',      // l/h, für die Flugzeit
-			'liter'           => '90',      // Vorgabe im Eingabefeld
 			'mtom'            => '600',
 			'cg_vorn'         => '750',
 			'cg_hinten'       => '871',
@@ -94,12 +93,12 @@ function lsv_schwerpunkt_html( $atts = array() ) {
 		$attr .= sprintf( ' data-%s="%s"', $k, esc_attr( $v ) );
 	}
 
-	$eingabe = function ( $key, $label, $wert, $einheit = 'kg', $schritt = '0.5' ) {
+	// Felder starten immer leer; $wert bleibt nur für spätere Vorgaben erhalten.
+	$eingabe = function ( $key, $label, $wert, $einheit = 'kg', $schritt = '0.5' ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
 		return sprintf(
-			'<label class="lsv-sp-ein"><input type="number" inputmode="decimal" min="0" step="%s" data-in="%s" value="%s" aria-label="%s"><span>%s</span></label>',
+			'<label class="lsv-sp-ein"><input type="number" inputmode="decimal" min="0" step="%s" data-in="%s" value="" placeholder="0" autocomplete="off" aria-label="%s"><span>%s</span></label>',
 			esc_attr( $schritt ),
 			esc_attr( $key ),
-			esc_attr( $wert ),
 			esc_attr( $label . ( 'kg' === $einheit ? ' in kg' : ' in Litern' ) ),
 			esc_html( $einheit )
 		);
@@ -116,7 +115,7 @@ function lsv_schwerpunkt_html( $atts = array() ) {
 <div class="lsv-sp"<?php echo $attr; // phpcs:ignore WordPress.Security.EscapeOutput -- oben escaped ?>>
 	<div class="lsv-sp-kopf">
 		<h2>Schwerpunktberechnung <?php echo esc_html( $a['kennzeichen'] ); ?></h2>
-		<p>Gewichte eintragen, alles andere rechnet sich sofort. Grün = innerhalb der Grenzen.</p>
+		<p>Gewichte und Kraftstoff eintragen, alles andere rechnet sich sofort. Grün = innerhalb der Grenzen.</p>
 	</div>
 	<table class="lsv-sp-tab">
 		<thead><tr><th>Posten</th><th>Gewicht</th><th class="lsv-sp-n">Arm</th><th class="lsv-sp-n">Moment</th></tr></thead>
@@ -129,7 +128,7 @@ function lsv_schwerpunkt_html( $atts = array() ) {
 			echo $zeile( 'Flügelkoffer links', 'max. ' . lsv_sp_text( $z['max_fluegel'] ) . ' kg', $eingabe( 'fluegel-l', 'Flügelkoffer links', 0 ), 'arm-fluegel', 'm-fluegel-l' ); // phpcs:ignore
 			echo $zeile( 'Flügelkoffer rechts', 'max. ' . lsv_sp_text( $z['max_fluegel'] ) . ' kg', $eingabe( 'fluegel-r', 'Flügelkoffer rechts', 0 ), 'arm-fluegel', 'm-fluegel-r' ); // phpcs:ignore
 			?>
-			<tr><td>Kraftstoff <small data-out="tank-kg"></small></td><td><?php echo $eingabe( 'liter', 'Kraftstoff', $z['liter'], 'l', '1' ); // phpcs:ignore ?></td><td class="lsv-sp-n" data-out="arm-tank"></td><td class="lsv-sp-n" data-out="m-tank"></td></tr>
+			<tr><td>Kraftstoff <small data-out="tank-kg"></small></td><td><?php echo $eingabe( 'liter', 'Kraftstoff', '', 'l', '1' ); // phpcs:ignore ?></td><td class="lsv-sp-n" data-out="arm-tank"></td><td class="lsv-sp-n" data-out="m-tank"></td></tr>
 		</tbody>
 	</table>
 

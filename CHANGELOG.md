@@ -3,6 +3,11 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## lsv-flugplatz 1.2.5
+
+- Schwerpunktrechner: Alle Eingabefelder sind bei jedem Aufruf leer, auch beim Zurückblättern im Browser. Ergebnisse erscheinen, sobald das Pilotengewicht eingetragen ist.
+- Schwerpunktrechner: Spaltenüberschriften „Arm“ und „Moment“ rechtsbündig wie die Werte.
+
 ## lsv-flugplatz 1.2.4
 
 - Schwerpunktrechner steht jetzt wie der übrige Inhalt mittig auf der Seite.
