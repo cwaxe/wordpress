@@ -110,7 +110,7 @@ final class WXSP_Frontend {
 		<div class="wxsp-kachel" data-box="cg0"><span>Schwerpunkt bei leerem Tank</span><strong data-out="cg0"></strong><small data-out="cg0-mac"></small></div>
 		<div class="wxsp-kachel" data-box="sprit"><span>Max. Kraftstoff bei dieser Beladung</span><strong data-out="sprit"></strong><small data-out="sprit-info"></small></div>
 		<?php if ( $f['verbrauch'] > 0 ) : ?>
-		<div class="wxsp-kachel"><span>Flugzeit mit dieser Tankfüllung</span><strong data-out="flugzeit"></strong><small>bei <?php echo esc_html( self::txt( $f['verbrauch'] ) ); ?> l/h</small></div>
+		<div class="wxsp-kachel"><span>Flugzeit mit dieser Tankfüllung</span><strong data-out="flugzeit"></strong><small>bei <?php echo esc_html( self::txt( $f['verbrauch'] ) ); ?> l/h, ohne Reserve</small></div>
 		<?php endif; ?>
 	</div>
 

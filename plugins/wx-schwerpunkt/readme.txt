@@ -3,7 +3,7 @@ Tags: weight and balance, schwerpunkt, flugzeug, masse, luftsport
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPL-2.0-or-later
 
 Rechner für Masse und Schwerpunkt (Weight & Balance) direkt auf der Website.
@@ -14,7 +14,7 @@ Rechner für Masse und Schwerpunkt (Weight & Balance) direkt auf der Website.
 * Zuladungsposten frei festlegbar (Pilot, Passagier, Gepäck, Flügelkoffer …) mit Min./Max. und Pflichtfeld
 * Prüft Startmasse, Schwerpunkt beim Start und bei leerem Tank sowie die Grenzen jedes Postens
 * Zeigt die maximal zulässige Kraftstoffmenge für die eingetragene Beladung (begrenzt durch MTOM,
-  Schwerpunktgrenzen und nutzbaren Tankinhalt) und ggf. eine Mindestmenge für den Schwerpunkt
+  Schwerpunktgrenzen und maximalen Tankinhalt) und ggf. eine Mindestmenge für den Schwerpunkt
 * Zeigt die Flugzeit mit der eingetragenen Tankfüllung und das Datum der Wägung
 * Eingabefelder sind bei jedem Aufruf leer
 * Übernimmt die Farben des Themes (CSS-Variablen --karte, --text, --akzent …)
@@ -38,6 +38,10 @@ Moment = Gewicht × Hebelarm, Schwerpunkt = Summe der Momente / Masse,
 Der Rechner ist eine Hilfe zur Flugvorbereitung; maßgeblich ist das Flughandbuch.
 
 == Changelog ==
+
+= 1.1.2 =
+* Einstellung heißt jetzt „Max. Tankinhalt“ (bei der Bristell 120 l Gesamtkapazität, davon 119 l ausfliegbar).
+* Flugzeit-Kachel: Hinweis „ohne Reserve“.
 
 = 1.1.1 =
 * Text „begrenzt durch Tankinhalt 120 l“; Vorgabe für neue Installationen: 120 l nutzbarer Tankinhalt.

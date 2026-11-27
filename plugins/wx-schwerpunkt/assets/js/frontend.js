@@ -40,7 +40,7 @@
 		};
 		/**
 		 * Zulässige Kraftstoffmenge (Liter) für die Beladung ohne Kraftstoff (m0 kg, Moment M0).
-		 * Grenzen: MTOM, nutzbarer Tankinhalt und beide Schwerpunktgrenzen. Der Schwerpunkt
+		 * Grenzen: MTOM, maximaler Tankinhalt und beide Schwerpunktgrenzen. Der Schwerpunkt
 		 * mit f kg Kraftstoff ist (M0 + f·a) / (m0 + f); daraus folgt je Grenze X:
 		 * f·(a − X) ≥ X·m0 − M0 (vordere Grenze) bzw. ≤ (hintere Grenze).
 		 */

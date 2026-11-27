@@ -3,6 +3,11 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-schwerpunkt 1.1.2
+
+- Einstellung „Tankinhalt nutzbar“ heißt jetzt „Max. Tankinhalt“ – gemeint ist die Menge, die getankt werden kann (Bristell: 120 l, davon 119 l ausfliegbar).
+- Flugzeit-Kachel mit Hinweis „ohne Reserve“.
+
 ## wx-schwerpunkt 1.1.1
 
 - Kraftstoffkachel nennt den Tankinhalt mit Wert („begrenzt durch Tankinhalt 120 l“).
