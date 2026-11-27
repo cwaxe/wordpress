@@ -1,6 +1,6 @@
 /* Schwerpunktrechner [schwerpunkt] – nutzt die Farbvariablen aus style.css */
 .lsv-sp { --sp-karte: var(--karte, #2c4767); --sp-hell: var(--karte-hell, #385879); --sp-text: var(--text, #f2f6fa); --sp-leise: var(--text-leise, #b6c7da); --sp-akzent: var(--akzent, #8fb3dc); --sp-gut: var(--gut, #2e8b57); --sp-warn: var(--warn, #c0392b); --sp-linie: var(--linie, rgba(255,255,255,.14)); --sp-r: var(--radius, 4px);
-	background: var(--sp-karte); color: var(--sp-text); border-radius: var(--sp-r); padding: 16px; box-shadow: var(--schatten, 0 2px 8px rgba(0,0,0,.18)); margin: 0 0 1.5em; }
+	background: var(--sp-karte); color: var(--sp-text); border-radius: var(--sp-r); padding: 16px; box-shadow: var(--schatten, 0 2px 8px rgba(0,0,0,.18)); margin-top: 0; margin-bottom: 1.5em; }
 .lsv-sp h2 { margin: 0 0 4px; font-size: 1.2rem; color: var(--titel, #d3e3f4); }
 .lsv-sp-kopf p { margin: 0 0 12px; color: var(--sp-leise); font-size: .9rem; }
 .lsv-sp-tab { width: 100%; border-collapse: collapse; font-size: .95rem; }
