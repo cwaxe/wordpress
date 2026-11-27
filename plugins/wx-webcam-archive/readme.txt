@@ -1,7 +1,7 @@
 === WX Webcam Archive ===
 Requires at least: 5.8
 Requires PHP: 7.4
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPL-2.0-or-later
 
 Archiviert Webcam-Bilder automatisch und macht sie über einen Kalender wieder abrufbar.
