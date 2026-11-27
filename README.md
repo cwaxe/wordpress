@@ -16,6 +16,7 @@ Die fertigen ZIP-Dateien liegen unter [**Releases**](https://github.com/cwaxe/wo
 | [WX Easy Calendar](plugins/wx-easy-calendar/) | Plugin | 2.2.1 | [wx-easy-calendar-2.2.1.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-calendar-v2.2.1/wx-easy-calendar-2.2.1.zip) |
 | [WX Easy Maintenance](plugins/wx-easy-maintenance/) | Plugin | 1.0.0 | [wx-easy-maintenance-1.0.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-easy-maintenance-v1.0.0/wx-easy-maintenance-1.0.0.zip) |
 | [WX Lightbox](plugins/wx-lightbox/) | Plugin | 1.2.1 | [wx-lightbox-1.2.1.zip](https://github.com/cwaxe/wordpress/releases/download/wx-lightbox-v1.2.1/wx-lightbox-1.2.1.zip) |
+| [WX Popup](plugins/wx-popup/) | Plugin | 1.0.0 | [wx-popup-1.0.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-popup-v1.0.0/wx-popup-1.0.0.zip) |
 | [WX Schwerpunkt](plugins/wx-schwerpunkt/) | Plugin | 1.0.0 | [wx-schwerpunkt-1.0.0.zip](https://github.com/cwaxe/wordpress/releases/download/wx-schwerpunkt-v1.0.0/wx-schwerpunkt-1.0.0.zip) |
 | [WX Webcam Archive](plugins/wx-webcam-archive/) | Plugin | 1.6.3 | [wx-webcam-archive-1.6.3.zip](https://github.com/cwaxe/wordpress/releases/download/wx-webcam-archive-v1.6.3/wx-webcam-archive-1.6.3.zip) |
 <!-- pakete:end -->

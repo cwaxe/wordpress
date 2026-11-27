@@ -3,6 +3,13 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-popup 1.0.0
+
+- Erste Version: Pop-ups mit Inhalt aus dem Block-Editor, Zeitraum, Seitenauswahl, Verzögerung und Wiederholung (jedes Mal, einmal pro Besuch oder nach X Tagen) – ohne Cookies.
+- Vorschau und Status in der Liste, Links auf `#popup-123` öffnen ein Pop-up von Hand.
+- Übernimmt beim Aktivieren alle Pop-ups aus Popup Maker.
+- Automatische Updates aus den Releases auf GitHub.
+
 ## wx-webcam-archive 1.6.3
 
 - `[webcam_aktuell link="bild"]`: In der Lightbox steht jetzt „Schwelle 03 · 27. November 2026, 09:50 Uhr“ statt Kameraname und Zeit ohne Abstand. Die Unterschrift wird beim automatischen Nachladen mit aktualisiert.
