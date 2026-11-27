@@ -3,6 +3,10 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-webcam-archive 1.6.3
+
+- `[webcam_aktuell link="bild"]`: In der Lightbox steht jetzt „Schwelle 03 · 27. November 2026, 09:50 Uhr“ statt Kameraname und Zeit ohne Abstand. Die Unterschrift wird beim automatischen Nachladen mit aktualisiert.
+
 ## wx-schwerpunkt 1.0.0
 
 - Erste Version: Rechner für Masse und Schwerpunkt mit `[schwerpunkt]`, bisher Teil des Themes LSV Flugplatz.

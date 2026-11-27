@@ -713,6 +713,7 @@
 					if (im.w && im.h) { img.width = im.w; img.height = im.h; }
 					// Link auf das Bild selbst mitziehen; Links ins Archiv auf den Tag des Bildes setzen.
 					if (link && cfg.linkImage) { link.href = im.full; }
+					if (link && link.hasAttribute('data-caption')) { link.setAttribute('data-caption', (cfg.name ? cfg.name + ' · ' : '') + fmt.format(new Date(+im.date.split('-')[0], +im.date.split('-')[1] - 1, +im.date.split('-')[2], +im.time.split(':')[0], +im.time.split(':')[1])) + ' Uhr'); }
 					else if (link && cfg.linkArchive) { link.href = cfg.linkArchive + '#wca=' + im.date + '&kamera=' + cfg.camera; }
 					var p = im.date.split('-'), t = im.time.split(':');
 					if (cap) { cap.textContent = fmt.format(new Date(+p[0], +p[1] - 1, +p[2], +t[0], +t[1])) + ' Uhr'; }

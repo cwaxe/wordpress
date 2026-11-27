@@ -1,7 +1,7 @@
 === WX Webcam Archive ===
 Requires at least: 5.8
 Requires PHP: 7.4
-Stable tag: 1.6.2
+Stable tag: 1.6.3
 License: GPL-2.0-or-later
 
 Archiviert Webcam-Bilder automatisch und macht sie über einen Kalender wieder abrufbar.
@@ -78,6 +78,9 @@ GET /wp-json/wca/v1/images?kamera=cam1&date=2026-11-09
 GET /wp-json/wca/v1/latest?kamera=cam1
 
 == Changelog ==
+
+= 1.6.3 =
+* [webcam_aktuell link="bild"]: Bildunterschrift in der Lightbox mit Trenner zwischen Kameraname und Zeit.
 
 = 1.6.2 =
 * [webcam_aktuell] lädt das neueste Bild sofort beim Seitenaufruf (auch bei Seiten-Cache).

@@ -191,6 +191,7 @@ final class WCA_Frontend {
 		unset( $cfg['i18n'] );
 		$cfg['refresh'] = max( 0, (int) $atts['refresh'] );
 		$cfg['camera']  = $cam_id;
+		$cfg['name']    = $cam['name'];
 		if ( $atts['archiv'] && false === strpos( $atts['archiv'], '#' ) ) {
 			$cfg['linkArchive'] = esc_url_raw( $atts['archiv'] );
 		} elseif ( ! $atts['archiv'] && 'bild' === strtolower( $atts['link'] ) ) {
@@ -212,11 +213,13 @@ final class WCA_Frontend {
 			(int) $img['h'],
 			esc_attr( $cam['name'] . ' – ' . $when )
 		);
+		// Bildunterschrift für Lightboxen (z. B. WX Lightbox), sonst kleben Name und Zeit aneinander.
+		$caption = $cam['name'] . ' · ' . $when;
 		if ( $atts['archiv'] ) {
 			$link  = $atts['archiv'] . ( false === strpos( $atts['archiv'], '#' ) ? '#wca=' . $img['date'] . '&kamera=' . $cam_id : '' );
 			$inner = sprintf( '<a href="%s">%s</a>', esc_url( $link ), $inner );
 		} elseif ( 'bild' === strtolower( $atts['link'] ) ) {
-			$inner = sprintf( '<a href="%s" target="_blank" rel="noopener">%s</a>', esc_url( $img['full'] ), $inner );
+			$inner = sprintf( '<a href="%s" target="_blank" rel="noopener" data-caption="%s">%s</a>', esc_url( $img['full'] ), esc_attr( $caption ), $inner );
 		}
 		$html .= $inner;
 		$html .= sprintf( '<figcaption><span class="wca-latest-name">%s</span><span class="wca-latest-time">%s</span></figcaption></figure>', esc_html( $cam['name'] ), esc_html( $when ) );
