@@ -3,6 +3,11 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## lsv-flugplatz 1.2.1
+
+- Startseite: Spalten mit nur einem Bild oder Webcambild haben keine blaue Karte mehr, die Bilder liegen direkt auf dem Seitenhintergrund.
+- Die Karte von `[webcam_aktuell]` (WX Webcam Archive) wird auf der Startseite ausgeblendet.
+
 ## wx-webcam-archive 1.6.2
 
 - `[webcam_aktuell]` holt das neueste Bild sofort beim Laden der Seite und beim Zurückwechseln in den Tab, nicht erst nach Ablauf des Intervalls. Damit stimmt das Bild auch, wenn die Seite aus einem Cache kommt.

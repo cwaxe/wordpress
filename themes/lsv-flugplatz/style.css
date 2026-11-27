@@ -3,7 +3,7 @@ Theme Name:   LSV Flugplatz
 Theme URI:    https://lsv-vilsbiburg.de
 Description:  Eigenständiges Theme für den Luftsportverein Vilsbiburg im Stil von wetter.lsv-vilsbiburg.de: blauer Hintergrund, dunkelblaue Karten, klare Kopfzeile. Kompatibel mit Inhalten, Menüs und Widgets aus Twenty Twenty-One.
 Author:       Luftsportverein Vilsbiburg e. V.
-Version:      1.2.0
+Version:      1.2.1
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
@@ -414,6 +414,26 @@ th { color: var(--text-leise); font-weight: 600; }
 .entry-content .wp-block-column .wp-block-image:not(:last-child) { margin-bottom: 8px; }
 .entry-content .wp-block-column figcaption,
 .entry-content .wp-block-column .wp-element-caption { margin: 8px 0 0; }
+
+/* Startseite: Spalten, die nur ein Bild oder ein Webcambild enthalten, ohne Karte –
+   das Bild liegt direkt auf dem Seitenhintergrund. */
+.home .entry-content .wp-block-columns > .wp-block-column:has(> .wp-block-image:only-child),
+.home .entry-content .wp-block-columns > .wp-block-column:has(> .wca-latest:only-child) {
+	background: none;
+	padding: 0;
+	box-shadow: none;
+}
+/* Karte des Plugins WX Webcam Archive ([webcam_aktuell]) auf der Startseite abschalten */
+.home .entry-content .wca-latest {
+	margin: 0;
+	padding: 0;
+	background: none;
+	border-top: 0;
+	box-shadow: none;
+}
+.home .entry-content .wca-latest figcaption { margin-top: 8px; }
+/* Bildstil "Rahmen" legt sonst einen Schatten um Bild und Bildunterschrift */
+.home .entry-content .wp-block-column > .wp-block-image.is-style-twentytwentyone-border { box-shadow: none; }
 
 /* Kachel (wie QNH / QFE auf der Wetterseite) */
 .lsv-kachel,

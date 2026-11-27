@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LSV_VERSION', '1.2.0' );
+define( 'LSV_VERSION', '1.2.1' );
 
 // Wetter-Block: nur laden, wenn das Plugin "LSV Wetter am Platz" nicht aktiv ist.
 if ( ! defined( 'LSVW_VERSION' ) ) {
