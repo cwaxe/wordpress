@@ -48,7 +48,7 @@
 			var a = A.tank, minKg = 0, maxKg = Infinity, grund = '';
 			var setzeMax = function (kg, warum) { if (kg < maxKg) { maxKg = kg; grund = warum; } };
 			setzeMax(A.mtom - m0, 'MTOM ' + fmt(A.mtom, 0) + ' kg');
-			if (A.tankMax > 0) { setzeMax(A.tankMax * A.kgL, 'nutzbarer Tankinhalt'); }
+			if (A.tankMax > 0) { setzeMax(A.tankMax * A.kgL, 'Tankinhalt ' + fmt(A.tankMax, 0) + ' l'); }
 			[[A.vorn, 1, 'vordere Schwerpunktgrenze'], [A.hinten, -1, 'hintere Schwerpunktgrenze']].forEach(function (g) {
 				var X = g[0], richtung = g[1], k = (a - X) * richtung, r = (X * m0 - M0) * richtung;
 				if (k > 0) { minKg = Math.max(minKg, r / k); }           // f ≥ r / k

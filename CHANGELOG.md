@@ -3,6 +3,11 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-schwerpunkt 1.1.1
+
+- Kraftstoffkachel nennt den Tankinhalt mit Wert („begrenzt durch Tankinhalt 120 l“).
+- Vorgabe für neue Installationen: Bristell D-MDMP mit 120 l nutzbarem Tankinhalt.
+
 ## wx-schwerpunkt 1.1.0
 
 - Neu: Kachel „Max. Kraftstoff bei dieser Beladung“. Begrenzt durch MTOM, beide Schwerpunktgrenzen und – falls eingetragen – den nutzbaren Tankinhalt; die begrenzende Grenze wird genannt.
