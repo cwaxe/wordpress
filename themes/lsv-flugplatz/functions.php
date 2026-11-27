@@ -14,12 +14,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LSV_VERSION', '1.2.2' );
+define( 'LSV_VERSION', '1.2.3' );
 
 // Wetter-Block: nur laden, wenn das Plugin "LSV Wetter am Platz" nicht aktiv ist.
 if ( ! defined( 'LSVW_VERSION' ) ) {
 	require_once get_template_directory() . '/inc/wetter.php';
 }
+
+// Schwerpunktrechner: [schwerpunkt]
+require_once get_template_directory() . '/inc/schwerpunkt.php';
 
 /* -------------------------------------------------------------------------
  * Theme-Setup

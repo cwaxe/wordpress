@@ -3,6 +3,10 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## lsv-flugplatz 1.2.3
+
+- Neu: Shortcode `[schwerpunkt]` – Masse und Schwerpunkt der Bristell D-MDMP direkt auf der Seite berechnen, ersetzt die Google-Tabelle. Prüft Startmasse, Schwerpunktgrenzen, Zuladungsgrenzen und den Schwerpunkt bei leerem Tank. Flugzeugdaten lassen sich per Attribut anpassen.
+
 ## lsv-flugplatz 1.2.2
 
 - Keine Rahmen mehr um Bilder im ganzen Theme: Spalten mit nur einem Bild oder Webcambild haben auf allen Seiten keine Karte, die Karte von `[webcam_aktuell]` ist überall abgeschaltet.
