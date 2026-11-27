@@ -38,6 +38,31 @@
 				ul.appendChild(li);
 			});
 		};
+		/**
+		 * Zulässige Kraftstoffmenge (Liter) für die Beladung ohne Kraftstoff (m0 kg, Moment M0).
+		 * Grenzen: MTOM, nutzbarer Tankinhalt und beide Schwerpunktgrenzen. Der Schwerpunkt
+		 * mit f kg Kraftstoff ist (M0 + f·a) / (m0 + f); daraus folgt je Grenze X:
+		 * f·(a − X) ≥ X·m0 − M0 (vordere Grenze) bzw. ≤ (hintere Grenze).
+		 */
+		var spritBereich = function (m0, M0) {
+			var a = A.tank, minKg = 0, maxKg = Infinity, grund = '';
+			var setzeMax = function (kg, warum) { if (kg < maxKg) { maxKg = kg; grund = warum; } };
+			setzeMax(A.mtom - m0, 'MTOM ' + fmt(A.mtom, 0) + ' kg');
+			if (A.tankMax > 0) { setzeMax(A.tankMax * A.kgL, 'nutzbarer Tankinhalt'); }
+			[[A.vorn, 1, 'vordere Schwerpunktgrenze'], [A.hinten, -1, 'hintere Schwerpunktgrenze']].forEach(function (g) {
+				var X = g[0], richtung = g[1], k = (a - X) * richtung, r = (X * m0 - M0) * richtung;
+				if (k > 0) { minKg = Math.max(minKg, r / k); }           // f ≥ r / k
+				else if (k < 0) { setzeMax(r / k, g[2]); }               // f ≤ r / k
+				else if (r > 0) { setzeMax(-1, g[2]); }                  // Tank genau auf der Grenze und Grenze verletzt
+			});
+			return {
+				// kleine Toleranz gegen Rundungsfehler (60 l × 0,72 / 0,72 = 59,999…)
+				min: A.kgL ? Math.ceil(minKg / A.kgL - 1e-6) : 0,
+				max: A.kgL ? Math.floor(maxKg / A.kgL + 1e-6) : 0,
+				grund: grund,
+				moeglich: maxKg >= minKg
+			};
+		};
 		var marken = function (sichtbar) {
 			root.querySelectorAll('[data-marke]').forEach(function (m) { m.style.display = sichtbar ? '' : 'none'; });
 		};
@@ -46,7 +71,8 @@
 			['masse', 'cg', 'cg0', 'flugzeit'].forEach(function (k) { out(k, '–'); });
 			['masse-info', 'cg-mac', 'cg0-mac', 'tank-kg', 'm-tank'].forEach(function (k) { out(k, ''); });
 			root.querySelectorAll('[data-moment]').forEach(function (e) { e.textContent = ''; });
-			['masse', 'cg', 'cg0'].forEach(function (k) { box(k, null); });
+			['masse', 'cg', 'cg0', 'sprit'].forEach(function (k) { box(k, null); });
+			out('sprit', '–'); out('sprit-info', '');
 			alle.forEach(function (i) { i.classList.remove('wxsp-zuviel'); });
 			marken(false);
 			hinweise([text], 'info');
@@ -56,7 +82,7 @@
 			var pflichtFehlt = A.posten.some(function (p, i) { return p.pflicht && !num(felder[i].value); });
 			if (pflichtFehlt) {
 				var namen = A.posten.filter(function (p) { return p.pflicht; }).map(function (p) { return p.name; });
-				leer('Bitte mindestens ' + namen.join(', ') + ' und die Kraftstoffmenge eintragen.');
+				leer('Bitte mindestens ' + namen.join(', ') + ' eintragen.');
 				return;
 			}
 
@@ -80,8 +106,16 @@
 			var cg = moment / masse;
 			var masse0 = masse - tankKg, cg0 = (moment - tankKg * A.tank) / masse0;
 			var masseOk = masse <= A.mtom, cgOk = imBereich(cg), cg0Ok = imBereich(cg0);
-			var tankZuviel = A.tankMax > 0 && liter > A.tankMax;
-			if (tankFeld) { tankFeld.classList.toggle('wxsp-zuviel', tankZuviel); }
+			var sp = spritBereich(masse0, moment - tankKg * A.tank);
+			var spritOk = sp.moeglich && liter <= sp.max && liter >= sp.min;
+			if (tankFeld) { tankFeld.classList.toggle('wxsp-zuviel', !spritOk); }
+			if (!sp.moeglich) {
+				out('sprit', 'keine'); out('sprit-info', 'Beladung ändern');
+			} else {
+				out('sprit', fmt(Math.max(0, sp.max), 0) + ' l');
+				out('sprit-info', 'begrenzt durch ' + sp.grund + (sp.min > 0 ? ' · mind. ' + fmt(sp.min, 0) + ' l' : ''));
+			}
+			box('sprit', spritOk);
 
 			out('tank-kg', fmt(tankKg, 1) + ' kg');
 			out('m-tank', liter ? fmt(tankKg * A.tank, 0) : '');
@@ -106,7 +140,13 @@
 			if (cg < A.vorn) { h.push('Schwerpunkt beim Start zu weit vorn (' + fmt(cg, 1) + ' mm, Grenze ' + fmt(A.vorn, 0) + ' mm).'); }
 			if (cg > A.hinten) { h.push('Schwerpunkt beim Start zu weit hinten (' + fmt(cg, 1) + ' mm, Grenze ' + fmt(A.hinten, 0) + ' mm).'); }
 			if (cgOk && !cg0Ok) { h.push('Mit leerem Tank wandert der Schwerpunkt aus dem zulässigen Bereich (' + fmt(cg0, 1) + ' mm).'); }
-			if (tankZuviel) { h.push('Kraftstoff: höchstens ' + fmt(A.tankMax, 0) + ' l nutzbar.'); }
+			if (!sp.moeglich) {
+				h.push('Mit dieser Beladung ist keine Kraftstoffmenge zulässig – Masse oder Schwerpunkt passen nicht.');
+			} else if (liter > sp.max) {
+				h.push('Kraftstoff: bei dieser Beladung höchstens ' + fmt(Math.max(0, sp.max), 0) + ' l (' + sp.grund + ').');
+			} else if (liter < sp.min) {
+				h.push('Kraftstoff: bei dieser Beladung mindestens ' + fmt(sp.min, 0) + ' l, sonst liegt der Schwerpunkt zu weit hinten.');
+			}
 
 			if (h.length) { hinweise(h); } else { hinweise(['Startmasse und Schwerpunkt liegen innerhalb der Grenzen.'], 'ok'); }
 		}

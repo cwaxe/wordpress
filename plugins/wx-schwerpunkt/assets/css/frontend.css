@@ -13,7 +13,7 @@
 .wxsp-ein input { width: 5.5em; padding: 6px 8px; border: 1px solid var(--sp-akzent); border-radius: var(--sp-r); background: var(--sp-hell); color: var(--sp-text); font: inherit; text-align: right; }
 .wxsp-ein input.wxsp-zuviel { border-color: var(--sp-warn); box-shadow: 0 0 0 1px var(--sp-warn); }
 .wxsp-ein span { color: var(--sp-leise); }
-.wxsp-erg { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 16px 0 12px; }
+.wxsp-erg { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 16px 0 12px; }
 .wxsp-kachel { background: var(--sp-hell); border-radius: var(--sp-r); border-top: 3px solid var(--sp-akzent); padding: 10px 12px; }
 .wxsp-kachel span { display: block; font-size: .8rem; color: var(--sp-leise); }
 .wxsp-kachel strong { display: block; font-size: 1.5rem; font-weight: 600; line-height: 1.25; font-variant-numeric: tabular-nums; }

@@ -25,7 +25,7 @@ final class WXSP_Daten {
 			'mac_vorderkante' => array( 'MAC-Vorderkante', 'mm' ),
 			'mac'             => array( 'MAC (Länge)', 'mm' ),
 			'tank_arm'        => array( 'Hebelarm Kraftstoff', 'mm' ),
-			'tank_max'        => array( 'Tankinhalt nutzbar (0 = keine Prüfung)', 'l' ),
+			'tank_max'        => array( 'Tankinhalt nutzbar (0 = unbekannt)', 'l' ),
 			'kg_pro_liter'    => array( 'Kraftstoffdichte', 'kg/l' ),
 			'verbrauch'       => array( 'Verbrauch für die Flugzeit', 'l/h' ),
 		);

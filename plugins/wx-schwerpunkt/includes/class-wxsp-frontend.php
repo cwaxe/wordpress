@@ -71,7 +71,7 @@ final class WXSP_Frontend {
 <div class="wxsp" data-wxsp="<?php echo esc_attr( wp_json_encode( $cfg ) ); ?>">
 	<div class="wxsp-kopf">
 		<h2><?php echo esc_html( $titel ); ?></h2>
-		<p>Gewichte und Kraftstoff eintragen, alles andere rechnet sich sofort. Grün = innerhalb der Grenzen.</p>
+		<p>Gewichte eintragen – der Rechner zeigt, wie viel Kraftstoff dazu passt. Grün = innerhalb der Grenzen.</p>
 	</div>
 	<table class="wxsp-tab">
 		<thead><tr><th>Posten</th><th>Gewicht</th><th class="wxsp-n">Arm</th><th class="wxsp-n">Moment</th></tr></thead>
@@ -108,6 +108,7 @@ final class WXSP_Frontend {
 		<div class="wxsp-kachel" data-box="masse"><span>Startmasse</span><strong data-out="masse"></strong><small data-out="masse-info"></small></div>
 		<div class="wxsp-kachel" data-box="cg"><span>Schwerpunkt beim Start</span><strong data-out="cg"></strong><small data-out="cg-mac"></small></div>
 		<div class="wxsp-kachel" data-box="cg0"><span>Schwerpunkt bei leerem Tank</span><strong data-out="cg0"></strong><small data-out="cg0-mac"></small></div>
+		<div class="wxsp-kachel" data-box="sprit"><span>Max. Kraftstoff bei dieser Beladung</span><strong data-out="sprit"></strong><small data-out="sprit-info"></small></div>
 		<?php if ( $f['verbrauch'] > 0 ) : ?>
 		<div class="wxsp-kachel"><span>Flugzeit mit dieser Tankfüllung</span><strong data-out="flugzeit"></strong><small>bei <?php echo esc_html( self::txt( $f['verbrauch'] ) ); ?> l/h</small></div>
 		<?php endif; ?>

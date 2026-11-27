@@ -3,6 +3,12 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-schwerpunkt 1.1.0
+
+- Neu: Kachel „Max. Kraftstoff bei dieser Beladung“. Begrenzt durch MTOM, beide Schwerpunktgrenzen und – falls eingetragen – den nutzbaren Tankinhalt; die begrenzende Grenze wird genannt.
+- Liegt der Schwerpunkt ohne Kraftstoff zu weit hinten, wird zusätzlich die nötige Mindestmenge angezeigt.
+- Ergebnisse erscheinen, sobald die Pflichtposten (z. B. Pilot) eingetragen sind; die Kraftstoffangabe ist nicht mehr nötig.
+
 ## wx-popup 1.0.0
 
 - Erste Version: Pop-ups mit Inhalt aus dem Block-Editor, Zeitraum, Seitenauswahl, Verzögerung und Wiederholung (jedes Mal, einmal pro Besuch oder nach X Tagen) – ohne Cookies.
