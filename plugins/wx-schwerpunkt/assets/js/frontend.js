@@ -73,6 +73,7 @@
 			root.querySelectorAll('[data-moment]').forEach(function (e) { e.textContent = ''; });
 			['masse', 'cg', 'cg0', 'sprit'].forEach(function (k) { box(k, null); });
 			out('sprit', '–'); out('sprit-info', '');
+			if (A.lh > 0) { out('flugzeit-info', 'bei ' + fmt(A.lh, 0) + ' l/h, ohne Reserve'); }
 			alle.forEach(function (i) { i.classList.remove('wxsp-zuviel'); });
 			marken(false);
 			hinweise([text], 'info');
@@ -124,9 +125,12 @@
 			out('cg', fmt(cg, 1) + ' mm'); out('cg-mac', fmt(pctMac(cg), 1) + ' %MAC');
 			out('cg0', fmt(cg0, 1) + ' mm'); out('cg0-mac', fmt(pctMac(cg0), 1) + ' %MAC');
 			if (A.lh > 0) {
-				var std = liter / A.lh, hh = Math.floor(std), mm = Math.round((std - hh) * 60);
+				// Muss für den Schwerpunkt eine Restmenge im Tank bleiben, ist nur der Rest verfliegbar.
+				var rest = sp.moeglich && sp.min > 0 ? Math.min(sp.min, liter) : 0;
+				var std = (liter - rest) / A.lh, hh = Math.floor(std), mm = Math.round((std - hh) * 60);
 				if (mm === 60) { hh++; mm = 0; }
 				out('flugzeit', hh + ':' + (mm < 10 ? '0' : '') + mm + ' h');
+				out('flugzeit-info', 'bei ' + fmt(A.lh, 0) + ' l/h' + (rest > 0 ? ' bis ' + fmt(rest, 0) + ' l Rest' : '') + ', ohne Reserve');
 			}
 			box('masse', masseOk); box('cg', cgOk); box('cg0', cg0Ok);
 

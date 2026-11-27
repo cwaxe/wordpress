@@ -3,6 +3,10 @@
 Ein Abschnitt je Paket und Version, Überschrift `## <paket> <version>`.
 Der Abschnitt wird beim Release als Beschreibung übernommen.
 
+## wx-schwerpunkt 1.1.4
+
+- Flugzeit-Kachel: Muss für den Schwerpunkt eine Restmenge im Tank bleiben, wird nur die Zeit bis zu dieser Restmenge angezeigt (z. B. „bei 19 l/h bis 8 l Rest, ohne Reserve“).
+
 ## wx-schwerpunkt 1.1.3
 
 - Wandert der Schwerpunkt mit leerem Tank aus dem zulässigen Bereich, nennt der Hinweis jetzt die Mindestmenge, die bis zur Landung im Tank bleiben muss.

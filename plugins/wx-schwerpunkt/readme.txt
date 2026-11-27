@@ -3,7 +3,7 @@ Tags: weight and balance, schwerpunkt, flugzeug, masse, luftsport
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPL-2.0-or-later
 
 Rechner für Masse und Schwerpunkt (Weight & Balance) direkt auf der Website.
@@ -38,6 +38,9 @@ Moment = Gewicht × Hebelarm, Schwerpunkt = Summe der Momente / Masse,
 Der Rechner ist eine Hilfe zur Flugvorbereitung; maßgeblich ist das Flughandbuch.
 
 == Changelog ==
+
+= 1.1.4 =
+* Flugzeit rechnet nur mit dem verfliegbaren Kraftstoff, wenn für den Schwerpunkt eine Restmenge im Tank bleiben muss („bis 8 l Rest“).
 
 = 1.1.3 =
 * Hinweis bei leerem Tank nennt die Mindestmenge, die bis zur Landung im Tank bleiben muss.
